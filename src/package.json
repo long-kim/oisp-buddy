@@ -1,0 +1,20 @@
+{
+  "name": "oisp-buddy",
+  "version": "1.0.0",
+  "description": "Community for OISP Students",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "oisp-buddy"
+  },
+  "keywords": [
+    "node",
+    "react",
+    "webapp"
+  ],
+  "author": "CO3055 Spring 2019 - G4",
+  "license": "MIT"
+}
