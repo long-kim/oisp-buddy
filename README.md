@@ -1,5 +1,5 @@
 # oisp-buddy
-- Practice on Software Engineering
+- This project is made for "Practice on Software Engineering"
 - (Long Kim, Thinh Tran, Nhu Vo, An Nguyen, Duy Ly)
 
 ## Summary
@@ -14,5 +14,4 @@ A platform for university students to find their study buddy.
 
 
 ## Available Scripts
-
 In the project directory, you can run:
