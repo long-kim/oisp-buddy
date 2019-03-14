@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "oisp-buddy"
+    "url": "https://github.com/long-kim/oisp-buddy.git"
   },
   "keywords": [
     "node",
