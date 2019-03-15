@@ -16,5 +16,8 @@
     "webapp"
   ],
   "author": "CO3055 Spring 2019 - G4",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
