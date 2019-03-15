@@ -20,6 +20,15 @@ class App extends Component {
             Learn React
           </a>
         </header>
+        <div className="row d-flex form-group mt-3 test-api mx-auto justify-content-center">
+          <h2>Post to Server:</h2>
+          <div className="col-md-9">
+            <input type="text" className="form-control" placeholder="Send to server"></input>
+          </div>
+          <div className="col-md-3">
+            <button type="submit" className="btn btn-primary btn-block">Submit</button>
+          </div>
+        </div>
       </div>
     );
   }
