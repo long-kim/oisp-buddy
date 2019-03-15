@@ -11,7 +11,15 @@ A platform for university students to find their study buddy.
 > - sarv19
 > - AnNguyen96
 
+## Instruction
+Run the following commands:
+> npm install<br>
+> node app.js
 
+Then access app with URL:
+> localhost:3000
+
+Please stage `package.json` if you add any new modules.
 
 ## Available Scripts
 In the project directory, you can run:
