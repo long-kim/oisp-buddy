@@ -19,6 +19,10 @@ A platform for university students to find their study buddy.
 
 In the project directory, you can run:
 
+### `npm run dev`
+
+Runs the React app and Node server.
+
 ### `npm start`
 
 Runs the app in the development mode.<br>
