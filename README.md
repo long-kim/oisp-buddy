@@ -3,8 +3,8 @@
 - (Long Kim, Thinh Tran, Nhu Vo, An Nguyen, Duy Ly)
 
 ## Summary
-A platform for university students to find their study buddy. 
- 
+A platform for university students to find their study buddy.
+
 ## Developer
 > - long-kim
 > - jimcbl
@@ -20,6 +20,3 @@ Then access app with URL:
 > localhost:3000
 
 Please stage `package.json` if you add any new modules.
-
-## Available Scripts
-In the project directory, you can run:
