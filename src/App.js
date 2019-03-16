@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import logo from "./hcmut.svg";
 import "./App.css";
+import "./components/common/Navbar";
+import Navbar from "./components/common/Navbar";
 
 class App extends Component {
   state = {
@@ -42,6 +44,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Navbar />
         <header className="App-header">
           <img src={logo} className="App-logo mb-3" alt="logo" />
           <p>OSIP Buddy Test Page</p>
