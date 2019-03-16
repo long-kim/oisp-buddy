@@ -1,15 +1,51 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './hcmut.svg';
 import './App.css';
 
 class App extends Component {
+  state = {
+    response: '',
+    post: '',
+    reponseToPost: ''
+  }
+
+  componentDidMount() {
+    this.callApi()
+      .then(res => this.setState({response: res.express}))
+      .catch(err => console.log(err));
+  }
+
+  callApi = async () => {
+    const response = await fetch('api/get');
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
+  }
+
+  handleSubmit = async(e) => {
+    e.preventDefault();
+    const response = await fetch('api/post', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({post: this.state.post})
+    });
+
+    const body = await response.text();
+
+    this.setState({reponseToPost: body});
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo} className="App-logo mb-3" alt="logo" />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            OSIP Buddy Test Page
           </p>
           <a
             className="App-link"
@@ -20,13 +56,35 @@ class App extends Component {
             Learn React
           </a>
         </header>
-        <div className="row d-flex form-group mt-3 test-api mx-auto justify-content-center">
+        <form className="row d-flex form-group mt-3 test-api mx-auto justify-content-center" onSubmit={this.handleSubmit}>
           <h2>Post to Server:</h2>
           <div className="col-md-9">
-            <input type="text" className="form-control" placeholder="Send to server"></input>
+            <input 
+              type="text"
+              className="form-control" 
+              placeholder="Send to server"
+              value={this.state.post}
+              onChange={e => this.setState({post: e.target.value})}
+            >
+            </input>
           </div>
-          <div className="col-md-3">
-            <button type="submit" className="btn btn-primary btn-block">Submit</button>
+            <div className="col-md-3 mt-md-0 mt-3">
+              <button 
+                type="submit"
+                className="btn btn-primary btn-block"
+              >
+                Submit
+            </button>
+          </div>
+        </form>
+        <div className="row d-flex mt-3 mx-auto response test-api justify-content-center">
+          <div className={"alert alert-info alert-dismissible " + (this.state.reponseToPost !== '' ? '' : 'd-none')} role="alert">
+            {this.state.reponseToPost.split('\n').map((item, key) => {
+              return <span key={key}>{item}<br></br></span>
+            })}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
         </div>
       </div>
