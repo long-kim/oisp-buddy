@@ -30,6 +30,11 @@
   max-width: 600px;
 }
 
+.App .test-api.response {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .App .test-api.response .alert {
   width: 100%;
 }

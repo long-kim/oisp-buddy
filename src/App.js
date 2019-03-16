@@ -78,13 +78,10 @@ class App extends Component {
           </div>
         </form>
         <div className="row d-flex mt-3 mx-auto response test-api justify-content-center">
-          <div className={"alert alert-info alert-dismissible " + (this.state.reponseToPost !== '' ? '' : 'd-none')} role="alert">
+          <div className={"alert alert-info " + (this.state.reponseToPost !== '' ? '' : 'd-none')} role="alert">
             {this.state.reponseToPost.split('\n').map((item, key) => {
               return <span key={key}>{item}<br></br></span>
             })}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
           </div>
         </div>
       </div>
