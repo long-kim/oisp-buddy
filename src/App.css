@@ -26,16 +26,16 @@
   text-decoration: none;
 }
 
-.App .test-api {
+.Test .test-api {
   max-width: 600px;
 }
 
-.App .test-api.response {
+.Test .test-api.response {
   padding-left: 15px;
   padding-right: 15px;
 }
 
-.App .test-api.response .alert {
+.Test .test-api.response .alert {
   width: 100%;
 }
 

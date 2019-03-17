@@ -8,11 +8,12 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "bootstrap": "^4.3.1",
     "font-awesome": "^4.7.0",
-    "fontawesome": "^5.6.3",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.7",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-router": "^4.4.0",
+    "react-router-dom": "^4.4.0",
     "react-scripts": "2.1.8"
   },
   "scripts": {
