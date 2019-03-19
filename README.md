@@ -3,7 +3,8 @@
 - (Long Kim, Thinh Tran, Nhu Vo, An Nguyen, Duy Ly)
 
 ## Summary
-A platform for university students to find their study buddy.
+A platform for students to discuss and solve problems.
+
 
 ## Developer
 > - long-kim
