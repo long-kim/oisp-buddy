@@ -11,6 +11,7 @@
     "jquery": "^3.3.1",
     "popper.js": "^1.14.7",
     "react": "^16.8.4",
+    "react-bootstrap": "^1.0.0-beta.5",
     "react-dom": "^16.8.4",
     "react-router": "^4.4.0",
     "react-router-dom": "^4.4.0",
