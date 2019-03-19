@@ -3,7 +3,7 @@ import logo from "../hcmut.svg";
 import "../App.css";
 class Header extends Component {
   state = {
-    currentPage: "home"
+    currentPage: ""
   };
 
   render() {

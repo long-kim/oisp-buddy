@@ -6,6 +6,11 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
   }
+
+  setActive(route) {
+    return this.props.page.substring(1) === route ? "active" : "";
+  }
+
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -33,7 +38,7 @@ class Navbar extends Component {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
+            <li className={"nav-item " + this.setActive("")}>
               <a className="nav-link" href="#">
                 Home <span className="sr-only">(current)</span>
               </a>
@@ -68,8 +73,10 @@ class Navbar extends Component {
                 </a>
               </div>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/test">Test Page</Link>
+            <li className={"nav-item " + this.setActive("test")}>
+              <Link className="nav-link" to="/test">
+                Test Page
+              </Link>
             </li>
             <form className="form-inline my-2 my-lg-0">
               <input

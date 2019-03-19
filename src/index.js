@@ -9,24 +9,12 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "jquery";
 import "bootstrap";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
-  <Router>
-    <App />
-    <Switch>
-      <Route exact path="/" component={Header} />
-      <Route
-        path="/test"
-        render={() => (
-          <div className="TestPage">
-            <Header currentPage="test"/>
-            <Test />
-          </div>
-        )}
-      />
-    </Switch>
-  </Router>,
+  <BrowserRouter>
+    <App view="/"/>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
