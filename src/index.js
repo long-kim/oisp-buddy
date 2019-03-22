@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import Test from "./components/Test";
-import Header from "./components/Header";
 import * as serviceWorker from "./serviceWorker";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "jquery";
@@ -13,7 +11,7 @@ import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <BrowserRouter>
-    <App view="/"/>
+    <App />
   </BrowserRouter>,
   document.getElementById("root")
 );

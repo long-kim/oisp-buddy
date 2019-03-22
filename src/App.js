@@ -9,13 +9,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: this.props.view
+      view: ""
     };
+    this.setView = this.setView;
   }
 
-  componentDidUpdate(props) {
-    this.setState(props);
-  }
+  setView = view => {
+    this.setState({ view: view });
+  };
 
   render() {
     return (
@@ -25,16 +26,16 @@ class App extends Component {
           path="/"
           render={props => (
             <div className="HomePage">
-              <Navbar page={props.location.pathname} />
+              <Navbar setview={this.setView} view="home" />
               <Header />
             </div>
           )}
         />
         <Route
           path="/test"
-          render={(props) => (
+          render={props => (
             <div className="TestPage">
-              <Navbar page={props.location.pathname} />
+              <Navbar setview={this.setView} view="test" />
               <Header currentPage="test" />
               <Test />
             </div>
