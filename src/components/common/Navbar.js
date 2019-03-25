@@ -5,7 +5,7 @@ import {
   Link,
   NavLink
 } from "react-router-dom";
-import logo from "../../hcmut.svg";
+import logo from "../../assets/img/hcmut.svg";
 import Button from "react-bootstrap/Button";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Nav from "react-bootstrap/Nav";

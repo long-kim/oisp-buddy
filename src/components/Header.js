@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import logo from "../hcmut.svg";
-import "../App.css";
+import logo from "../assets/img/hcmut.svg";
+import "../assets/css/App.css";
 class Header extends Component {
   state = {
     currentPage: ""

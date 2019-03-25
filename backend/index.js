@@ -1,5 +1,16 @@
+require("dotenv").config();
+
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+
+mongoose.connect(process.env.DB_LOCAL);
+
+var db = mongoose.connection;
+db.on("error", console.error.bind(console, "Connection error!"));
+db.once("open", function() {
+  console.log(`Connected to database: OISP-Buddy`);
+});
 
 const app = express();
 app.use(
@@ -7,6 +18,7 @@ app.use(
     extended: false
   })
 );
+
 app.use(bodyParser.json());
 
 app.get("/api/get", (_req, res) => {
