@@ -1,1 +1,1 @@
-Store relevant documents here.
+MongoDB Manual: https://docs.mongodb.com/manual/

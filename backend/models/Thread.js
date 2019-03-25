@@ -8,8 +8,8 @@ let Thread = new mongoose.Schema(
       required: [true, "Title cannot be empty!"]
     },
     author: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true
     },
     content: {
@@ -24,7 +24,22 @@ let Thread = new mongoose.Schema(
     favorites: {
       type: Number,
       default: 0
-    }
+    },
+    url: {
+      type: String
+    },
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Reply"
+      }
+		],
+		reports: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Report"
+			}
+		]
   },
   { timestamps: true }
 );

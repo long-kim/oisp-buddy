@@ -25,10 +25,34 @@ let User = new mongoose.Schema(
       index: true
     },
     password: String,
-    fname: String,
-    lname: String,
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "admin",
+      required: true
+    },
+    first_name: String,
+    last_name: String,
     dept: String,
-    year: Number
+    year: Number,
+    thread_by: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Thread"
+      }
+    ],
+    thread_subscribed: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Thread"
+      }
+    ],
+    replies: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Reply"
+      }
+    ]
   },
   { timestamps: true }
 );

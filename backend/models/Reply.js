@@ -1,8 +1,9 @@
 let mongoose = require("mongoose");
 let Comment = new mongoose.Schema(
   {
-		parent_id: {
-			type: mongoose.Schema.Types.ObjectId
+		parent: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Thread'
 		},
     posted_by: {
       type: mongoose.Schema.Types.ObjectId,
@@ -17,7 +18,7 @@ let Comment = new mongoose.Schema(
     score: {
       type: Number,
       default: 0
-    }
+		}
   },
   { timestamps: true }
 );
