@@ -1,15 +1,31 @@
 import React, { Component } from "react";
-import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
-import logo from "../../hcmut.svg";
+import {
+  BrowserRouter as _Router,
+  _Route,
+  Link,
+  NavLink
+} from "react-router-dom";
+import logo from "../../assets/img/hcmut.svg";
+import Button from "react-bootstrap/Button";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Nav from "react-bootstrap/Nav";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+import Navbar from "react-bootstrap/Navbar";
+import InputGroup from "react-bootstrap/InputGroup";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
 
-class Navbar extends Component {
+class PrimaryNav extends Component {
   constructor(props) {
     super(props);
+    this.setView = this.props.setview.bind(this);
   }
+
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <Link className="navbar-brand" to="/">
+      <Navbar bg="light" expand="lg">
+        <Navbar.Brand href="/">
           <img
             src={logo}
             width="30"
@@ -18,90 +34,56 @@ class Navbar extends Component {
             alt=""
           />
           Buddy
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
-
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <a className="nav-link" href="#">
-                Home <span className="sr-only">(current)</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Topic
-              </a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="#">
-                  Action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Another action
-                </a>
-                <div className="dropdown-divider" />
-                <a className="dropdown-item" href="#">
-                  Something else here
-                </a>
-              </div>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/test">Test Page</Link>
-            </li>
-            <form className="form-inline my-2 my-lg-0">
-              <input
-                className="form-control mr-sm-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-            </form>
-          </ul>
-
-          <button type="button" className="btn btn-outline-secondary mr-2">
-            Log in
-          </button>
-
-          <button type="button" className="btn btn-primary mr-3">
-            Sign Up
-          </button>
-        </div>
-
-        {/* <a class="navbar-brand" href="#">
-          <img
-            src={logo}
-            width="30"
-            height="30"
-            class="d-inline-block align-top "
-            alt=""
-          />
-        </a> */}
-      </nav>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Item>
+              <NavLink to="/" activeClassName="active" className="nav-link">
+                Home
+              </NavLink>
+            </Nav.Item>
+            <Nav.Link href="#">Link</Nav.Link>
+            <NavDropdown title="Topic">
+              <NavDropdown.Item href="#">Acion</NavDropdown.Item>
+              <NavDropdown.Item href="#">Another Action</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item>Something else here</NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Item>
+              <NavLink className="nav-link" to="/test" activeClassName="active">
+                Test Page
+              </NavLink>
+            </Nav.Item>
+            <Form inline className="my-2 my-lg-0">
+              <InputGroup>
+                <FormControl type="text" placeholder="Search" />
+                <DropdownButton
+                  as={InputGroup.Append}
+                  variant="info"
+                  title="More"
+                >
+                  <Dropdown.Item href="#">Action</Dropdown.Item>
+                  <Dropdown.Item href="#">Another action</Dropdown.Item>
+                  <Dropdown.Item href="#">Something else here</Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item href="#">Separated link</Dropdown.Item>
+                </DropdownButton>
+              </InputGroup>
+            </Form>
+          </Nav>
+          <Nav>
+            <Button type="button" variant="secondary" className="mr-lg-2 mb-2 mb-lg-0">
+              Log In
+            </Button>
+            <Button type="button" variant="primary">
+              Sign Up
+            </Button>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     );
   }
 }
 
-export default Navbar;
+export default PrimaryNav;

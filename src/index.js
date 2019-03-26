@@ -1,32 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./assets/css/index.css";
 import App from "./App";
-import Test from "./components/Test";
-import Header from "./components/Header";
 import * as serviceWorker from "./serviceWorker";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "jquery";
 import "bootstrap";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
-  <Router>
+  <BrowserRouter>
     <App />
-    <Switch>
-      <Route exact path="/" component={Header} />
-      <Route
-        path="/test"
-        render={() => (
-          <div className="TestPage">
-            <Header currentPage="test"/>
-            <Test />
-          </div>
-        )}
-      />
-    </Switch>
-  </Router>,
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
