@@ -41,6 +41,15 @@ class App extends Component {
             </div>
           )}
         />
+        <Route
+          path="/admin"
+          render={props => (
+            <div className="AdminPage">
+              <Navbar setview={this.setView} view="admin" />
+              <h2>AdminPage</h2>
+            </div>
+          )}
+        />
       </Switch>
     );
   }
