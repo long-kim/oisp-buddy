@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./components/common/Navbar";
 import Header from "./components/Header";
+import Admin from "./components/Admin";
 import Test from "./components/Test";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./assets/css/App.css";
@@ -47,6 +48,7 @@ class App extends Component {
             <div className="AdminPage">
               <Navbar setview={this.setView} view="admin" />
               <h2>AdminPage</h2>
+              <Admin />
             </div>
           )}
         />
