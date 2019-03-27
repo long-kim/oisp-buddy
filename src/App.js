@@ -11,7 +11,6 @@ class App extends Component {
     this.state = {
       view: ""
     };
-    this.setView = this.setView;
   }
 
   setView = view => {
@@ -25,7 +24,7 @@ class App extends Component {
           exact
           path="/"
           render={props => (
-            <div className="HomePage">
+            <div className="HomePage" itemProp={props}>
               <Navbar setview={this.setView} view="home" />
               <Header />
             </div>
@@ -34,7 +33,7 @@ class App extends Component {
         <Route
           path="/test"
           render={props => (
-            <div className="TestPage">
+            <div className="TestPage" itemProp={props}>
               <Navbar setview={this.setView} view="test" />
               <Header currentPage="test" />
               <Test />

@@ -1,4 +1,6 @@
 let mongoose = require("mongoose");
+
+/* SCHEMA DEFINITION */
 let User = new mongoose.Schema(
   {
     username: {
@@ -35,26 +37,19 @@ let User = new mongoose.Schema(
     last_name: String,
     dept: String,
     year: Number,
-    thread_by: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Thread"
-      }
-    ],
     thread_subscribed: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Thread"
       }
-    ],
-    replies: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Reply"
-      }
     ]
   },
   { timestamps: true }
 );
+
+/* METHODS */
+User.methods.getID = function(cb) {
+  return this.model("User").findOne({_id: this._id}).select("_id").exec(cb);
+}
 
 module.exports = mongoose.model("User", User);

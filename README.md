@@ -1,16 +1,22 @@
-# oisp-buddy
-- This project is made for "Practice on Software Engineering"
-- (Long Kim, Thinh Tran, Nhu Vo, An Nguyen, Duy Ly)
+# OISP SOCIAL PLATFORM
+**Lecturer:** Quan Thanh Tho
+
+**Group members:**
+- Long Kim - 1652758
+- Thinh Tran - 1652578
+- Nhu Vo - 1652458
+- An Nguyen - 1552005
+- Duy Ly - 1652099
 
 ## Summary
-A platform for students to discuss and solve problems.
+Occasionally, we might hear people say: “Better learn from your friend than your teacher”. As a student, that saying is actually very true. We can learn so much from our friends. A right friend can be our helping hand for not only spiritual support but also academic learning.
 
+Base on that, our group decided to do something about it. In the beginning, we wanted to make an online platform (website application) for finding study buddy. However, after a couple of meetings, we settled on the plan of **creating a platform** for students to **discuss and solve problems**.
 
-## Developer
-> - long-kim
-> - jimcbl
-> - sarv19
-> - AnNguyen96
+## Technologies
+- **React:** Front-end
+- **Node:** Server-side, API
+- **MongoDB:** Database
 
 ## Additional Tools
 - **Postman**: Test your APIs.
