@@ -1,17 +1,18 @@
-@import "assets/styles/scss/threads.scss";
-
 .oisp-buddy {
   font-family: "LatoWeb";
+  @import "assets/styles/scss/threads.scss";
   .btn {
     border: none;
     border-radius: 0;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    &:active {
+      transform: scale(0.95);
+    }
     &.btn-primary {
       background-color: #a56a4b;
       &:not(:disabled) {
         &:active {
           background-color: #a56a4b;
-          transform: scale(0.95);
           &:focus {
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
           }
@@ -23,6 +24,18 @@
     }
     &:focus {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    }
+  }
+  input.form-control {
+    border: unset;
+    border-radius: 0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    &:focus {
+      color: #777777;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.36);
+    }
+    &::placeholder {
+      color: #dddddd;
     }
   }
   .select-wrapper {
