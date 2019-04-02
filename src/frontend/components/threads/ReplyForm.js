@@ -289,9 +289,11 @@ class ReplyForm extends Component {
             </label>
           </ul>
 
-          <Button variant="primary" size="sm" className="post-btn">
-            Post
-          </Button>
+          {this.props.createThread && (
+            <Button variant="primary" size="sm" className="post-btn">
+              Post
+            </Button>
+          )}
         </div>
       </div>
     );
