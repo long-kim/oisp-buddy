@@ -24,7 +24,7 @@ class PrimaryNav extends Component {
 
   render() {
     return (
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light" expand="lg" className="sticky-top primary-nav">
         <Navbar.Brand href="/">
           <img
             src={logo}

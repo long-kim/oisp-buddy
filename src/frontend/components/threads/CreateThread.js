@@ -10,7 +10,7 @@ class CreateThread extends Component {
   render() {
     return (
       <Container className="CreateThread">
-        <div className="card-wrapper sticky-top">
+        <div className="card-wrapper header">
           <h3 className="mr-auto">Create new Thread</h3>
           <Button variant="primary" className="post-btn">
             Post

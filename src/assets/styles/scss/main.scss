@@ -6,6 +6,9 @@ body {
   font-family: "LatoWeb";
   color: #777777;
   @import "assets/styles/scss/threads.scss";
+  .primary-nav {
+    height: 60px;
+  }
   .btn {
     border: none;
     border-radius: 0;

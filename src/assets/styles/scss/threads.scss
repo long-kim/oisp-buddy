@@ -48,6 +48,7 @@
     }
     #reply-tabpane-preview {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+      background-color: #fff;
       font-size: 14px;
       height: 100%;
       max-height: 400px;
@@ -140,6 +141,12 @@
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     margin-bottom: 30px;
     padding: 1rem 2rem;
+    position: relative;
+    &.header {
+      position: sticky;
+      z-index: 1010;
+      width: 900px;
+    }
     &.trans {
       background-color: rgba(255, 255, 255, 0.4);
     }
