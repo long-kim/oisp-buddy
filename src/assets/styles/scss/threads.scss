@@ -1,5 +1,4 @@
 .ReplyForm {
-  font-family: "LatoWeb";
   position: relative;
   .nav {
     background-color: #dddddd;
@@ -68,23 +67,7 @@
       }
       .spoiler-wrapper {
         .btn {
-          border: none;
-          border-radius: 0;
-          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-          background-color: #a56a4b;
-          font-size: 0.85rem;
-          &:not(:disabled) {
-            &:active {
-              background-color: #a56a4b;
-              transform: scale(0.95);
-              &:focus {
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-              }
-            }
-            &:hover {
-              background-color: #b97d5c;
-            }
-          }
+          width: 150px;
         }
         .content-wrapper {
           background-color: #dddddd;
@@ -131,38 +114,105 @@
   }
 }
 
-.CreateThread {
-  background-color: #dddddd;
-  padding: 0;
-  max-width: 900px;
-  .card-wrapper {
-    background-color: #fff;
-    display: flex;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-    margin-bottom: 30px;
-    padding: 1rem 2rem;
-    position: relative;
-    &.header {
-      position: sticky;
-      z-index: 1010;
-      width: 900px;
+.Thread {
+  .container {
+    background-color: #dddddd;
+    padding: 0;
+    max-width: 900px;
+    &.index {
+      padding: 20px;
+      .card-wrapper {
+        padding: 1rem;
+        font-size: 20px;
+        height: 150px;
+      }
     }
-    &.trans {
-      background-color: rgba(255, 255, 255, 0.4);
-    }
-    h3 {
-      margin-bottom: 0;
-    }
-    .btn-primary {
-      width: 100px;
-    }
-    form {
-      width: 100%;
-      .form-group {
-        margin-bottom: 2rem;
-        label {
-          font-size: 18px;
-          margin-bottom: 0.8rem;
+    .card-wrapper {
+      @include shadow(0.16);
+      background-color: #fff;
+      display: flex;
+      margin-bottom: 30px;
+      padding: 1rem 2rem;
+      position: relative;
+      &.header {
+        position: sticky;
+        z-index: 1010;
+        width: 900px;
+        top: $navbar-height;
+      }
+      &.trans {
+        background-color: rgba(255, 255, 255, 0.4);
+      }
+      h3 {
+        margin-bottom: 0;
+      }
+      .btn-primary {
+        width: 100px;
+      }
+      form {
+        width: 100%;
+        .form-group {
+          margin-bottom: 2rem;
+          label {
+            font-size: 18px;
+            margin-bottom: 0.8rem;
+          }
+        }
+      }
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        font-size: 20px;
+        align-items: center;
+        color: #aeaeae;
+        width: 30px;
+        height: 90px;
+        justify-content: space-between;
+        &.interact {
+          color: #dddddd;
+          height: 100%;
+          padding-top: 10px;
+          .control:hover {
+            color: #aeaeae;
+          }
+        }
+        .control {
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          &:focus {
+            outline: none;
+          }
+          &:hover {
+            color: #777777;
+          }
+        }
+      }
+      .content {
+        padding: 10px 20px 10px 20px;
+        width: calc(100% - 60px);
+        .thread-title {
+          color: #777777;
+          width: 100%;
+          text-decoration: none;
+          height: 60px;
+        }
+        .topics-wrapper {
+          display: flex;
+          margin-top: 10px;
+          .topic {
+            @include shadow(0.16);
+            display: flex;
+            width: 100px;
+            height: 40px;
+            background-color: #a56a4b;
+            color: #fff;
+            font-size: 16px;
+            flex-direction: column;
+            text-align: center;
+            text-decoration: none;
+            justify-content: center;
+          }
         }
       }
     }

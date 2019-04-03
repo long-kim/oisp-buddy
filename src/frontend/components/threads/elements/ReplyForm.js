@@ -6,9 +6,8 @@ import Button from "react-bootstrap/Button";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import parser from "bbcode-to-react";
 import insertText from "frontend/helpers/insertText";
-import * as tags from "frontend/helpers/tags";
+import * as tags from "../tags/Tags";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 class ReplyForm extends Component {
   constructor(props) {
     super(props);
@@ -76,23 +75,21 @@ class ReplyForm extends Component {
           transition={false}
         >
           <Tab eventKey="edit" title="Write">
-            <Form>
-              <Form.Group>
-                <div className="mdedit-wrapper">
-                  <Form.Control
-                    as="textarea"
-                    rows="7"
-                    placeholder="Type post content here"
-                    onChange={e => {
-                      this.setState({
-                        input: e.target.value
-                      });
-                    }}
-                    ref={this.handleEditorRef}
-                  />
-                </div>
-              </Form.Group>
-            </Form>
+            <Form.Group>
+              <div className="mdedit-wrapper">
+                <Form.Control
+                  as="textarea"
+                  rows="15"
+                  placeholder="Type post content here"
+                  onChange={e => {
+                    this.setState({
+                      input: e.target.value
+                    });
+                  }}
+                  ref={this.handleEditorRef}
+                />
+              </div>
+            </Form.Group>
           </Tab>
           <Tab eventKey="preview" title="Preview">
             <div className="md-preview-wrapper">
@@ -272,6 +269,23 @@ class ReplyForm extends Component {
                 <span>br</span>
               </OverlayTrigger>
             </li>
+            <li data-type="spoiler" onClick={this.insert}>
+              <OverlayTrigger
+                placement="top"
+                overlay={({
+                  placement,
+                  scheduleUpdate,
+                  arrowProps,
+                  ...props
+                }) => (
+                  <div className="mdedit-tooltip" {...props}>
+                    Spoiler Box
+                  </div>
+                )}
+              >
+                <i className="fa fa-barcode" />
+              </OverlayTrigger>
+            </li>
             <label className="fsize-select select-wrapper">
               <span className="select-label">Font Size</span>
               <i className="fa fa-chevron-down" />
@@ -280,7 +294,7 @@ class ReplyForm extends Component {
                 data-type="fsize"
                 onChange={this.setfsize}
               >
-                <option value="" disabled hidden selected="selected" />
+                <option value="" disabled hidden defaultValue />
                 <option value="50">Tiny</option>
                 <option value="85">Small</option>
                 <option value="100">Normal</option>

@@ -17,11 +17,6 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 
 class PrimaryNav extends Component {
-  constructor(props) {
-    super(props);
-    this.setView = this.props.setview.bind(this);
-  }
-
   render() {
     return (
       <Navbar bg="light" expand="lg" className="sticky-top primary-nav">

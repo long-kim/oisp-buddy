@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import CreateThread from "./threads/CreateThread";
+import CreateThread from "./threads/Create";
 
 class Test extends Component {
   constructor(props) {

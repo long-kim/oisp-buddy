@@ -4,9 +4,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Select from "react-select";
 import makeAnimated from "react-select/lib/animated";
-import ReplyForm from "./ReplyForm";
+import ReplyForm from "./elements/ReplyForm";
 
-class CreateThread extends Component {
+export class Create extends Component {
   render() {
     return (
       <Container className="CreateThread">
@@ -49,4 +49,4 @@ class CreateThread extends Component {
   }
 }
 
-export default CreateThread;
+export default Create;

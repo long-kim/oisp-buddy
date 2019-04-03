@@ -70,6 +70,9 @@ let shortcuts = {
   },
   code(vm) {
     insert(vm, '[code lang="', "language", '"]\n\n[/code]');
+  },
+  spoiler(vm) {
+    insert(vm, "[spoil]", "text", "[/spoil]");
   }
 };
 
