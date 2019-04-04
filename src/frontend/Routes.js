@@ -5,6 +5,7 @@ import Admin from "./components/Admin";
 import Test from "./components/Test";
 import Thread from "./components/threads/Thread";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Page404 from "./components/404";
 
 class Routes extends Component {
   render() {
@@ -47,6 +48,7 @@ class Routes extends Component {
               </div>
             )}
           />
+          <Route component={Page404} />
         </Switch>
       </div>
     );

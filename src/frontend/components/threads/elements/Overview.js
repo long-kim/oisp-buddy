@@ -29,8 +29,9 @@ class Overview extends Component {
             <div className="control">
               <i className="fa fa-star"></i>
             </div>
-            <div className="control">
+            <div className="control comment">
               <i className="fa fa-comment"></i>
+              <span className="comment-number">1</span>
             </div>
             <div className="control">
               <i className="fa fa-share-alt"></i>
