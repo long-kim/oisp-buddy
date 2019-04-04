@@ -39,12 +39,18 @@ class Routes extends Component {
               </div>
             )}
           />
+
+          {/* FORUM */}
           <Route
             path="/forum"
             render={({ match: { url } }) => (
               <div className="Thread">
                 <Route path={`${url}/`} component={Thread.Index} exact />
                 <Route path={`${url}/create`} component={Thread.Create} />
+                <Route
+                  path={`${url}/thread/:threadId`}
+                  component={Thread.Create}
+                />
               </div>
             )}
           />

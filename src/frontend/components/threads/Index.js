@@ -10,13 +10,13 @@ class Index extends Component {
       <Container className="index">
         <div className="card-wrapper header">
           <h3 className="mr-auto">Threads</h3>
-          <Link className="post-anchor" to={`${this.props.match.url}/create`}>
+          <Link className="post-anchor" to={`./create`}>
             <Button variant="primary" className="post-btn">
-              Post
+              New
             </Button>
           </Link>
         </div>
-        <Overview />
+        <Overview post_id="1" score={2} />
         <Overview />
         <Overview />
         <Overview />
