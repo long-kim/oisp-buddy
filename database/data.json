@@ -1,0 +1,10 @@
+{
+    "users": {
+        "_model": "User",
+        "long": {
+            "username": "longkh",
+            "email": "kimhoanglong.cs@gmail.com",
+            "password": 123456
+        }
+    }
+}
