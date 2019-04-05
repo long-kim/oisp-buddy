@@ -34,19 +34,18 @@ class Overview extends Component {
       <div className="overview">
         <div className="card-wrapper">
           <div className="control-group score">
-            <div
-              className="control"
-              onClick={this.updateScore.bind(this, 1)}
-              style={
-                this.state.voted === 1
-                  ? {
-                      color: "#777777",
-                      fontWeight: "bold"
-                    }
-                  : {}
-              }
-            >
-              <i className="fa fa-angle-up" />
+            <div className="control" onClick={this.updateScore.bind(this, 1)}>
+              <i
+                className="fa fa-angle-up"
+                style={
+                  this.state.voted === 1
+                    ? {
+                        color: "#777777",
+                        fontWeight: "bold"
+                      }
+                    : {}
+                }
+              />
             </div>
             <span className="score">{this.state.score}</span>
             <div className="control" onClick={this.updateScore.bind(this, -1)}>

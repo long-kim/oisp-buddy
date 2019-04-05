@@ -49,7 +49,7 @@ class Routes extends Component {
                 <Route path={`${url}/create`} component={Thread.Create} />
                 <Route
                   path={`${url}/thread/:threadId`}
-                  component={Thread.Create}
+                  component={Thread}
                 />
               </div>
             )}

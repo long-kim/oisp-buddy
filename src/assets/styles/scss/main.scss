@@ -5,9 +5,9 @@ body {
 }
 
 .oisp-buddy {
+  @import "./threads.scss";
   font-family: "LatoWeb";
-  color: #777777;
-  @import "assets/styles/scss/threads.scss";
+  color: #373A3C;
   .primary-nav {
     height: 60px;
     @include shadow(0.36);

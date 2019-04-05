@@ -4,10 +4,9 @@ import Tabs from "react-bootstrap/Tabs";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import parser from "bbcode-to-react";
 import insertText from "frontend/helpers/insertText";
-import * as tags from "../tags/Tags";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BBParser from "./BBParser";
 class ReplyForm extends Component {
   constructor(props) {
     super(props);
@@ -60,12 +59,6 @@ class ReplyForm extends Component {
   };
 
   render() {
-    parser.registerTag("br", tags.LineBreak);
-    parser.registerTag("spoil", tags.SpoilerBox);
-    parser.registerTag("size", tags.FontSize);
-    parser.registerTag("code", tags.CodeBlock);
-    parser.registerTag("p", tags.Paragraph);
-
     return (
       <div className="ReplyForm">
         <Tabs
@@ -93,7 +86,7 @@ class ReplyForm extends Component {
           </Tab>
           <Tab eventKey="preview" title="Preview">
             <div className="md-preview-wrapper">
-              {parser.toReact(this.state.input)}
+              <BBParser input={this.state.input} />
             </div>
           </Tab>
         </Tabs>
