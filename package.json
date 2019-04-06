@@ -41,7 +41,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "node-env-run src/backend --exec nodemon | pino-colada",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm start\""
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm start\"",
+    "seed": "node-env-run database/seeder.js"
   },
   "eslintConfig": {
     "extends": "react-app"

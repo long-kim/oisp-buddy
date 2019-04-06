@@ -50,7 +50,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 /* Hash password */
-UserSchema.pre("save", next => {
+UserSchema.pre("save", function(next) {
   // Check if document is new or a new password has been set
   if (this.isNew || this.isModified("password")) {
     const document = this;
@@ -68,7 +68,7 @@ UserSchema.pre("save", next => {
 });
 
 UserSchema.plugin(AutoIncrement, {
-  inc_field: 'userid'
+  inc_field: 'user_id'
 });
 
 UserSchema.methods.add_friend = user_id => {

@@ -38,7 +38,7 @@ const ThreadSchema = new mongoose.Schema({
 });
 
 ThreadSchema.plugin(AutoIncrement, {
-  inc_field: 'userid'
+  inc_field: 'thread_id'
 });
 
 ThreadSchema.methods.vote = val => {
@@ -52,6 +52,7 @@ ThreadSchema.methods.add_post = post => {
 }
 
 ThreadSchema.methods.get_by_user = _id => {
+  const Thread = mongoose.model("Thread", ThreadSchema);
   Thread.find({
     author_id: _id
   }).then(threads => {

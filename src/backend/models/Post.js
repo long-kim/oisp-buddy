@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const Post = new mongoose.Schema({
+const AutoIncrement = require("mongoose-sequence")(mongoose);
+const PostSchema = new mongoose.Schema({
     parent: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Thread',
@@ -23,4 +24,8 @@ const Post = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model("Post", Post);
+PostSchema.plugin(AutoIncrement, {
+    inc_field: 'post_id'
+})
+
+module.exports = mongoose.model("Post", PostSchema);
