@@ -74,6 +74,7 @@ class ReplyForm extends Component {
                   as="textarea"
                   rows="15"
                   placeholder="Type post content here"
+                  name="content"
                   onChange={e => {
                     this.setState({
                       input: e.target.value
@@ -296,7 +297,7 @@ class ReplyForm extends Component {
             </label>
           </ul>
 
-          {this.props.createThread && (
+          {!this.props.createThread && (
             <Button variant="primary" size="sm" className="post-btn">
               Post
             </Button>

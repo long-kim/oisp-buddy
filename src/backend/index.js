@@ -1,36 +1,38 @@
 require("dotenv").config();
 
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
+const Sequelize = require("sequelize");
 
-mongoose.connect(process.env.DB_LOCAL);
+express.static("backend/static");
 
-var db = mongoose.connection;
-db.on("error", console.error.bind(console, "Connection error!"));
-db.once("open", function() {
-  console.log(`Connected to database: ${process.env.DB_LOCAL}`);
+const sequelize = new Sequelize({
+  database: "oisp-buddy",
+  username: "root",
+  password: null,
+  dialect: "mysql"
 });
 
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch(err => {
+    console.error("Unable to connect to the database:", err);
+  });
+
 const app = express();
+app.use(cors());
+app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
-    extended: false
+    extended: true
   })
 );
 
-app.use(bodyParser.json());
-
-app.get("/api/get", (_req, res) => {
-  res.send({
-    express: "Hello From Server"
-  });
-});
-
-app.post("/api/post", (req, res) => {
-  console.log(req.body);
-  res.send(`I received your message. Is this what you sent?\n${req.body.post}`);
-});
+app.use(require("./routes"));
 
 app.listen(4000, () =>
   console.log("Express server is running on localhost:4000")

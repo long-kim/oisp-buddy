@@ -6,7 +6,7 @@ class Overview extends Component {
     super(props);
     this.state = {
       comments: 0,
-      score: this.props.score | 0,
+      score: this.props.score,
       subscribed: false,
       voted: 0
     };
@@ -65,10 +65,9 @@ class Overview extends Component {
           <div className="content">
             <Link
               className="thread-title"
-              to={`./thread/${this.props.post_id}`}
+              to={`./thread/${this.props.thread_id}`}
             >
-              I am trying to store output from calculator and display on label
-              or text box in visual basic asp.net
+              {this.props.title}
             </Link>
             <div className="topics-wrapper">
               <a className="topic" href="./">

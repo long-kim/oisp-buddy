@@ -2,14 +2,24 @@ import React, { Component } from "react";
 import Badge from "react-bootstrap/Badge";
 import img from "assets/img/avatar_nhu.jpg";
 import BBParser from "./BBParser";
+import Axios from "axios";
+import Moment from "react-moment";
 
 class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      score: this.props.score | 0,
-      voted: 0
+      score: this.props.score,
+      voted: 0,
+      posted_by: {}
     };
+  }
+
+  componentDidMount() {
+    Axios.get(`/api/posts/${this.props.post_id}`).then(res => {
+      console.log(res);
+      this.setState({ posted_by: res.data });
+    });
   }
 
   updateScore = val => {
@@ -33,17 +43,19 @@ class Post extends Component {
           </div>
           <div className="header-content mr-auto">
             <div className="author-info">
-              <a href={`/user/${this.props.author_id | 1}`} className="author">
-                Vo Ngoc Quynh Nhu
+              <a href={`/user/${this.props.author}`} className="author">
+                {this.state.posted_by.name}
               </a>
               <Badge variant="secondary" className="badge">
                 senior
               </Badge>
             </div>
-            <div className="timestamp">2 days ago</div>
+            <div className="timestamp">
+              <Moment fromNow>{this.props.created}</Moment>
+            </div>
           </div>
           <div className="menu-expand">
-            <i class="fa fa-ellipsis-h" />
+            <i className="fa fa-ellipsis-h" />
           </div>
         </div>
         <div className="post-content">

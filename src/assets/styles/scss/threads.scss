@@ -145,6 +145,21 @@
         }
       }
     }
+    form {
+      width: 100%;
+      .card-wrapper {
+        &.trans {
+          flex-direction: column;
+        }
+        .form-group {
+          margin-bottom: 2rem;
+          label {
+            font-size: 18px;
+            margin-bottom: 0.8rem;
+          }
+        }
+      }
+    }
     .card-wrapper {
       @include shadow(0.16);
       background-color: #fff;
@@ -153,6 +168,7 @@
       padding: 1rem 2rem;
       position: relative;
       &.header {
+        @include shadow(0.36);
         position: sticky;
         z-index: 1010;
         width: 900px;
@@ -160,22 +176,16 @@
       }
       &.trans {
         background-color: rgba(255, 255, 255, 0.4);
+        .ReplyForm {
+          width: 85%;
+          margin: 0 auto;
+        }
       }
       h3 {
         margin-bottom: 0;
       }
       .btn-primary {
         width: 100px;
-      }
-      form {
-        width: 100%;
-        .form-group {
-          margin-bottom: 2rem;
-          label {
-            font-size: 18px;
-            margin-bottom: 0.8rem;
-          }
-        }
       }
       .control-group {
         display: flex;
@@ -218,6 +228,8 @@
         }
       }
       .content {
+        display: flex;
+        flex-direction: column;
         padding: 10px 20px 10px 20px;
         width: calc(100% - 60px);
         .thread-title {
@@ -271,7 +283,7 @@
               .author {
                 font-size: 18px;
                 margin-right: 5px;
-                color: #373A3C;
+                color: #373a3c;
                 text-decoration: none;
               }
               .badge {
@@ -320,5 +332,11 @@
         }
       }
     }
+  }
+
+  .CreateThread {
+    // .card-wrapper {
+    //   flex-direction: column;
+    // }
   }
 }

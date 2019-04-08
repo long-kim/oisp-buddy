@@ -4,6 +4,8 @@ import ReplyForm from "./elements/ReplyForm";
 import Index from "./Index";
 import Container from "react-bootstrap/Container";
 import Post from "./elements/Post";
+import Axios from "axios";
+import Moment from "react-moment";
 
 class Thread extends Component {
   static Create = Create;
@@ -13,11 +15,28 @@ class Thread extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comments: 0,
       score: this.props.score | 0,
       subscribed: false,
-      voted: 0
+      voted: 0,
+      title: "",
+      date: new Date(),
+      posts: []
     };
+  }
+
+  componentDidMount() {
+    let thread_id = this.props.match.params.threadId;
+    Axios.get(`/api/threads/view/${thread_id}`).then(res => {
+      this.setState({
+        title: res.data.title,
+        score: res.data.score,
+        date: res.data.createdAt
+      });
+    });
+    Axios.get(`/api/threads/view/${thread_id}/posts`).then(res => {
+      const posts = res.data.posts;
+      this.setState({ posts: posts });
+    });
   }
 
   handleSubscribe = () => {
@@ -71,11 +90,11 @@ class Thread extends Component {
             </div>
           </div>
           <div className="content">
-            <h3 className="title">
-              I am trying to store output from calculator and display on label
-              or text box in visual basic asp.net
-            </h3>
-            <p className="subtitle">Mar 23, 2019 - 20 comments</p>
+            <h3 className="title">{this.state.title}</h3>
+            <p className="subtitle">
+              <Moment format="MMMM DD, YYYY">{this.state.date}</Moment> -{" "}
+              {this.state.posts.length} posts
+            </p>
             <div className="topics-wrapper">
               <a className="topic" href="./">
                 asp.net
@@ -83,7 +102,21 @@ class Thread extends Component {
             </div>
           </div>
         </div>
-        <Post content="[b]Test[/b]" />
+        {this.state.posts.map((post, idx) => {
+          return (
+            <Post
+              key={post.post_id}
+              post_id={post.post_id}
+              content={post.content}
+              score={post.score}
+              author={post.posted_by}
+              created={post.createdAt}
+            />
+          );
+        })}
+        <div className="card-wrapper trans">
+          <ReplyForm />
+        </div>
       </Container>
     );
   }

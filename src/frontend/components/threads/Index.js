@@ -3,8 +3,23 @@ import Overview from "./elements/Overview";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
+import Axios from "axios";
 
 class Index extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      threads: []
+    };
+  }
+
+  componentDidMount() {
+    return Axios.get("/api/threads/index").then(res =>
+      this.setState({ threads: res.data.threads })
+    );
+  }
+
   render() {
     return (
       <Container className="index">
@@ -16,14 +31,16 @@ class Index extends Component {
             </Button>
           </Link>
         </div>
-        <Overview post_id="1" score={2} />
-        <Overview />
-        <Overview />
-        <Overview />
-        <Overview />
-        <Overview />
-        <Overview />
-        <Overview />
+        {this.state.threads.map(thread => {
+          return (
+            <Overview
+              thread_id={thread.thread_id}
+              score={thread.score}
+              title={thread.title}
+              key={thread.thread_id}
+            />
+          );
+        })}
       </Container>
     );
   }
