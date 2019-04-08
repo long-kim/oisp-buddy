@@ -1,4 +1,5 @@
 "use strict";
+const bcrypt = require("bcrypt");
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -12,11 +13,12 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
+    const seed_pwd = bcrypt.hashSync("123456", 10)
     return queryInterface.bulkInsert("Users", [
       {
         username: "longkh",
         email: "kimhoanglong.cs@gmail.com",
-        password: "123456",
+        password: seed_pwd,
         first_name: "Long",
         last_name: "Kim",
         createdAt: new Date(),
@@ -25,7 +27,7 @@ module.exports = {
       {
         username: "jimcbl",
         email: "jimcbl@gmail.com",
-        password: "123456",
+        password: seed_pwd,
         first_name: "Jim",
         last_name: "Tran",
         createdAt: new Date(),
@@ -34,7 +36,7 @@ module.exports = {
       {
         username: "sarah123",
         email: "sarah@gmail.com",
-        password: "123456",
+        password: seed_pwd,
         first_name: "Sarah",
         last_name: "Vo",
         createdAt: new Date(),
@@ -43,7 +45,7 @@ module.exports = {
       {
         username: "anng96",
         email: "anng96@gmail.com",
-        password: "123456",
+        password: seed_pwd,
         first_name: "An",
         last_name: "Nguyen",
         createdAt: new Date(),

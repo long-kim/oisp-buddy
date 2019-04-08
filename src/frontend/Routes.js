@@ -6,6 +6,7 @@ import Test from "./components/Test";
 import Thread from "./components/threads/Thread";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Page404 from "./components/404";
+import Login from "./components/auth/Login";
 
 class Routes extends Component {
   render() {
@@ -22,6 +23,7 @@ class Routes extends Component {
               </div>
             )}
           />
+          <Route path="/auth" component={Login} />
           <Route
             path="/test"
             render={props => (
@@ -47,10 +49,7 @@ class Routes extends Component {
               <div className="Thread">
                 <Route path={`${url}/`} component={Thread.Index} exact />
                 <Route path={`${url}/create`} component={Thread.Create} />
-                <Route
-                  path={`${url}/thread/:threadId`}
-                  component={Thread}
-                />
+                <Route path={`${url}/thread/:threadId`} component={Thread} />
               </div>
             )}
           />

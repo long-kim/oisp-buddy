@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-router.use("/api", require("./api"));
+module.exports = passport => {
+  router.use("/auth", require("./auth")(passport));
+  router.use("/api", require("./api"));
 
-module.exports = router;
+  return router;
+};

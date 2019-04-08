@@ -28,12 +28,13 @@ export class Create extends Component {
     });
 
     Axios.post("/api/threads/create", content).then(res => {
-      let data = res.data;
-      Axios.post("/api/post/create", { content: content, thread: data }).then(
-        res => {
-          console.log(res);
-        }
-      );
+      console.log(res);
+      // let data = res.data;
+      // Axios.post("/api/post/create", { content: content, thread: data }).then(
+      //   res => {
+      //     console.log(res);
+      //   }
+      // );
     });
   };
 
