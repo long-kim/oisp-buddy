@@ -25,7 +25,7 @@ class Index extends Component {
       <Container className="index">
         <div className="card-wrapper header">
           <h3 className="mr-auto">Threads</h3>
-          <Link className="post-anchor" to={`./create`}>
+          <Link className="post-anchor" to={`forum/create`}>
             <Button variant="primary" className="post-btn">
               New
             </Button>

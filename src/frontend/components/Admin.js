@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
+import { Redirect } from "react-router";
 
 class Admin extends Component {
   constructor(props) {
@@ -7,24 +8,9 @@ class Admin extends Component {
     this.state = {
       number: 0,
       isLoading: true,
-      error: true
+      error: true,
     };
     this.handleClick = this.handleClick.bind(this);
-  }
-
-  async componentDidMount() {
-    const access = localStorage.getItem("JWT");
-    console.log(access);
-    await Axios.get("/auth/current", {
-      params: {
-        username: "longkh"
-      },
-      header: {
-        Authorization: `JWT ${access}`
-      }
-    }).then(res => {
-      console.log(res);
-    });
   }
 
   handleClick = () => {
@@ -33,8 +19,10 @@ class Admin extends Component {
   };
 
   render() {
+    // const re = this.renderRedirect();
     return (
       <div>
+        {/* {re} */}
         <h2>{this.state.number}</h2>
         <button type="button" onClick={this.handleClick}>
           Click me

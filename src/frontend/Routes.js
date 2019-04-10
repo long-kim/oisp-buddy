@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Admin from "./components/Admin";
 import Test from "./components/Test";
 import Thread from "./components/threads/Thread";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Page404 from "./components/404";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/auth/PrivateRoute";
@@ -24,7 +24,10 @@ class Routes extends Component {
               </div>
             )}
           />
-          <Route path="/login" component={Login} />
+          <Route
+            path="/login"
+            render={props => <Login {...props} />}
+          />
           <Route
             path="/test"
             render={props => (
@@ -42,9 +45,12 @@ class Routes extends Component {
               </div>
             )}
           />
-          <PrivateRoute path="/secret" component={Admin} />
+          <PrivateRoute
+            path="/secret"
+            component={Admin}
+            auth={this.props.auth}
+          />
 
-          {/* FORUM */}
           <Route
             path="/forum"
             render={({ match: { url } }) => (

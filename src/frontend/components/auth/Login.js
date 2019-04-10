@@ -6,45 +6,40 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      number: 0,
-      isLoading: true,
-      error: true,
       username: "",
       password: "",
-      auth: false
+      redirectToReferrer: false
     };
   }
 
   handleSubmit = e => {
     e.preventDefault();
+    const form = new FormData(document.getElementById("loginfrm"));
     Axios.post("/auth/login", {
-      username: this.state.username,
-      password: this.state.password
+      username: form.get("username"),
+      password: form.get("password")
     }).then(res => {
       console.log(res);
-      if (res.status === 200) {
-        this.setState({ auth: true });
-      }
+      localStorage.setItem("oisp-token", res.data.token);
+      this.setState({ redirectToReferrer: true });
     });
   };
 
   render() {
+    let { from } = this.props.location.state || {
+      from: { pathname: "/forum" }
+    };
+    let { redirectToReferrer } = this.state;
+
+    if (redirectToReferrer) return <Redirect to={from} />;
+
     return (
       <div>
-        {this.state.auth && <Redirect to="/forum"></Redirect>}
         <form id="loginfrm" method="POST" onSubmit={this.handleSubmit}>
           <label>Username</label>
-          <input
-            type="text"
-            name="username"
-            onChange={e => this.setState({ username: e.target.value })}
-          />
+          <input type="text" name="username" />
           <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            onChange={e => this.setState({ password: e.target.value })}
-          />
+          <input type="password" name="password" />
           <button type="submit">Log in</button>
         </form>
       </div>

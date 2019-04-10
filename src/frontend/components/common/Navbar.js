@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as _Router,
-  _Route,
-  Link,
-  NavLink
-} from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/img/hcmut.svg";
 import Button from "react-bootstrap/Button";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -15,21 +10,31 @@ import Navbar from "react-bootstrap/Navbar";
 import InputGroup from "react-bootstrap/InputGroup";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
+import Axios from "axios";
 
 class PrimaryNav extends Component {
+  logOut = () => {
+    Axios.get("/auth/logout").then(res => {
+      localStorage.removeItem("oisp-token");
+      console.log(res);
+    });
+  };
   render() {
     return (
       <Navbar bg="light" expand="lg" className="sticky-top primary-nav">
-        <Navbar.Brand href="/">
-          <img
-            src={logo}
-            width="30"
-            height="30"
-            className="d-inline-block align-top mr-2"
-            alt=""
-          />
-          Buddy
-        </Navbar.Brand>
+        <Link to="/">
+          <Navbar.Brand>
+            <img
+              src={logo}
+              width="30"
+              height="30"
+              className="d-inline-block align-top mr-2"
+              alt=""
+            />
+            Buddy
+          </Navbar.Brand>
+        </Link>
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -77,7 +82,7 @@ class PrimaryNav extends Component {
                 Log In
               </Button>
             </Link>
-            <Button type="button" variant="primary">
+            <Button type="button" variant="primary" onClick={this.logOut}>
               Sign Up
             </Button>
           </Nav>

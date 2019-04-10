@@ -65,7 +65,7 @@ class Overview extends Component {
           <div className="content">
             <Link
               className="thread-title"
-              to={`./thread/${this.props.thread_id}`}
+              to={`forum/thread/${this.props.thread_id}`}
             >
               {this.props.title}
             </Link>
