@@ -12,7 +12,7 @@ const port = process.env.SERVER_PORT || 4000;
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const session = require("express-session");
+const cookieSession = require("cookie-session");
 
 // Configuration ==============================================================
 const sequelize = new Sequelize({
@@ -40,12 +40,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set up passport
 app.use(
-  session({
+  cookieSession({
     secret: process.env.SESSION_KEY,
-    resave: false,
-    saveUninitialized: false
+    maxAge: 24 * 60 * 60 * 1000
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());

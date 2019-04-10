@@ -1,9 +1,7 @@
-const jwt_secret = require("./jwt_config");
 const bcrypt = require("bcrypt");
 const localStrategy = require("passport-local").Strategy;
 const models = require("backend/database/models/index");
-const JWTStrategy = require("passport-jwt").Strategy;
-const extractJWT = require("passport-jwt").ExtractJwt;
+const Op = require("sequelize").Op;
 
 const SALT_ROUNDS = 10;
 const User = models.User;
@@ -31,13 +29,15 @@ module.exports = passport => {
         try {
           User.findOne({
             where: {
-              username: username
+              [Op.or]: [{ username: username }, { email: req.body.email }]
             }
           }).then(user => {
             if (user !== null) {
-              // User already exists
-              console.log("Username taken.");
-              return done(null, false, { message: "Username already taken" });
+              // User/Email already exists
+              console.log("Username/email taken.");
+              return done(null, false, {
+                message: "Username/Email already taken!"
+              });
             } else {
               bcrypt.hash(password, SALT_ROUNDS).then(hashedPassword => {
                 const data = {
@@ -60,11 +60,11 @@ module.exports = passport => {
   );
 
   passport.use(
-    "login",
+    "auth",
     new localStrategy(
       {
         usernameField: "username",
-        passwordField: "password",
+        passwordField: "password"
       },
       (username, password, done) => {
         try {
@@ -93,33 +93,5 @@ module.exports = passport => {
         }
       }
     )
-  );
-
-  const opts = {
-    jwtFromRequest: extractJWT.fromAuthHeaderWithScheme("JWT"),
-    secretOrKey: jwt_secret.secret
-  };
-
-  passport.use(
-    "jwt",
-    new JWTStrategy(opts, (jwt_payload, done) => {
-      try {
-        User.findOne({
-          where: {
-            username: jwt_payload.id
-          }
-        }).then(user => {
-          if (user) {
-            console.log("User found.");
-            done(null, user);
-          } else {
-            console.log("User not found.");
-            done(null, false);
-          }
-        });
-      } catch (err) {
-        done(err);
-      }
-    })
   );
 };

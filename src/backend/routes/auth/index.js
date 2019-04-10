@@ -2,33 +2,31 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = passport => {
-  const AuthController = require("../../controllers/AuthController")(passport);
+  const AuthService = require("../../services/AuthService")(passport);
+  router.get("/", (req, res) => {
+    let result = AuthService.auth(req);
+    if (result) {
+      res.status(200).send("Authorized");
+    } else {
+      res.status(401).send("Unauthorized");
+    }
+  });
+
   router.post(
     "/register",
     passport.authenticate("register"),
     (req, res, next) => {
-      AuthController.add(req, res, next);
+      AuthService.register(req, res, next);
     }
   );
 
-  router.post("/login", passport.authenticate("login"), (req, res, next) => {
-    req.logIn(req.user, err => {
-      AuthController.login(req, res, next);
-    });
+  router.post("/login", passport.authenticate("auth"), (req, res, next) => {
+    AuthService.login(req, res, next);
   });
 
-  router.get(
-    "/current",
-    passport.authenticate("jwt", { session: false }),
-    (req, res, next) => {
-      console.log("User found in DB.");
-      res.status(200).send({
-        auth: true,
-        user: req.user.toJSON(),
-        message: "User found in DB."
-      });
-    }
-  );
+  router.get("/logout", (req, res, next) => {
+    AuthService.logout(req, res, next);
+  });
 
   return router;
 };

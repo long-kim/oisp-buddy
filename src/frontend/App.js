@@ -7,13 +7,17 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: ""
+      auth: false
     };
   }
 
-  setView = view => {
-    this.setState({ view: view });
-  };
+  getAuth = () => {
+    return this.state.auth;
+  }
+
+  setAuth = () => {
+    this.setState({auth: true});
+  }
 
   render() {
     return <Routes />;

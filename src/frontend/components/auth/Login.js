@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Route, Redirect } from "react-router";
 import Axios from "axios";
 
 class Login extends Component {
@@ -24,13 +25,13 @@ class Login extends Component {
       if (res.status === 200) {
         this.setState({ auth: true });
       }
-      localStorage.setItem("JWT", res.data.token);
     });
   };
 
   render() {
     return (
       <div>
+        {this.state.auth && <Redirect to="/forum"></Redirect>}
         <form id="loginfrm" method="POST" onSubmit={this.handleSubmit}>
           <label>Username</label>
           <input

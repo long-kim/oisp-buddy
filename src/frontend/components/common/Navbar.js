@@ -68,13 +68,15 @@ class PrimaryNav extends Component {
             </Form>
           </Nav>
           <Nav>
-            <Button
-              type="button"
-              variant="secondary"
-              className="mr-lg-2 mb-2 mb-lg-0"
-            >
-              Log In
-            </Button>
+            <Link to="/login">
+              <Button
+                type="button"
+                variant="secondary"
+                className="mr-lg-2 mb-2 mb-lg-0"
+              >
+                Log In
+              </Button>
+            </Link>
             <Button type="button" variant="primary">
               Sign Up
             </Button>

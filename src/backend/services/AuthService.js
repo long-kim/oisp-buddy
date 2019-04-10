@@ -1,9 +1,16 @@
-const models = require("backend/database/models/index");
+const models = require("backend/database/models");
 const User = models.User;
-const jwt = require("jsonwebtoken");
 
 module.exports = passport => {
-  function add(req, res, next) {
+  function auth(req) {
+    let result = false;
+    if (req.session.passport) {
+      result = true;
+    }
+    return result;
+  }
+
+  function register(req, res, next) {
     req.logIn(req.user, err => {
       if (err) {
         console.error(err);
@@ -30,27 +37,31 @@ module.exports = passport => {
           .then(() => {
             console.log("User created.");
             res.status(200).send({ message: "User created." });
-          });
+          })
       });
     });
   }
 
-  function auth(req, res, next) {
+  function login(req, res, next) {
     req.logIn(req.user, err => {
       User.findOne({
         where: {
           username: req.user.username
         }
       }).then(user => {
-        const token = jwt.sign({ id: user.username }, process.env.SECRET_KEY);
         res.status(200).send({
           auth: true,
-          token: token,
           message: "User signed in."
         });
       });
     });
   }
 
-  return { add, auth }
-}
+  function logout(req, res, next) {
+    req.logOut();
+    req.session = null;
+    res.status(400).send("Logged out.");
+  }
+
+  return { auth, register, login, logout };
+};
