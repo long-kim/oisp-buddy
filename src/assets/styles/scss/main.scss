@@ -1,13 +1,13 @@
 @import "assets/styles/scss/mixins.scss";
 
 body {
-  background-color: #777777 !important;
+  background-color: #f0f0f0 !important;
 }
 
 .oisp-buddy {
   @import "./threads.scss";
   font-family: "LatoWeb";
-  color: #373A3C;
+  color: #373a3c;
   .primary-nav {
     height: 60px;
     @include shadow(0.36);
