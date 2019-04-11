@@ -27,12 +27,13 @@ Base on that, our group decided to do something about it. In the beginning, we w
 0. Get MySQL (included with XAMPP)
 1. Clone source code from branch `develop` (or fork your own branch)
 2. Run `npm install`
-3. Set up database: cd to `/src/backend/database` then run these commands:
+3. Create `.env` file from `.env-example` and modify `config.json` in `src/backend/database/config`
+4. Set up database: cd to `/src/backend/database` then run these commands:
 ```
 npx runmigration
 npx sequelize db:seed:all
 ```
-4. Run `npm run dev` (for front-end + server) or `npm run server` (for server only)
+5. Run `npm run dev` (for front-end + server) or `npm run server` (for server only)
 
 ## Available Scripts
 
