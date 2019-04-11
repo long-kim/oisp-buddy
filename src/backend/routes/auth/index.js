@@ -8,7 +8,7 @@ module.exports = passport => {
     if (result) {
       res.status(200).send("Authorized");
     } else {
-      res.status(401).send("Unauthorized");
+      res.status(201).send("Unauthorized");
     }
   });
 
@@ -20,7 +20,7 @@ module.exports = passport => {
     }
   );
 
-  router.post("/login", passport.authenticate("auth"), (req, res, next) => {
+  router.post("/login", passport.authenticate("login"), (req, res, next) => {
     AuthService.login(req, res, next);
   });
 

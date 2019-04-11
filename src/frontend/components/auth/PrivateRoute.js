@@ -1,44 +1,23 @@
 import React, { Component } from "react";
-import { Route, Redirect } from "react-router";
-import Axios from "axios";
+import { Route, Redirect } from "react-router-dom";
 
 class PrivateRoute extends Component {
-  constructor({ component: Component, ...rest }) {
-    super({ component: Component, ...rest });
-    this.state = {
-      auth: false
-    };
-  }
-
-  getResponse = async () => {
-    const response = await Axios.get("/auth");
-    return await response;
-  };
-
-  componentWillMount() {
-    // this.getResponse().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ auth: true });
-    //   }
-    // });
-  }
-
+  isAuthenticated = true;
   render() {
-    const { Component, ...rest } = this.props;
+    const { component: Component, ...rest } = this.props;
+    const token = localStorage.getItem("oisp-token");
     return (
       <Route
         {...rest}
-        render={props => {
-          if (this.state.auth === true) {
-            return <Component {...props} />;
-          } else {
-            return (
-              <Redirect
-                to={{ pathname: "/login", state: { from: props.location } }}
-              />
-            );
-          }
-        }}
+        render={props =>
+          token !== null ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{ pathname: "/login", state: { from: props.location } }}
+            />
+          )
+        }
       />
     );
   }

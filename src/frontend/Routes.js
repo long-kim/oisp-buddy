@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Admin from "./components/Admin";
 import Test from "./components/Test";
 import Thread from "./components/threads/Thread";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Page404 from "./components/404";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/auth/PrivateRoute";
@@ -25,7 +25,8 @@ class Routes extends Component {
               </div>
             )}
           />
-          <Route path="/login" component={Login} />
+          <Route path="/login" render={props => <Login {...props} />} />
+          <Route path="/chat" component={ChatBox} />
           <Route
             path="/test"
             render={props => (
@@ -43,11 +44,12 @@ class Routes extends Component {
               </div>
             )}
           />
-          <Route path="/chat" component={ChatBox} />
+          <PrivateRoute
+            path="/secret"
+            component={Admin}
+            auth={this.props.auth}
+          />
 
-          <PrivateRoute path="/secret" component={Admin} />
-
-          {/* FORUM */}
           <Route
             path="/forum"
             render={({ match: { url } }) => (

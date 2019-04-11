@@ -26,6 +26,7 @@ export class Create extends Component {
     data.forEach((value, key) => {
       content[key] = value;
     });
+    content.token = localStorage.getItem("oisp-token");
 
     Axios.post("/api/threads/create", content).then(res => {
       console.log(res);
