@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import MessageList from "./MessageList";
+import Chatkit from "@pusher/chatkit-client";
+require("dotenv").config();
 
 class ChatBox extends Component {
   constructor(props) {
@@ -6,7 +9,12 @@ class ChatBox extends Component {
     this.state = {};
   }
   render() {
-    return <div> Hello World!</div>;
+    return (
+      <div>
+        {/* <div> {} </div> */}
+        <MessageList />
+      </div>
+    );
   }
 }
 

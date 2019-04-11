@@ -43,7 +43,7 @@ class Routes extends Component {
               </div>
             )}
           />
-          <Route path="/chatbox" component={ChatBox} />
+          <Route path="/chat" component={ChatBox} />
 
           <PrivateRoute path="/secret" component={Admin} />
 
