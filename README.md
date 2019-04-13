@@ -24,7 +24,7 @@ Base on that, our group decided to do something about it. In the beginning, we w
 
 ## Set-up Project
 
-0. Get MySQL (included with XAMPP)
+0. Get MySQL (included with XAMPP) then create a database using utf8_unicode_ci
 1. Clone source code from branch `develop` (or fork your own branch)
 2. Run `npm install`
 3. Create `.env` file from `.env-example` and modify `config.json` in `src/backend/database/config`
