@@ -20,8 +20,6 @@ const DUMMY_DATA = [
   }
 ];
 
-const activeUser = "perborgen";
-
 class MessageList extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +28,7 @@ class MessageList extends Component {
   render() {
     return (
       <div className="message-list">
-        {DUMMY_DATA.map(function(message, index) {
+        {DUMMY_DATA.map(function (message, index) {
           return (
             <div key={index} className="message">
               <div className="message-username"> {message.senderId} </div>
