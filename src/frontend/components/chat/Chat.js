@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import MessageList from "./MessageList";
-
-
-
-
+// import socketIOClient from "socket.io-client";
+import FormInput from "./FormInput"
 
 const DUMMY_DATA = [
     {
@@ -24,17 +22,23 @@ const DUMMY_DATA = [
     }
 ];
 
-class ChatBox extends Component {
+class Chat extends Component {
     constructor() {
-        super()
+        super();
         this.state = {
             messages: DUMMY_DATA
-        }
+        };
     }
 
     render() {
-        return <MessageList messages={this.state.messages} />;
+        return (
+            <div>
+                <MessageList messages={this.state.messages} />
+                <FormInput />
+            </div>
+
+        )
     }
 }
 
-export default ChatBox;
+export default Chat;

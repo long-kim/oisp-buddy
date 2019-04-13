@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import "assets/styles/Chat.css";
-import Message from "./Message"
-
-
+import Message from "./Message";
 
 // const activeUser = "perborgen";
 
@@ -14,9 +12,13 @@ class MessageList extends Component {
   render() {
     return (
       <div className="message-list">
-        {this.props.messages.map(function (message, index) {
+        {this.props.messages.map(function(message, index) {
           return (
-            <Message key={index} username={message.senderId} content={message.text} />
+            <Message
+              key={index}
+              username={message.senderId}
+              content={message.text}
+            />
           );
         })}
       </div>
