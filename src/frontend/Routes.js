@@ -8,6 +8,7 @@ import { Route, Switch } from "react-router-dom";
 import Page404 from "./components/404";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/auth/PrivateRoute";
+import ChatBox from "./components/chat/ChatBox";
 
 class Routes extends Component {
   render() {
@@ -24,10 +25,8 @@ class Routes extends Component {
               </div>
             )}
           />
-          <Route
-            path="/login"
-            render={props => <Login {...props} />}
-          />
+          <Route path="/login" render={props => <Login {...props} />} />
+          <Route path="/chat" component={ChatBox} />
           <Route
             path="/test"
             render={props => (
