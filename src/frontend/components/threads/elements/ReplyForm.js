@@ -60,7 +60,7 @@ class ReplyForm extends Component {
 
   render() {
     return (
-      <div className="ReplyForm">
+      <div className="ReplyForm" id="reply_form">
         <Tabs
           id="reply"
           activeKey={this.state.active}
@@ -298,7 +298,12 @@ class ReplyForm extends Component {
           </ul>
 
           {!this.props.createThread && (
-            <Button variant="primary" size="sm" className="post-btn">
+            <Button
+              variant="primary"
+              size="sm"
+              className="post-btn"
+              type="submit"
+            >
               Post
             </Button>
           )}

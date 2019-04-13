@@ -26,16 +26,11 @@ export class Create extends Component {
     data.forEach((value, key) => {
       content[key] = value;
     });
-    content.token = localStorage.getItem("oisp-token");
 
-    Axios.post("/api/threads/create", content).then(res => {
+    Axios.post("/api/threads/create", content, {
+      headers: { Authorization: `Bearer ` + localStorage.getItem("oisp-token") }
+    }).then(res => {
       console.log(res);
-      // let data = res.data;
-      // Axios.post("/api/post/create", { content: content, thread: data }).then(
-      //   res => {
-      //     console.log(res);
-      //   }
-      // );
     });
   };
 
@@ -78,7 +73,7 @@ export class Create extends Component {
             </Form.Group>
             <Form.Group>
               <Form.Label>Content</Form.Label>
-              <ReplyForm />
+              <ReplyForm createThread={true} />
             </Form.Group>
           </div>
         </Form>

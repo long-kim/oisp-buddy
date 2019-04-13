@@ -4,6 +4,8 @@ import img from "assets/img/avatar_nhu.jpg";
 import BBParser from "./BBParser";
 import Axios from "axios";
 import Moment from "react-moment";
+import Popup from "reactjs-popup";
+import AnchorLink from "react-anchor-link-smooth-scroll";
 
 class Post extends Component {
   constructor(props) {
@@ -34,6 +36,10 @@ class Post extends Component {
     this.setState({ voted: voted + val });
   };
 
+  focusReplyForm = () => {
+    document.getElementsByName("content")[0].focus();
+  };
+
   render() {
     return (
       <div className="card-wrapper post">
@@ -54,9 +60,24 @@ class Post extends Component {
               <Moment fromNow>{this.props.created}</Moment>
             </div>
           </div>
-          <div className="menu-expand">
-            <i className="fa fa-ellipsis-h" />
-          </div>
+          <Popup
+            trigger={
+              <div className="menu-expand">
+                <i className="fa fa-ellipsis-h" />
+              </div>
+            }
+            position="bottom right"
+            on="click"
+            arrow={false}
+            closeOnDocumentClick
+          >
+            <ul>
+              <li>
+                <a href="#">Share</a>
+              </li>
+              <li>Quote</li>
+            </ul>
+          </Popup>
         </div>
         <div className="post-content">
           <BBParser input={this.props.content} />
@@ -91,9 +112,13 @@ class Post extends Component {
               />
             </div>
           </div>
-          <a className="control" href="#">
+          <AnchorLink
+            href="#reply_form"
+            className="control"
+            onClick={this.focusReplyForm}
+          >
             reply
-          </a>
+          </AnchorLink>
         </div>
       </div>
     );

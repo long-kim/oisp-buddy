@@ -20,8 +20,20 @@ class Thread extends Component {
       voted: 0,
       title: "",
       date: new Date(),
-      posts: []
+      posts: [],
+      headerResize: false,
+      newPost: false
     };
+  }
+
+  componentDidUpdate() {
+    let thread_id = this.props.match.params.threadId;
+    Axios.get(`/api/threads/view/${thread_id}/posts`).then(res => {
+      const posts = res.data.posts;
+      if (this.state.newPost === true) {
+        this.setState({ posts: posts, newPost: false });
+      }
+    });
   }
 
   componentDidMount() {
@@ -37,11 +49,40 @@ class Thread extends Component {
       const posts = res.data.posts;
       this.setState({ posts: posts });
     });
+    window.addEventListener("scroll", this.handleScroll);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
+  handleScroll = () => {
+    const distanceY = window.pageYOffset || document.documentElement.scrollTop;
+    const shrinkOn = document.getElementById("thread-header").offsetHeight;
+    const smallHeader = document.getElementById("sticky-header");
+    if (distanceY > shrinkOn) {
+      smallHeader.classList.add("show");
+    } else {
+      smallHeader.classList.remove("show");
+    }
+  };
 
   handleSubscribe = () => {
     const sub = this.state.subscribed;
     this.setState({ subscribed: !sub });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const data = {
+      thread_id: this.props.match.params.threadId,
+      content: document.getElementsByName("content")[0].value
+    };
+    Axios.post("/api/posts/new", data).then(res => {
+      console.log("Post created");
+      this.setState({ newPost: true });
+    });
+    document.getElementsByName("content")[0].value = "";
   };
 
   updateScore = val => {
@@ -59,7 +100,13 @@ class Thread extends Component {
   render() {
     return (
       <Container className="single-thread">
-        <div className="card-wrapper header">
+        <div className="card-wrapper sticky-header" id="sticky-header">
+          <h3 className="title mr-auto">{this.state.title}</h3>
+          <div className="menu-expand">
+            <i className="fa fa-ellipsis-h" />
+          </div>
+        </div>
+        <div id="thread-header" className="card-wrapper header">
           <div className="control-group score">
             <div className="control" onClick={this.updateScore.bind(this, 1)}>
               <i
@@ -115,7 +162,9 @@ class Thread extends Component {
           );
         })}
         <div className="card-wrapper trans">
-          <ReplyForm />
+          <form id="thread-reply" onSubmit={this.handleSubmit}>
+            <ReplyForm />
+          </form>
         </div>
       </Container>
     );
