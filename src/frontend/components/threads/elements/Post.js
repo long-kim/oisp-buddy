@@ -73,7 +73,7 @@ class Post extends Component {
           >
             <ul>
               <li>
-                <a href="#">Share</a>
+                <a href="https://www.google.com">Share</a>
               </li>
               <li>Quote</li>
             </ul>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
+//import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
+import { BrowserRouter as Link } from "react-router-dom";
 
 class Overview extends Component {
   constructor(props) {

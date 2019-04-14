@@ -19,6 +19,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     maxlength: 250
   },
+  userAvatar: {
+    type: Buffer
+  },
   email: {
     type: String,
     lowercase: true,
