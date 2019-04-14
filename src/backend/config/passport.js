@@ -101,7 +101,7 @@ module.exports = passport => {
     "jwt",
     new JWTStrategy(
       {
-        jwtFromRequest: ExtractJWT.fromBodyField("token"),
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
         secretOrKey: process.env.JWT_SECRET
       },
       (payload, done) => {

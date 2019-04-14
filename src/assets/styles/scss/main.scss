@@ -10,6 +10,7 @@ body {
   color: #373a3c;
   .primary-nav {
     height: 60px;
+    z-index: 1070;
     @include shadow(0.36);
   }
   .btn {
@@ -124,6 +125,30 @@ body {
     }
     &:hover {
       color: #999999;
+    }
+  }
+  .popup-content {
+    border: unset !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16) !important;
+    width: 90px !important;
+    text-align: right !important;
+    ul {
+      list-style: none;
+      padding: 10px;
+      color: #999999;
+      margin-bottom: 0;
+      li:hover {
+        color: #373a3c;
+        cursor: pointer;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+        &:hover {
+          color: #373a3c;
+          cursor: pointer;
+        }
+      }
     }
   }
 }

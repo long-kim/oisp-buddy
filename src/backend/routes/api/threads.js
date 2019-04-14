@@ -12,26 +12,34 @@ module.exports = passport => {
     });
   });
 
-  router.get("/view/:threadId", (req, res, next) => {
-    Thread.findByPk(req.params.threadId)
-      .then(thread => {
-        res.json(thread.toJSON());
-      })
-      .catch(err => console.error(err));
-  });
+  router.get(
+    "/view/:threadId",
 
-  router.get("/view/:threadId/posts", (req, res, next) => {
-    Thread.findByPk(req.params.threadId)
-      .then(thread => {
-        return thread.getPosts();
-      })
-      .then(posts => {
-        res.json({ posts: posts.map(post => post.toJSON()) });
-      })
-      .catch(err => console.error(err));
-  });
+    (req, res, next) => {
+      Thread.findByPk(req.params.threadId)
+        .then(thread => {
+          res.json(thread.toJSON());
+        })
+        .catch(err => console.error(err));
+    }
+  );
 
-  router.post("/create", passport.authenticate("jwt"), (req, res, next) => {
+  router.get(
+    "/view/:threadId/posts",
+
+    (req, res, next) => {
+      Thread.findByPk(req.params.threadId)
+        .then(thread => {
+          return thread.getPosts();
+        })
+        .then(posts => {
+          res.json({ posts: posts.map(post => post.toJSON()) });
+        })
+        .catch(err => console.error(err));
+    }
+  );
+
+  router.post("/create", (req, res, next) => {
     Thread.create({ title: req.body.title, author_id: req.user.user_id })
       .then(thread => {
         let post = {
