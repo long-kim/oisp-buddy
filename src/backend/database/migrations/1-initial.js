@@ -281,10 +281,12 @@ module.exports = {
                     let command = migrationCommands[index];
                     console.log("[#"+index+"] execute: " + command.fn);
                     index++;
+                    console.log(command.params+'\n');
                     queryInterface[command.fn].apply(queryInterface, command.params).then(next, reject);
                 }
                 else
                     resolve();
+                
             }
             next();
         });

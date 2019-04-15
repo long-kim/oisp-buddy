@@ -7,8 +7,8 @@ class Profile extends Component {
         super(props);
         this.state = { 
             name: "Sarah V",
-            about: "",
-            avatar: "https://scontent.fdad3-2.fna.fbcdn.net/v/t1.0-9/12472234_799905163468289_8089281938658497720_n.jpg?_nc_cat=101&_nc_oc=AQktNpLiz_2p-Ws7wtgQISv-ecSJY5dSD54c3hD7yKu0-qZ5e83uGdTTx42PRU9Fkac&_nc_ht=scontent.fdad3-2.fna&oh=9123b33805a2d6d3d86d645518854d85&oe=5D296F81",
+            about: "I am a third year student majoring in CS. I love making new friends and learning new things.",
+            avatar: "https://s22295.pcdn.co/wp-content/uploads/Avatar-couple.jpg",
             // cover: "http://gilbertford.com/news/wp-content/uploads/2012/07/inside-cover2.jpg",
             // cover: "https://source.unsplash.com/random",
             cover: "https://scontent.fdad3-2.fna.fbcdn.net/v/t1.0-9/52373523_1938412499617544_6909351250995707904_o.jpg?_nc_cat=101&_nc_oc=AQkZ0RvqrA1orXKn7SC4QRDynCEblv53i48g6tVUE1N8RWFbYOtiVP0Ahs0plBHdNrs&_nc_ht=scontent.fdad3-2.fna&oh=b1ece9c4ef053c7cb92ffc0fd12c5d8d&oe=5D4F11B4",
@@ -45,10 +45,10 @@ class Profile extends Component {
                         alt = "user's cover" 
                     />
                     <h2 className = "user_name">
-                        {this.state.name} 
+                        {this.state.name} <button type = "button" className = "title">PRO</button>
                     </h2>
                     <h6>
-                        📷
+                        <button type = "button" onClick = {() => alert("UNAVAILABLE AT THE MOMENT")}>📷</button>
                     </h6>
                     <h5>
                         Class of {this.state.year} - {this.state.major}
@@ -60,16 +60,20 @@ class Profile extends Component {
                         >Change the cover
                     </button> */}
                     <div class="polaroid">
-                        <img src="http://gilbertford.com/news/wp-content/uploads/2012/07/inside-cover2.jpg" alt="Norway" />
+                        <img src={this.state.avatar} alt="user's avatar" />
                         <div class="container">
-                            <p>ABOUT</p>
+                            <p>ABOUT <button type = "button" onClick = {() => alert("UNAVAILABLE AT THE MOMENT")}>✎</button></p>
+                            <h6>{this.state.about} </h6> 
+                            {/* <h7 className = "readmore">READ MORE →</h7> */}
+                            <button type = "button" className = "readmore" onClick = {() => alert("That's it, I have nothing left to say")}>
+                                Read more →
+                            </button>
+                            <hr/>
                         </div>
                     </div>
                 
                 </header>
-                {/* <div className = "avatar">
-                    <img src = {this.state.avatar} alt = "user's avatar"/>
-                </div> */}
+                
 
             </div>
         );

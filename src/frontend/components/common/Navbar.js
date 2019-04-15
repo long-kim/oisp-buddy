@@ -43,7 +43,8 @@ class PrimaryNav extends Component {
                 Home
               </NavLink>
             </Nav.Item>
-            <Nav.Link href="#">Link</Nav.Link>
+            <Nav.Link href="/profile">Profile</Nav.Link>
+            
             <NavDropdown title="Topic">
               <NavDropdown.Item href="#">Acion</NavDropdown.Item>
               <NavDropdown.Item href="#">Another Action</NavDropdown.Item>

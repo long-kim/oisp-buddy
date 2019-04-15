@@ -41,6 +41,7 @@ header > h2 {
     margin-top: 6.5%;
     margin-left: 30%;
     color: azure;
+    text-shadow: 2px 2px 5px rgb(39, 38, 38);
 }
 
 header > h5 {
@@ -50,13 +51,24 @@ header > h5 {
     margin-left: 30%;
     color: azure;
     font-size: 100%;
+    text-shadow: 2px 2px 5px rgb(39, 38, 38);
 }
 
 header > h6 {
     position: absolute;
     z-index: 3;
+    
     margin-top: 10%;
-    margin-left: 98%;
+    margin-left: 97%;
+}
+
+header > h6 >button{
+    background: none;
+    border: 0px;
+}
+
+header > h6 > button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 .avatar > img {
@@ -86,9 +98,37 @@ header > h6 {
     height: 400px;
 }  
 
+.polaroid > div > p > button {
+    background: none;
+    border: 0px;
+}
+
+.polaroid > div > p > button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
 .container {
-    padding: 80px;
+    padding: 50px;
     color: #615959;
     font-weight: 600;
-    text-align: top;
-  }
+    padding-top: 1%;
+    padding-bottom: 0%
+}
+
+.container > h6 {
+    font-size: 13px;
+}
+
+.title {
+    font-size: 10px;
+    border: none
+}
+
+.readmore {
+    color: rgb(160, 25, 25);
+    font-size: 12px;
+    font-weight: 150;
+    border: 0px;
+    background: none;
+    padding-left: 0%
+}
