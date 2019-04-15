@@ -15,14 +15,16 @@ class Thread extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      score: this.props.score | 0,
+      score: this.props.score || 0,
       subscribed: false,
       voted: 0,
       title: "",
       date: new Date(),
       posts: [],
       headerResize: false,
-      newPost: false
+      newPost: false,
+      deletePost: false,
+      editPost: false
     };
   }
 
@@ -32,6 +34,12 @@ class Thread extends Component {
       const posts = res.data.posts;
       if (this.state.newPost === true) {
         this.setState({ posts: posts, newPost: false });
+      }
+      if (this.state.deletePost === true) {
+        this.setState({ posts: posts, deletePost: false });
+      }
+      if (this.state.editPost === true) {
+        this.setState({ posts: posts, editPost: false });
       }
     });
   }
@@ -83,6 +91,14 @@ class Thread extends Component {
       this.setState({ newPost: true });
     });
     document.getElementsByName("content")[0].value = "";
+  };
+
+  handleDeletePost = () => {
+    this.setState({ deletePost: true });
+  };
+
+  handleEditPost = () => {
+    this.setState({ editPost: true });
   };
 
   updateScore = val => {
@@ -153,11 +169,16 @@ class Thread extends Component {
           return (
             <Post
               key={post.post_id}
+              parent_id={post.parent_id}
               post_id={post.post_id}
               content={post.content}
               score={post.score}
               author={post.posted_by}
+              author_info={post.User}
               created={post.createdAt}
+              no={idx}
+              delete={this.handleDeletePost}
+              edit={this.handleEditPost}
             />
           );
         })}

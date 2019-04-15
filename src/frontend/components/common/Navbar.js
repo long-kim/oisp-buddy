@@ -16,6 +16,7 @@ class PrimaryNav extends Component {
   logOut = () => {
     Axios.get("/auth/logout").then(res => {
       localStorage.removeItem("oisp-token");
+      localStorage.removeItem("user_id");
       console.log(res);
     });
   };

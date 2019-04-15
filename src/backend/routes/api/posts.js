@@ -3,38 +3,53 @@ const models = require("../../database/models/index");
 const Post = models.Post;
 
 module.exports = passport => {
-  router.get("/:postId", (req, res, next) => {
-    Post.findByPk(req.params.postId)
+  router.post("/new", (req, res, next) => {
+    Post.create({
+      content: req.body.content,
+      parent_id: req.body.thread_id,
+      posted_by: req.user.user_id
+    })
       .then(post => {
-        return post.getUser();
+        console.log("Post created.");
+        res.status(200).json({
+          post_id: post.post_id,
+          message: "Post created."
+        });
       })
-      .then(user => {
-        const data = {
-          name: [user.first_name, user.last_name].join(" "),
-          username: user.username
-        };
-        res.json(data);
-      })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+      });
   });
 
-  router.post("/new", (req, res, next) => {
-    Post.create(
+  router.patch("/edit/:postId", (req, res, next) => {
+    console.log(req.body);
+    Post.update(
       {
-        content: req.body.content,
-        parent_id: req.body.thread_id,
-        posted_by: req.user.user_id
+        content: req.body.content
+      },
+      {
+        where: {
+          post_id: req.params.postId
+        }
       }
     ).then(post => {
-      console.log("Post created.");
-      res.status(200).json({
+      res.json({ post_id: post.post_id, message: "Post edit successful" });
+    });
+  });
+
+  router.delete("/delete/:postId", (req, res, next) => {
+    Post.destroy({
+      where: {
+        post_id: req.params.postId
+      }
+    }).then(post => {
+      console.log(post);
+      res.json({
         post_id: post.post_id,
-        message: "Post created."
-      })
-    }).catch(err => {
-      console.error(err);
-    })
-  })
+        message: "Post deleted."
+      });
+    });
+  });
 
   return router;
 };

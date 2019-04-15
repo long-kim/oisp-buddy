@@ -14,7 +14,11 @@ module.exports = passport => {
   });
 
   passport.deserializeUser((id, done) => {
-    models.User.findOne({ user_id: id }).then(user => {
+    models.User.findOne({
+      where: {
+        user_id: id
+      }
+    }).then(user => {
       done(null, user);
     });
   });

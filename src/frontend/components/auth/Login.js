@@ -19,8 +19,8 @@ class Login extends Component {
       username: form.get("username"),
       password: form.get("password")
     }).then(res => {
-      console.log(res);
       localStorage.setItem("oisp-token", res.data.token);
+      localStorage.setItem("user_id", res.data.user_id);
       this.setState({ redirectToReferrer: true });
     });
   };

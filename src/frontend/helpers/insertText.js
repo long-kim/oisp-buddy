@@ -73,6 +73,9 @@ let shortcuts = {
   },
   spoiler(vm) {
     insert(vm, "[spoil]", "text", "[/spoil]");
+  },
+  quote(vm) {
+    insert(vm, "[quote]", "text", "[/quote]");
   }
 };
 

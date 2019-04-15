@@ -2,6 +2,7 @@ const router = require("express").Router();
 const models = require("../../database/models/index");
 const Thread = models.Thread;
 const Post = models.Post;
+const User = models.User;
 
 module.exports = passport => {
   router.get("/index", (req, res, next) => {
@@ -30,7 +31,7 @@ module.exports = passport => {
     (req, res, next) => {
       Thread.findByPk(req.params.threadId)
         .then(thread => {
-          return thread.getPosts();
+          return thread.getPosts({ include: [{ model: User }] });
         })
         .then(posts => {
           res.json({ posts: posts.map(post => post.toJSON()) });
@@ -57,7 +58,7 @@ module.exports = passport => {
         }).then(post => {
           console.log("Thread created.");
           res.status(200).json({
-            thread_id: post_data.parent_id,
+            thread_id: post.parent_id,
             message: "Thread created."
           });
         });

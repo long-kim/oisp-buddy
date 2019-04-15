@@ -54,6 +54,7 @@ module.exports = passport => {
         res.status(200).send({
           auth: true,
           token: token,
+          user_id: user.user_id,
           message: "User signed in."
         });
       });
@@ -61,8 +62,9 @@ module.exports = passport => {
   }
 
   function logout(req, res, next) {
-    req.logOut();
+    req.logOut();  
     req.session = null;
+    res.clearCookie("connect.sid");
     res.status(200).send("Logged out.");
   }
 
