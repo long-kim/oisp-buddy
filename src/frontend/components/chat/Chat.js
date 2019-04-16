@@ -1,44 +1,73 @@
 import React, { Component } from "react";
 import MessageList from "./MessageList";
-// import socketIOClient from "socket.io-client";
-import FormInput from "./FormInput"
+import firebase from "firebase";
+import FormInput from "./FormInput";
+import firebaseConfig from "./Config";
 
-const DUMMY_DATA = [
-    {
-        senderId: "perborgen",
-        text: "Hey, how is it going?"
-    },
-    {
-        senderId: "perborgen",
-        text: "Are you still there?"
-    },
-    {
-        senderId: "janedoe",
-        text: "Great! How about you?"
-    },
-    {
-        senderId: "perborgen",
-        text: "Good to hear! I am great as well"
-    }
-];
+import { Button } from "react-bootstrap";
+
+firebase.initializeApp(firebaseConfig);
+
+// function GuestGreeting(props) {
+//   return <h3>Please sign in</h3>;
+// }
+
+// function UserGreeting(props) {
+//   return <h3>Welcome back!</h3>;
+// }
+
+// function Greeting(props) {
+//   const isLoggedIn = props.isLoggedIn;
+//   if (!isLoggedIn) {
+//     return <UserGreeting />;
+//   }
+//   return <GuestGreeting />;
+// }
 
 class Chat extends Component {
-    constructor() {
-        super();
-        this.state = {
-            messages: DUMMY_DATA
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: null
+    };
+  }
 
-    render() {
-        return (
-            <div>
-                <MessageList messages={this.state.messages} />
-                <FormInput />
-            </div>
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      this.setState({ user });
+    });
+  }
+  handleSignIn() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider);
+  }
+  handleLogOut() {
+    firebase.auth().signOut();
+  }
 
-        )
-    }
+  render() {
+    return (
+      <div>
+        {!this.state.user ? (
+          <Button variant="primary" onClick={this.handleSignIn.bind(this)}>
+            {" "}
+            Sign in
+          </Button>
+        ) : (
+          <div>
+            {/* <h5>Hello {this.state.user.displayName}</h5>
+            <img src={this.state.user.photoURL} height="100" width="100" /> */}
+            <Button variant="secondary" onClick={this.handleLogOut.bind(this)}>
+              {" "}
+              Log out
+            </Button>
+          </div>
+        )}
+        <MessageList user={this.state.user} />
+        <FormInput user={this.state.user} />
+      </div>
+    );
+  }
 }
 
 export default Chat;

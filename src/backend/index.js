@@ -9,6 +9,9 @@ const passport = require("passport");
 const flash = require("connect-flash");
 const port = process.env.SERVER_PORT || 4000;
 
+// const http = require("http").Server(app);
+// const io = require("socket.io")(http);
+
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
