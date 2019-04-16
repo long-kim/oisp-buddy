@@ -13,6 +13,18 @@ body {
     z-index: 1070;
     @include shadow(0.36);
   }
+  .control {
+    &.cancel-edit {
+      align-self: center;
+      color: #999999;
+      cursor: pointer;
+      margin-right: 1.25rem;
+      font-size: 0.85rem;
+      &:hover {
+        color: #777777;
+      }
+    }
+  }
   .btn {
     @include shadow(0.16);
     &:active {
@@ -130,16 +142,27 @@ body {
   .popup-content {
     border: unset !important;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16) !important;
-    width: 90px !important;
+    width: 80px !important;
     text-align: right !important;
     ul {
       list-style: none;
-      padding: 10px;
+      padding: 2px;
       color: #999999;
       margin-bottom: 0;
-      li:hover {
-        color: #373a3c;
-        cursor: pointer;
+      li {
+        &.delete:hover {
+          color: #b45139;
+        }
+        &:hover {
+          color: #777777;
+          cursor: pointer;
+        }
+      }
+      .divider {
+        height: 0;
+        margin: 0.2rem 0;
+        overflow: hidden;
+        border-top: 1px solid #e9ecef;
       }
       a {
         text-decoration: none;
@@ -149,6 +172,80 @@ body {
           cursor: pointer;
         }
       }
+    }
+  }
+  .modal-wrapper {
+    .popup-content {
+      display: flex;
+      justify-content: flex-start;
+      width: 500px !important;
+      padding: 0 !important;
+      transition-duration: 0.2s;
+      .modal-confirm {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        .header {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          border-bottom: 1px solid #dddddd;
+        }
+        .content {
+          width: 100%;
+          flex-direction: row;
+          padding: 1.25rem 1rem 1rem 1rem;
+          align-content: center;
+          align-items: center;
+        }
+        .control-group {
+          width: 100%;
+          height: 100%;
+          padding: 0 1.25rem 0.75rem 1rem;
+          flex-direction: row;
+          justify-content: flex-end;
+          .control {
+            font-size: 16px;
+            color: #dddddd;
+            transition-duration: 0.2s;
+            &:last-child {
+              margin-left: 28px;
+            }
+            &.red {
+              color: #d6a88f;
+              &:hover {
+                color: #b45139;
+                transition-duration: 0.2s;
+              }
+            }
+          }
+        }
+        i {
+          margin-right: 20px;
+        }
+        text-align: left;
+      }
+    }
+  }
+  .quote {
+    display: block;
+    position: relative;
+    .quote-header {
+      @include shadow(0.16);
+      padding: 0.5rem;
+      background: #999999;
+      position: sticky;
+      width: 100%;
+      .author {
+        font-weight: bold;
+        color: inherit;
+      }
+      .post-anchor {
+        color: inherit;
+      }
+    }
+    .quote-content {
+      background: #dddddd;
+      padding: 1rem 0.5rem;
     }
   }
 }

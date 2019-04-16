@@ -50,3 +50,30 @@ export class Paragraph extends Tag {
     return <p>{this.getComponents()}</p>;
   }
 }
+
+export class Quote extends Tag {
+  toReact() {
+    return (
+      <blockquote className="quote">
+        <div className="quote-header">
+          <a
+            href={`${process.env.PUBLIC_URL}/user/${this.params.author_id}`}
+            className="author"
+          >
+            {this.params.name}&nbsp;
+          </a>
+          wrote&nbsp;
+          <a
+            href={`${process.env.PUBLIC_URL}/forum/thread/${
+              this.params.parent_id
+            }#${this.params.post_id}`}
+            className="post-anchor"
+          >
+            <i className="fas fa-long-arrow-alt-up" />
+          </a>
+        </div>
+        <div className="quote-content">{this.getComponents()}</div>
+      </blockquote>
+    );
+  }
+}

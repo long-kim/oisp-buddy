@@ -7,6 +7,7 @@ parser.registerTag("spoil", tags.SpoilerBox);
 parser.registerTag("size", tags.FontSize);
 parser.registerTag("code", tags.CodeBlock);
 parser.registerTag("p", tags.Paragraph);
+parser.registerTag("quote", tags.Quote);
 
 class BBParser extends Component {
   render() {
