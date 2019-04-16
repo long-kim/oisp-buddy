@@ -2,6 +2,7 @@ const router = require("express").Router();
 const models = require("../../database/models/index");
 const Thread = models.Thread;
 const Post = models.Post;
+const User = models.User;
 
 module.exports = passport => {
   router.get("/index", (req, res, next) => {
@@ -12,26 +13,34 @@ module.exports = passport => {
     });
   });
 
-  router.get("/view/:threadId", (req, res, next) => {
-    Thread.findByPk(req.params.threadId)
-      .then(thread => {
-        res.json(thread.toJSON());
-      })
-      .catch(err => console.error(err));
-  });
+  router.get(
+    "/view/:threadId",
 
-  router.get("/view/:threadId/posts", (req, res, next) => {
-    Thread.findByPk(req.params.threadId)
-      .then(thread => {
-        return thread.getPosts();
-      })
-      .then(posts => {
-        res.json({ posts: posts.map(post => post.toJSON()) });
-      })
-      .catch(err => console.error(err));
-  });
+    (req, res, next) => {
+      Thread.findByPk(req.params.threadId)
+        .then(thread => {
+          res.json(thread.toJSON());
+        })
+        .catch(err => console.error(err));
+    }
+  );
 
-  router.post("/create", passport.authenticate("jwt"), (req, res, next) => {
+  router.get(
+    "/view/:threadId/posts",
+
+    (req, res, next) => {
+      Thread.findByPk(req.params.threadId)
+        .then(thread => {
+          return thread.getPosts({ include: [{ model: User }] });
+        })
+        .then(posts => {
+          res.json({ posts: posts.map(post => post.toJSON()) });
+        })
+        .catch(err => console.error(err));
+    }
+  );
+
+  router.post("/create", (req, res, next) => {
     Thread.create({ title: req.body.title, author_id: req.user.user_id })
       .then(thread => {
         let post = {
@@ -49,7 +58,7 @@ module.exports = passport => {
         }).then(post => {
           console.log("Thread created.");
           res.status(200).json({
-            thread_id: post_data.parent_id,
+            thread_id: post.parent_id,
             message: "Thread created."
           });
         });

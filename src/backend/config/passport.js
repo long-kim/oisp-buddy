@@ -14,7 +14,11 @@ module.exports = passport => {
   });
 
   passport.deserializeUser((id, done) => {
-    models.User.findOne({ user_id: id }).then(user => {
+    models.User.findOne({
+      where: {
+        user_id: id
+      }
+    }).then(user => {
       done(null, user);
     });
   });
@@ -101,7 +105,7 @@ module.exports = passport => {
     "jwt",
     new JWTStrategy(
       {
-        jwtFromRequest: ExtractJWT.fromBodyField("token"),
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
         secretOrKey: process.env.JWT_SECRET
       },
       (payload, done) => {

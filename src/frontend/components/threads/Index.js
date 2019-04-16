@@ -15,7 +15,7 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    return Axios.get("/api/threads/index").then(res =>
+    return Axios.get("/api/threads/index", {headers: {Authorization: `Bearer ` + localStorage.getItem("oisp-token")}}).then(res =>
       this.setState({ threads: res.data.threads })
     );
   }
@@ -25,7 +25,7 @@ class Index extends Component {
       <Container className="index">
         <div className="card-wrapper header">
           <h3 className="mr-auto">Threads</h3>
-          <Link className="post-anchor" to={`forum/create`}>
+          <Link className="post-anchor" to={`./create`}>
             <Button variant="primary" className="post-btn">
               New
             </Button>

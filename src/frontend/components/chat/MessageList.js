@@ -3,8 +3,6 @@ import "assets/styles/Chat.css";
 import Message from "./Message";
 import firebase from "firebase";
 
-// const activeUser = "perborgen";
-
 class MessageList extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +28,6 @@ class MessageList extends Component {
   }
 
   render() {
-    // console.log(this.state.messages);
     return (
       <div className="message-list">
         {this.state.messages.map(function(item, index) {
