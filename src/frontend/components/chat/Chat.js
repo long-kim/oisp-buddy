@@ -3,33 +3,20 @@ import MessageList from "./MessageList";
 import firebase from "firebase";
 import FormInput from "./FormInput";
 import firebaseConfig from "./Config";
-
 import { Button } from "react-bootstrap";
 
 firebase.initializeApp(firebaseConfig);
-
-// function GuestGreeting(props) {
-//   return <h3>Please sign in</h3>;
-// }
-
-// function UserGreeting(props) {
-//   return <h3>Welcome back!</h3>;
-// }
-
-// function Greeting(props) {
-//   const isLoggedIn = props.isLoggedIn;
-//   if (!isLoggedIn) {
-//     return <UserGreeting />;
-//   }
-//   return <GuestGreeting />;
-// }
 
 class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null
+      user: null,
+      roomlist: []
     };
+
+    this.fireStoreRef = firebase.firestore();
+    this.userRef = this.fireStoreRef.collection("user");
   }
 
   componentDidMount() {
@@ -46,6 +33,14 @@ class Chat extends Component {
   }
 
   render() {
+    {
+      this.userRef.get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+        });
+      });
+    }
     return (
       <div>
         {!this.state.user ? (
@@ -55,16 +50,16 @@ class Chat extends Component {
           </Button>
         ) : (
           <div>
-            {/* <h5>Hello {this.state.user.displayName}</h5>
-            <img src={this.state.user.photoURL} height="100" width="100" /> */}
+            <h5>Hello {this.state.user.displayName}</h5>
+            <img src={this.state.user.photoURL} height="100" width="100" />
             <Button variant="secondary" onClick={this.handleLogOut.bind(this)}>
               {" "}
               Log out
             </Button>
           </div>
         )}
-        <MessageList user={this.state.user} />
-        <FormInput user={this.state.user} />
+        {/* <MessageList user={this.state.user} />
+        <FormInput user={this.state.user} /> */}
       </div>
     );
   }

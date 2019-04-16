@@ -5,19 +5,22 @@
   ===
   Lots of transactions!!
 
-2. NoSQL: MongoDB
+2. NoSQL: Firebase
   [*] Chat Log
   Example
-  {
-    participants: []
-    chatlog: 
-    [
-      {
-        sender
-        content
-        timestamp
-      },...
-    ]
+  
+  user:{
+    username,
+    [] roomsID
+  }
+
+  rooms:{
+    roomsID,
+    messages: {
+      message,
+      time,
+      username
+    }
   }
 
   [*] Friendships
