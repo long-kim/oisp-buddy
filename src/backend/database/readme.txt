@@ -8,19 +8,25 @@
 2. NoSQL: Firebase
   [*] Chat Log
   Example
-  
-  user:{
-    username,
-    [] roomsID
-  }
-
-  rooms:{
-    roomsID,
-    messages: {
-      message,
-      time,
-      username
-    }
+  {
+    participants: []
+    chatlog: 
+    [
+      {
+        sender
+        content
+        timestamp
+      },...
+    ],
+    participants: []
+    chatlog: 
+    [
+      {
+        sender
+        content
+        timestamp
+      },...
+    ]
   }
 
   [*] Friendships

@@ -12,12 +12,11 @@ class FormInput extends Component {
       roomID: "",
       time: ""
     };
-
     this.messageRef = firebase
-      .database()
-      .ref()
-      .child("messages")
-      .child("rooms");
+      .firestore()
+      .collection("rooms")
+      .doc(this.props.roomID)
+      .collection("messages");
   }
 
   componentDidUpdate() {
@@ -38,11 +37,11 @@ class FormInput extends Component {
   handleSend() {
     if (this.state.message) {
       let newItem = {
-        username: this.state.username,
+        username: "jimcbl",
         message: this.state.message,
         time: new firebase.firestore.Timestamp.now()
       };
-      this.messageRef.push(newItem);
+      this.messageRef.add(newItem);
       this.setState({ message: "" });
     }
   }

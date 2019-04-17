@@ -1,29 +1,37 @@
 import React, { Component } from "react";
 import "assets/styles/Chat.css";
 import Message from "./Message";
-import firebase from "firebase";
+import { db } from "./firebase";
 
 class MessageList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      roomID: "",
       messages: []
     };
-
-    this.messageRef = firebase
-      .database()
-      .ref()
-      .child("messages")
-      .child("rooms");
   }
 
+  // componentDidMount() {
+  //   this.messageRef.on("value", message => {
+  //     if (message.val()) {
+  //       this.setState({
+  //         messages: Object.values(message.val())
+  //       });
+  //     }
+  //   });
+  // }
   componentDidMount() {
-    this.messageRef.on("value", message => {
-      if (message.val()) {
-        this.setState({
-          messages: Object.values(message.val())
-        });
-      }
+    let messageRef = db
+      .collection("rooms")
+      .doc(this.props.roomID.toString())
+      .collection("messages")
+      .orderBy("time")
+      .limit(10);
+    messageRef.onSnapshot(snapshot => {
+      snapshot.forEach(doc => {
+        this.setState({ messages: [...this.state.messages, doc.data()] });
+      });
     });
   }
 
@@ -35,7 +43,7 @@ class MessageList extends Component {
             <Message
               key={index}
               username={item.username}
-              message={item.message}
+              message={item.content}
               time={item.time}
             />
           );

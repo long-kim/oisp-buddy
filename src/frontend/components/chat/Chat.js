@@ -1,49 +1,44 @@
 import React, { Component } from "react";
 import MessageList from "./MessageList";
-import firebase from "firebase";
+import { db } from "./firebase";
 import FormInput from "./FormInput";
-import firebaseConfig from "./Config";
+import RoomList from "./RoomList";
 import { Button } from "react-bootstrap";
-
-firebase.initializeApp(firebaseConfig);
 
 class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
       user: null,
-      roomlist: []
+      roomlist: [],
+      roomID: 1000
     };
-
-    this.fireStoreRef = firebase.firestore();
-    this.userRef = this.fireStoreRef.collection("user");
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      this.setState({ user });
-    });
-  }
-  handleSignIn() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider);
-  }
-  handleLogOut() {
-    firebase.auth().signOut();
-  }
-
-  render() {
-    {
-      this.userRef.get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
+    db.collection("users")
+      .doc("jimcbl")
+      .get()
+      .then(doc => {
+        this.setState({
+          user: doc.data().username,
+          roomlist: doc.data().rooms
         });
       });
-    }
+  }
+
+  // handleSignIn() {
+  //   const provider = new firebase.auth.GoogleAuthProvider();
+  //   firebase.auth().signInWithPopup(provider);
+  // }
+  // handleLogOut() {
+  //   firebase.auth().signOut();
+  // }
+
+  render() {
     return (
       <div>
-        {!this.state.user ? (
+        {/* {!this.state.user ? (
           <Button variant="primary" onClick={this.handleSignIn.bind(this)}>
             {" "}
             Sign in
@@ -57,9 +52,10 @@ class Chat extends Component {
               Log out
             </Button>
           </div>
-        )}
-        {/* <MessageList user={this.state.user} />
-        <FormInput user={this.state.user} /> */}
+        )} */}
+        <h1>Hello {this.state.user} </h1>
+        {/* <RoomList roomlist={this.state.roomlist} /> */}
+        <MessageList user={this.state.user} roomID={this.state.roomID} />
       </div>
     );
   }
