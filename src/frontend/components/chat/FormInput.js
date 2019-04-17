@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-
-import firebase from "firebase";
 import { Form } from "react-bootstrap";
 
 class FormInput extends Component {
@@ -12,11 +10,6 @@ class FormInput extends Component {
       roomID: "",
       time: ""
     };
-    this.messageRef = firebase
-      .firestore()
-      .collection("rooms")
-      .doc(this.props.roomID)
-      .collection("messages");
   }
 
   componentDidUpdate() {
@@ -34,17 +27,7 @@ class FormInput extends Component {
     this.setState({ message: event.target.value });
   }
 
-  handleSend() {
-    if (this.state.message) {
-      let newItem = {
-        username: "jimcbl",
-        message: this.state.message,
-        time: new firebase.firestore.Timestamp.now()
-      };
-      this.messageRef.add(newItem);
-      this.setState({ message: "" });
-    }
-  }
+  handleSend() {}
 
   render() {
     return (

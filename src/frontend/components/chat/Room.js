@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { db } from "./firebase";
+
 import * as stylee from "./style.css";
 var moment = require("moment");
 
@@ -14,34 +14,7 @@ class Room extends Component {
     };
   }
 
-  componentDidMount() {
-    let roomRef = db.collection("rooms").doc(this.props.roomID.toString());
-
-    roomRef
-      .get()
-      .then(doc => {
-        this.setState({
-          groupName: doc.data().name,
-          roomImgURL: doc.data().photoURL
-        });
-      })
-      .catch(function(error) {
-        console.error("Error getting document: ", error);
-      });
-
-    roomRef
-      .collection("messages")
-      .orderBy("time", "desc")
-      .limit(1)
-      .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          this.setState({
-            lastMessage: doc.data().content,
-            time: moment(doc.data().time.toDate())
-          });
-        });
-      });
-  }
+  componentDidMount() {}
   render() {
     return (
       <div>
@@ -55,7 +28,7 @@ class Room extends Component {
           </div>
         </div>
         <div className="room-lst-right"> {this.state.time.format("LT")}</div> */}
-        
+
         <div className="chat">
           <div className="left">
             <img src={this.state.roomImgURL} />
