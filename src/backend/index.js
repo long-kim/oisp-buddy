@@ -8,9 +8,13 @@ const Sequelize = require("sequelize");
 const passport = require("passport");
 const flash = require("connect-flash");
 const port = process.env.SERVER_PORT || 4000;
+const mongoose = require("mongoose");
 
-// const http = require("http").Server(app);
-// const io = require("socket.io")(http);
+mongoose.connect("mongodb://localhost:27017/oisp-buddy", {
+  useNewUrlParser: true
+});
+
+var db = mongoose.connection;
 
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
