@@ -26,7 +26,8 @@ class Routes extends Component {
             )}
           />
           <Route path="/login" render={props => <Login {...props} />} />
-          <Route path="/chat" component={Chat} />
+          <Route exact path="/chat" component={Chat} />
+          <Route path="/chat/:id" component={Chat} />
           <Route
             path="/test"
             render={props => (

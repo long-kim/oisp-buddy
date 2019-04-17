@@ -4,18 +4,33 @@ import { db } from "./firebase";
 import FormInput from "./FormInput";
 import RoomList from "./RoomList";
 import { Button } from "react-bootstrap";
+import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
+
+let ConditionalRender = props => {
+  if (props.roomID) {
+    // console.log("true true");
+    return <MessageList user={props.user} roomID={props.roomID} />;
+  } else {
+    return <RoomList roomlist={props.roomlist} />;
+  }
+};
 
 class Chat extends Component {
   constructor(props) {
     super(props);
+    // static Index;
+    // static Single;
     this.state = {
       user: null,
       roomlist: [],
-      roomID: 1000
+      roomID: ""
     };
   }
 
   componentDidMount() {
+    if (this.props.match.params.id) {
+      this.setState({ roomID: this.props.match.params.id });
+    }
     db.collection("users")
       .doc("jimcbl")
       .get()
@@ -38,6 +53,11 @@ class Chat extends Component {
   render() {
     return (
       <div>
+        <ConditionalRender
+          roomID={this.state.roomID}
+          user={this.state.user}
+          roomlist={this.state.roomlist}
+        />
         {/* {!this.state.user ? (
           <Button variant="primary" onClick={this.handleSignIn.bind(this)}>
             {" "}
@@ -53,9 +73,8 @@ class Chat extends Component {
             </Button>
           </div>
         )} */}
-        <h1>Hello {this.state.user} </h1>
-        {/* <RoomList roomlist={this.state.roomlist} /> */}
-        <MessageList user={this.state.user} roomID={this.state.roomID} />
+        {/* <h1>Hello {this.state.user} </h1> */}
+        {/* <MessageList user={this.state.user} roomID={this.state.roomID} /> */}
       </div>
     );
   }

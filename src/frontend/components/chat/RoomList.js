@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Room from "./Room";
 import { ListGroup } from "react-bootstrap";
+import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
 
 class RoomList extends Component {
   constructor(props) {
@@ -12,12 +13,15 @@ class RoomList extends Component {
       <ListGroup>
         {this.props.roomlist.map(function(room, index) {
           return (
-            <ListGroup.Item key = {index}>
-              <Room roomID={room} />{" "}
+            <ListGroup.Item key={index}>
+              <Link className="chat-obj" to={`./${room}`}>
+                <Room roomID={room} />
+              </Link>
             </ListGroup.Item>
           );
         })}
       </ListGroup>
+      
     );
   }
 }

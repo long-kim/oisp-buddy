@@ -55,6 +55,7 @@ class Room extends Component {
           </div>
         </div>
         <div className="room-lst-right"> {this.state.time.format("LT")}</div> */}
+        
         <div className="chat">
           <div className="left">
             <img src={this.state.roomImgURL} />

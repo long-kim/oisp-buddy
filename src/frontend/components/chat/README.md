@@ -19,3 +19,23 @@ Including two collections
 - Each doc is a chatlog which contains username, timestrap and content
 
 #### Ex: db.collection("users").doc("roomID").collection("messages")
+
+[
+    id
+    par: [
+        userId:
+        fullname:
+        avatar:
+    ],
+    chatlog: [
+        {
+            from:
+            content:
+            timestamp:
+        }
+    ]
+]
+
+User.getRooms()
+Room.getMessages()
+User.send(roomid, message)
