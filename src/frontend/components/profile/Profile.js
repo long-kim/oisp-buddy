@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import * as styles from "./style.css"
-// import image from "./images/Original image_ 1920x1200.jpg"
+import * as styles from "./style.css";
+import Button from '@material-ui/core/Button';
+// import DatePicker from '@material-ui/core/DatePicker';
 
 class Profile extends Component {
     constructor(props) {
@@ -40,29 +41,36 @@ class Profile extends Component {
         return ( 
             <div>
                 <header className="header">
-
+                    
                     <img src = {this.state.cover}
                         alt = "user's cover" 
                     />
-                    <h2 className = "user_name">
-                        {this.state.name} <button type = "button" className = "title">PRO</button>
-                    </h2>
                     <h6>
-                        <button type = "button" onClick = {() => alert("UNAVAILABLE AT THE MOMENT")}>📷</button>
+                        <button type = "button" onClick = {() => alert("UNAVAILABLE AT THE MOMENT")}><i class="fas fa-pencil-alt"></i></button>
+                    </h6>
+                    <h2 className = "user_name">
+                            {this.state.name} <br/>
+                            <h6>Class of {this.state.year} - {this.state.major}</h6>
+
+                    </h2>
+                    {/* <div className="image-background">
+                        <div className="image-background__overlay">
+                        <h2 className = "user_name">
+                            {this.state.name} <button type = "button" className = "title">PRO</button>
+                        </h2>
+                         </div>
+                    </div> 
+                    <h6>
+                        <button type = "button" onClick = {() => alert("UNAVAILABLE AT THE MOMENT")}><i class="fas fa-pencil-alt"></i></button>
                     </h6>
                     <h5>
                         Class of {this.state.year} - {this.state.major}
-                    </h5>
-                    {/* <button 
-                        type="button"
-                        onClick = {()=> window.location.reload()}
-                        // onClick = {this.handdleButton}
-                        >Change the cover
-                    </button> */}
+                    </h5>*/}
+                    
                     <div class="polaroid">
                         <img src={this.state.avatar} alt="user's avatar" />
                         <div class="container">
-                            <p>ABOUT <button type = "button" onClick = {() => alert("UNAVAILABLE AT THE MOMENT")}>✎</button></p>
+                            <p>ABOUT <button type = "button" onClick = {() => alert("UNAVAILABLE AT THE MOMENT")}><i class="fas fa-pencil-alt"></i></button></p>
                             <h6>{this.state.about} </h6> 
                             {/* <h7 className = "readmore">READ MORE →</h7> */}
                             <button type = "button" className = "readmore" onClick = {() => alert("That's it, I have nothing left to say")}>
@@ -73,8 +81,15 @@ class Profile extends Component {
                     </div>
                 
                 </header>
-                
-
+                <div className = "calendar">
+                <Button variant="contained" color="primary">
+      Hello World
+    </Button>
+                    {/* <DatePicker hintText="Portrait Dialog" /> Hey <br/>
+                    <DatePicker hintText="Landscape Dialog" mode="landscape" /> Hey 2 <br/>
+                    <DatePicker hintText="Dialog Disabled" disabled={true} /> hey 3 <br/>
+                    <DatePicker hintText="Open to Year" openToYearSelection={true} /> hey 4 <br/> */}
+                </div>
             </div>
         );
     }

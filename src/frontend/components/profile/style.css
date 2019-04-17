@@ -7,6 +7,9 @@ body {
     background-color: whitesmoke;
 }
 
+header {
+    position: relative;
+}
 
 header > img {
     object-fit: cover;
@@ -36,12 +39,13 @@ header > button:hover {
 }
 
 header > h2 {
+    left: 410px;
+    top: 100px;
     position: absolute;
     z-index: 3;
-    margin-top: 6.5%;
-    margin-left: 30%;
     color: azure;
-    text-shadow: 2px 2px 5px rgb(39, 38, 38);
+    text-shadow: 0 0 3px rgba(0, 0, 0, .8);
+    
 }
 
 header > h5 {
@@ -58,13 +62,25 @@ header > h6 {
     position: absolute;
     z-index: 3;
     
-    margin-top: 10%;
+    margin-top: 150px;
     margin-left: 97%;
+}
+
+@media screen and (max-width: 600px){
+    .user_name > h6 {
+        display: none;
+    }
+    .container {
+        display: none;
+    }
 }
 
 header > h6 >button{
     background: none;
     border: 0px;
+    color: #925F4A;
+    outline: black;
+    position: relative;
 }
 
 header > h6 > button:hover {
@@ -84,8 +100,8 @@ header > h6 > button:hover {
     /* text-align: left; */
     position: absolute;
     z-index: 2;
-    margin-top: 1%;
-    margin-left: 10%;
+    top: 20px;
+    left: 100px;
   }
 
 .polaroid > img:hover {
@@ -101,6 +117,11 @@ header > h6 > button:hover {
 .polaroid > div > p > button {
     background: none;
     border: 0px;
+    color: #925F4A;
+}
+
+.polaroid > div > p{
+    margin-bottom: 0%
 }
 
 .polaroid > div > p > button:hover {
@@ -131,4 +152,11 @@ header > h6 > button:hover {
     border: 0px;
     background: none;
     padding-left: 0%
+}
+
+.calendar {
+    position: absolute;
+    z-index: 3;
+    top: 250px;
+    left: 410px;
 }
