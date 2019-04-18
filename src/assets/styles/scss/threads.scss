@@ -1,0 +1,373 @@
+.ReplyForm {
+  position: relative;
+  .nav {
+    background-color: #dddddd;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.36);
+    border-bottom: none;
+    width: 100%;
+    z-index: 2;
+    .nav-link {
+      border: unset;
+      color: #aeaeae;
+      font-size: 0.9rem;
+      line-height: 1.5rem;
+      padding: 0;
+      padding-bottom: 0.2rem;
+      margin: 0.6rem 0.5rem 0 1rem;
+      &:hover {
+        color: #777777;
+      }
+      &.active {
+        color: #a56a4b;
+        background-color: unset;
+        border-bottom: 2px solid #a56a4b;
+      }
+    }
+  }
+  .tab-content {
+    width: 100%;
+    z-index: 1;
+    .form-group {
+      margin-bottom: 0;
+      .mdedit-wrapper {
+        textarea {
+          border: unset;
+          border-radius: 0;
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+          font-family: Consolas, monospace;
+          font-size: 14px;
+          padding: 0.4rem 1rem;
+        }
+      }
+    }
+    #reply-tabpane-edit {
+      .form-group {
+        margin-bottom: 0;
+      }
+    }
+    #reply-tabpane-preview {
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+      background-color: #fff;
+      font-size: 14px;
+      height: 100%;
+      max-height: 400px;
+      min-height: 40px;
+      overflow: scroll;
+      padding: 0.4rem 1rem;
+      code {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+        padding: 0 0.25rem;
+      }
+      pre {
+        display: block;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+        code {
+          display: block;
+        }
+      }
+      .spoiler-wrapper {
+        .btn {
+          width: 150px;
+        }
+        .content-wrapper {
+          background-color: #dddddd;
+          margin-top: 0.4rem;
+          padding: 0.4rem 1rem;
+        }
+      }
+    }
+  }
+  .reply-controls {
+    background-color: #dddddd;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.36);
+    display: flex;
+    padding: 0.5rem 0.75rem;
+    position: sticky;
+    ul {
+      align-items: center;
+      display: flex;
+      list-style: none;
+      margin-bottom: 0;
+      padding-inline-start: 0.25rem;
+      li {
+        color: #aeaeae;
+        cursor: pointer;
+        display: flex;
+        font-size: 1rem;
+        margin-right: 20px;
+        &:hover {
+          color: #777777;
+        }
+        &:last-of-type {
+          margin-right: 15px;
+        }
+      }
+      .fsize-select {
+        font-size: 0.85rem !important;
+        margin-bottom: 0 !important;
+      }
+    }
+    .post-btn {
+      font-size: 0.85rem;
+      width: 100px;
+    }
+  }
+}
+
+.Thread {
+  background-color: #777777;
+  .container {
+    background-color: #dddddd;
+    padding: 0;
+    max-width: 900px;
+    &.index {
+      padding: 20px;
+      .card-wrapper {
+        padding: 1rem;
+        font-size: 20px;
+        height: 150px;
+        &.header {
+          margin: -20px;
+          height: 100%;
+          padding: 1rem 2rem;
+          margin-bottom: 20px;
+        }
+      }
+    }
+    &.single-thread {
+      .card-wrapper {
+        &.header {
+          padding: 1rem;
+          .content {
+            .subtitle {
+              color: #777777;
+            }
+          }
+        }
+      }
+    }
+    form {
+      width: 100%;
+      .card-wrapper {
+        &.trans {
+          flex-direction: column;
+        }
+        .form-group {
+          margin-bottom: 2rem;
+          label {
+            font-size: 18px;
+            margin-bottom: 0.8rem;
+          }
+        }
+      }
+    }
+    .card-wrapper {
+      @include shadow(0.16);
+      background-color: #fff;
+      display: flex;
+      margin-bottom: 30px;
+      padding: 1rem 2rem;
+      position: relative;
+      &.header {
+        @include shadow(0.36);
+        z-index: 1010;
+        width: 900px;
+      }
+      &.sticky-header {
+        max-height: 0;
+        overflow: hidden;
+        width: 900px;
+        padding-left: 45px;
+        position: fixed;
+        top: $navbar-height - 30px;
+        opacity: 0;
+        z-index: 1020;
+        transition: all 0.3s;
+        background-color: #585858;
+        color: #dddddd;
+        h3 {
+          font-size: 1.3rem;
+          display: flex;
+          align-items: center;
+          width: 750px;
+          display: block;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        &.show {
+          opacity: 1;
+          max-height: 60px;
+          top: $navbar-height;
+        }
+      }
+      &.trans {
+        background-color: rgba(255, 255, 255, 0.4);
+        margin-bottom: 0;
+        .ReplyForm {
+          width: 85%;
+          margin: 0 auto;
+        }
+      }
+      h3 {
+        margin-bottom: 0;
+      }
+      .btn-primary {
+        width: 100px;
+      }
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        font-size: 20px;
+        align-items: center;
+        color: #aeaeae;
+        width: 30px;
+        height: 90px;
+        justify-content: space-around;
+        &.interact {
+          color: #dddddd;
+          height: 100%;
+          padding-top: 10px;
+          .control:hover {
+            color: #aeaeae;
+          }
+        }
+        .control {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border: none;
+          background: transparent;
+          justify-content: space-around;
+          font-size: 18px;
+          cursor: pointer;
+          &.comment {
+            margin-top: 8px;
+            span {
+              font-size: 14px;
+            }
+          }
+          &:focus {
+            outline: none;
+          }
+          &:hover {
+            color: #777777;
+          }
+        }
+      }
+      .content {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 20px 10px 20px;
+        width: calc(100% - 60px);
+        .thread-title {
+          color: #777777;
+          width: 100%;
+          text-decoration: none;
+          height: 60px;
+          &:hover {
+            color: #585858;
+          }
+        }
+        .topics-wrapper {
+          display: flex;
+          margin-top: 10px;
+          .topic {
+            @include shadow(0.16);
+            display: flex;
+            width: 80px;
+            height: 30px;
+            background-color: #a56a4b;
+            color: #fff;
+            font-size: 15px;
+            flex-direction: column;
+            text-align: center;
+            text-decoration: none;
+            justify-content: center;
+          }
+        }
+      }
+      &.post {
+        display: flex;
+        flex-direction: column;
+        .post-header {
+          display: flex;
+          align-items: center;
+          .author-avatar {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            img {
+              object-fit: cover;
+              border-radius: 50%;
+              max-width: 100%;
+              box-shadow: -1px 2px 6px rgba(0, 0, 0, 0.16);
+            }
+          }
+          .header-content {
+            .author-info {
+              display: flex;
+              align-items: center;
+              .author {
+                font-size: 18px;
+                margin-right: 5px;
+                color: #373a3c;
+                text-decoration: none;
+              }
+              .badge {
+                @include shadow(0.16);
+                font-weight: normal;
+              }
+            }
+            .timestamp {
+              font-size: 14px;
+              color: #777777;
+            }
+          }
+          .no-post {
+            margin-top: -20px;
+            margin-right: 20px;
+            color: #dddddd;
+            font-size: 15px;
+          }
+          .menu-expand {
+            color: #aeaeae;
+            cursor: pointer;
+            margin-top: -20px;
+            &:hover {
+              color: #777777;
+            }
+          }
+        }
+        .post-content {
+          margin-top: 30px;
+          margin-left: calc(1rem - 5px);
+          .ReplyForm {
+            margin-bottom: 1rem;
+          }
+        }
+        .post-control {
+          margin-top: 20px;
+          display: flex;
+          align-items: center;
+          .control-group {
+            flex-direction: row;
+            height: 30px;
+            width: 90px;
+            margin-right: 20px;
+            &.vote {
+              font-size: 16px;
+            }
+          }
+          a.control {
+            color: #aeaeae;
+            text-decoration: none;
+            &:hover {
+              color: #777777;
+            }
+          }
+        }
+      }
+    }
+  }
+}

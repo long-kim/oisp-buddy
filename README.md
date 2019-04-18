@@ -16,7 +16,7 @@ Base on that, our group decided to do something about it. In the beginning, we w
 ## Technologies
 - **React:** Front-end
 - **Node:** Server-side, API
-- **MySQL:** Database
+- **MongoDB & MySQL:** Database
 
 ## Additional Tools
 - **Postman**: Test your APIs.
