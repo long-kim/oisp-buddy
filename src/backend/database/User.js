@@ -15,6 +15,13 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
     maxlength: 20
   },
+  userInfo: {
+    type: String,
+    maxlength: 250
+  },
+  userAvatar: {
+    type: Buffer
+  },
   email: {
     type: String,
     lowercase: true,

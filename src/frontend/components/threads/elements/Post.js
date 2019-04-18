@@ -138,7 +138,7 @@ class Post extends Component {
           >
             <ul>
               <li>
-                <a href="#">Share</a>
+                <a href="https://www.google.com">Share</a>
               </li>
               <li onClick={this.focusReplyForm}>Quote</li>
               {this.state.current_user && (

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Overview from "./elements/Overview";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
-import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
+//import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
+import { BrowserRouter as  Link } from "react-router-dom";
 import Axios from "axios";
 
 class Index extends Component {

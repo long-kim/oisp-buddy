@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Axios from "axios";
-import { Redirect } from "react-router";
+//import Axios from "axios";
+//import { Redirect } from "react-router";
 
 class Admin extends Component {
   constructor(props) {
