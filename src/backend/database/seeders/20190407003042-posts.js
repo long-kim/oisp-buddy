@@ -3,7 +3,7 @@
 const faker = require("faker");
 
 const seed_data = [];
-for (let i = 0; i < 30; ++i) {
+for (let i = 0; i < 60; ++i) {
   seed_data.push({
     content: faker.lorem.paragraph(10),
     posted_by: Math.floor(Math.random() * 4) + 1,

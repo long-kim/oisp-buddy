@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Axios from "axios";
 
 class Overview extends Component {
   constructor(props) {
@@ -12,14 +13,41 @@ class Overview extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.voted !== prevProps.voted) {
+      this.setState({ voted: this.props.voted });
+    }
+    if (this.props.sub !== prevProps.sub) {
+      this.setState({ subscribed: this.props.sub });
+    }
+    if (
+      this.state.score !== this.props.score &&
+      this.state.voted !== this.props.voted
+    ) {
+      Axios.patch(`/api/threads/${this.props.thread_id}/edit/score`, {
+        score: this.state.score
+      }).then(() => {
+        Axios.post(`/api/threads/${this.props.thread_id}/vote`, {
+          voted: this.state.voted
+        });
+      });
+    }
+  }
+
   handleSubscribe = () => {
     const sub = this.state.subscribed;
-    this.setState({ subscribed: !sub });
+    if (!sub) {
+      this.setState({ subscribed: true });
+      Axios.get(`/api/threads/${this.props.thread_id}/subscribe`);
+    } else {
+      this.setState({ subscribed: false });
+      Axios.get(`/api/threads/${this.props.thread_id}/unsubscribe`);
+    }
   };
 
   updateScore = val => {
     const score = this.state.score;
-    let voted = this.state.voted;
+    let voted = this.props.voted;
     if (val === voted) {
       val = -voted;
     } else if (val === -voted) {

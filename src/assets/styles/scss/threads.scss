@@ -131,6 +131,8 @@
           height: 100%;
           padding: 1rem 2rem;
           margin-bottom: 20px;
+          position: sticky;
+          top: $navbar-height;
         }
       }
     }
@@ -143,6 +145,14 @@
               color: #777777;
             }
           }
+        }
+      }
+    }
+    &.CreateThread {
+      .card-wrapper {
+        &.header {
+          position: sticky;
+          top: $navbar-height;
         }
       }
     }

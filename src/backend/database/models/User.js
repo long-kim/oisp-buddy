@@ -57,11 +57,21 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
+
   User.associate = function(models) {
-    // associations can be defined here
     User.hasMany(models.Thread, { foreignKey: "author_id" });
     User.hasMany(models.Post, { foreignKey: "posted_by" });
     User.hasMany(models.Report, { foreignKey: "reported_by" });
+    User.belongsToMany(models.Thread, {
+      as: "Subscription",
+      through: models.SubscriptionModel,
+      foreignKey: "user_id"
+    });
+    User.belongsToMany(models.Thread, {
+      as: "ThreadVote",
+      through: models.ThreadVoteModel,
+      foreignKey: "user_id"
+    });
   };
 
   User.addHook("beforeSave", (user, _options) => {
@@ -78,5 +88,6 @@ module.exports = (sequelize, DataTypes) => {
   User.prototype.getFullName = () => {
     return [this.first_name, this.last_name].join(" ");
   };
+
   return User;
 };

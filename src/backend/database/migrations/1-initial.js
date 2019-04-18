@@ -9,13 +9,15 @@ var Sequelize = require('sequelize');
  * createTable "Threads", deps: [Users]
  * createTable "Posts", deps: [Users, Threads]
  * createTable "Reports", deps: [Users, Threads]
+ * createTable "thread_votes", deps: [Threads, Users]
+ * createTable "subscriptions", deps: [Threads, Users]
  *
  **/
 
 var info = {
     "revision": 1,
     "name": "initial",
-    "created": "2019-04-08T00:28:48.616Z",
+    "created": "2019-04-17T20:03:40.860Z",
     "comment": ""
 };
 
@@ -262,6 +264,94 @@ var migrationCommands = [{
                         "key": "thread_id"
                     },
                     "allowNull": true
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "thread_votes",
+            {
+                "voted": {
+                    "type": Sequelize.INTEGER,
+                    "field": "voted",
+                    "allowNull": false,
+                    "defaultValue": 0
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                },
+                "thread_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "thread_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Threads",
+                        "key": "thread_id"
+                    },
+                    "primaryKey": true
+                },
+                "user_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "user_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "primaryKey": true
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "subscriptions",
+            {
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                },
+                "thread_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "thread_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Threads",
+                        "key": "thread_id"
+                    },
+                    "primaryKey": true
+                },
+                "user_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "user_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "primaryKey": true
                 }
             },
             {}
