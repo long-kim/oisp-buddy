@@ -14,7 +14,7 @@ mongoose.connect("mongodb://localhost:27017/oisp-buddy", {
   useNewUrlParser: true
 });
 
-var db = mongoose.connection;
+const db = mongoose.connection;
 
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");

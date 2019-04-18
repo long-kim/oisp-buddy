@@ -20,7 +20,7 @@ const roomSchema = new mongoose.Schema({
 
   messages: {
     type: [messageSchema],
-    default: undefined
+    default: []
   }
 });
 

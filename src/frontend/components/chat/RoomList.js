@@ -8,6 +8,7 @@ class RoomList extends Component {
     super(props);
     this.state = {};
   }
+
   render() {
     return (
       <ListGroup>
@@ -21,7 +22,6 @@ class RoomList extends Component {
           );
         })}
       </ListGroup>
-      
     );
   }
 }

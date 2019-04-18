@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import axios from "axios";
 import * as stylee from "./style.css";
 var moment = require("moment");
 
@@ -7,14 +7,26 @@ class Room extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      groupName: "",
+      roomName: "",
       lastMessage: "",
       time: moment(),
       roomImgURL: ""
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    axios
+      .get(`/api/chats/rooms/${this.props.roomID}`)
+      .then(response => {
+        // handle success
+
+        this.setState({ roomName: response.data.roomName });
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      });
+  }
   render() {
     return (
       <div>
@@ -33,7 +45,7 @@ class Room extends Component {
           <div className="left">
             <img src={this.state.roomImgURL} />
             <p>
-              {this.state.groupName} <br />
+              {this.state.roomName} <br />
               {this.state.lastMessage} <br />
             </p>
           </div>
