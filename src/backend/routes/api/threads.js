@@ -44,24 +44,22 @@ module.exports = passport => {
   router.post("/create", (req, res, next) => {
     Thread.create({ title: req.body.title, author_id: req.user.user_id })
       .then(thread => {
-        let post = {
+        let post_data = {
           posted_by: req.user.user_id,
           content: req.body.content,
           parent_id: thread.thread_id
         };
-        return post;
-      })
-      .then(post_data => {
-        Post.create({
+        return thread.createContent({
           content: post_data.content,
           posted_by: post_data.posted_by,
           parent_id: post_data.parent_id
-        }).then(post => {
-          console.log("Thread created.");
-          res.status(200).json({
-            thread_id: post.parent_id,
-            message: "Thread created."
-          });
+        });
+      })
+      .then(post => {
+        console.log("Thread created.");
+        res.status(200).json({
+          thread_id: post.parent_id,
+          message: "Thread created."
         });
       })
       .catch(err => {
@@ -118,11 +116,22 @@ module.exports = passport => {
   });
 
   router.patch("/:threadId/edit/score", (req, res, next) => {
-    Thread.findByPk(req.params.threadId).then(thread => {
-      thread.update({ score: req.body.score }).then(result => {
-        res.send(result.toJSON());
+    Thread.findByPk(req.params.threadId)
+      .then(thread => {
+        return thread.update({ score: req.body.score });
+      })
+      .then(thread => {
+        return thread.getContent();
+      })
+      .then(post => {
+        return post.update({ score: req.body.score });
+      })
+      .then(() => {
+        res.send("Update score done.");
+      })
+      .catch(err => {
+        console.error(err);
       });
-    });
   });
 
   return router;

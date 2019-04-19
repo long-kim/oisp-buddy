@@ -54,6 +54,17 @@
                     "onUpdate": "CASCADE",
                     "field": "parent_id",
                     "seqType": "Sequelize.INTEGER"
+                },
+                "content_of": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Threads",
+                        "key": "thread_id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "content_of",
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -108,6 +119,44 @@
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "field": "thread_id",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "subscriptions": {
+            "tableName": "subscriptions",
+            "schema": {
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "thread_id": {
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Threads",
+                        "key": "thread_id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "field": "thread_id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "user_id": {
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "field": "user_id",
                     "seqType": "Sequelize.INTEGER"
                 }
             },
@@ -289,44 +338,6 @@
                     "allowNull": false,
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
-                }
-            },
-            "indexes": []
-        },
-        "subscriptions": {
-            "tableName": "subscriptions",
-            "schema": {
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "thread_id": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Threads",
-                        "key": "thread_id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "thread_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "user_id": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Users",
-                        "key": "user_id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "user_id",
-                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []

@@ -26,10 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  
+
   Thread.associate = function(models) {
     Thread.belongsTo(models.User, { foreignKey: "author_id" });
     Thread.hasMany(models.Post, { foreignKey: "parent_id" });
+    Thread.hasOne(models.Post, { as: "Content", foreignKey: "content_of" });
     Thread.hasMany(models.Report, { foreignKey: "thread_id" });
     Thread.belongsToMany(models.User, {
       as: "Subscription",

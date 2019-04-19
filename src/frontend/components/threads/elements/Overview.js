@@ -93,7 +93,10 @@ class Overview extends Component {
           <div className="content">
             <Link
               className="thread-title"
-              to={`thread/${this.props.thread_id}`}
+              to={{
+                pathname: `thread/${this.props.thread_id}`,
+                state: this.state
+              }}
             >
               {this.props.title}
             </Link>

@@ -11,13 +11,14 @@ class Thread extends Component {
   static Create = Create;
   static Reply = ReplyForm;
   static Index = Index;
+  passedProps = this.props.location.state;
 
   constructor(props) {
     super(props);
     this.state = {
-      score: this.props.score || 0,
-      subscribed: false,
-      voted: 0,
+      score: this.passedProps.score,
+      subscribed: this.passedProps.subscribed,
+      voted: this.passedProps.voted,
       title: "",
       date: new Date(),
       posts: [],
@@ -28,7 +29,7 @@ class Thread extends Component {
     };
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     let thread_id = this.props.match.params.threadId;
     Axios.get(`/api/threads/view/${thread_id}/posts`).then(res => {
       const posts = res.data.posts;
@@ -179,6 +180,7 @@ class Thread extends Component {
               no={idx}
               delete={this.handleDeletePost}
               edit={this.handleEditPost}
+              parent_score={post.content_of !== null ? this.passedProps : null}
             />
           );
         })}

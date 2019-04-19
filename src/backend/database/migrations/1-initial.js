@@ -7,17 +7,17 @@ var Sequelize = require('sequelize');
  *
  * createTable "Users", deps: []
  * createTable "Threads", deps: [Users]
- * createTable "Posts", deps: [Users, Threads]
+ * createTable "Posts", deps: [Users, Threads, Threads]
  * createTable "Reports", deps: [Users, Threads]
- * createTable "thread_votes", deps: [Threads, Users]
  * createTable "subscriptions", deps: [Threads, Users]
+ * createTable "thread_votes", deps: [Threads, Users]
  *
  **/
 
 var info = {
     "revision": 1,
     "name": "initial",
-    "created": "2019-04-17T20:03:40.860Z",
+    "created": "2019-04-19T01:48:25.654Z",
     "comment": ""
 };
 
@@ -206,6 +206,17 @@ var migrationCommands = [{
                         "key": "thread_id"
                     },
                     "allowNull": true
+                },
+                "content_of": {
+                    "type": Sequelize.INTEGER,
+                    "field": "content_of",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "SET NULL",
+                    "references": {
+                        "model": "Threads",
+                        "key": "thread_id"
+                    },
+                    "allowNull": true
                 }
             },
             {}
@@ -272,14 +283,8 @@ var migrationCommands = [{
     {
         fn: "createTable",
         params: [
-            "thread_votes",
+            "subscriptions",
             {
-                "voted": {
-                    "type": Sequelize.INTEGER,
-                    "field": "voted",
-                    "allowNull": false,
-                    "defaultValue": 0
-                },
                 "createdAt": {
                     "type": Sequelize.DATE,
                     "field": "createdAt",
@@ -319,8 +324,14 @@ var migrationCommands = [{
     {
         fn: "createTable",
         params: [
-            "subscriptions",
+            "thread_votes",
             {
+                "voted": {
+                    "type": Sequelize.INTEGER,
+                    "field": "voted",
+                    "allowNull": false,
+                    "defaultValue": 0
+                },
                 "createdAt": {
                     "type": Sequelize.DATE,
                     "field": "createdAt",

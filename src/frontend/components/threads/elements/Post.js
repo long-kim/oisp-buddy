@@ -12,7 +12,7 @@ class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      score: this.props.score,
+      score: 0,
       voted: 0,
       posted_by: {},
       modal_is_open: false,
@@ -24,13 +24,27 @@ class Post extends Component {
   currentUser = false;
 
   componentDidMount() {
+    if (this.props.parent_score) {
+      const props = this.props.parent_score;
+      this.setState({
+        score: props.score,
+        voted: props.voted
+      });
+    }
     this.setState({
       current_user:
-        parseInt(localStorage.getItem("user_id")) === this.props.author
+        parseInt(localStorage.getItem("user_id")) === this.props.author,
+      score: this.props.score
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if (this.props.voted !== prevProps.voted) {
+      this.setState({ voted: this.props.voted });
+    }
+    if (this.props.score !== prevProps.score) {
+      this.setState({ score: this.props.score });
+    }
     if (this.state.edit_mode === true) {
       const post = document.getElementById(`${this.props.post_id}`);
       const text = post.getElementsByTagName("textarea")[0];
@@ -49,6 +63,9 @@ class Post extends Component {
     }
     this.setState({ score: score + val });
     this.setState({ voted: voted + val });
+    Axios.patch(`/api/posts/edit/${this.props.post_id}/score`, {
+      score: score + val
+    }).then(res => console.log(res));
   };
 
   focusReplyForm = () => {
@@ -137,9 +154,16 @@ class Post extends Component {
             closeOnDocumentClick
           >
             <ul>
-              <li>
-                <a href="#">Share</a>
-              </li>
+              <Popup
+                on="click"
+                trigger={<li>Share</li>}
+                modal={true}
+                closeOnDocumentClick
+                onOpen={this.openModal}
+                onClose={this.closeModal}
+                open={this.state.modal_is_open}
+              />
+
               <li onClick={this.focusReplyForm}>Quote</li>
               {this.state.current_user && (
                 <div className="divider" role="separator" />
@@ -193,7 +217,10 @@ class Post extends Component {
         </div>
         {!this.state.edit_mode && (
           <div className="post-control">
-            <div className="control-group vote">
+            <div
+              className="control-group vote"
+              style={this.props.parent_score && { pointerEvents: "none" }}
+            >
               <div className="control" onClick={this.updateScore.bind(this, 1)}>
                 <i
                   className="fa fa-angle-up"
