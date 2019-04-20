@@ -5,9 +5,11 @@ var Sequelize = require('sequelize');
 /**
  * Actions summary:
  *
+ * createTable "Topics", deps: []
  * createTable "Users", deps: []
  * createTable "Threads", deps: [Users]
  * createTable "Posts", deps: [Users, Threads, Threads]
+ * createTable "post_votes", deps: [Posts, Users]
  * createTable "Reports", deps: [Users, Threads]
  * createTable "subscriptions", deps: [Threads, Users]
  * createTable "thread_votes", deps: [Threads, Users]
@@ -17,11 +19,48 @@ var Sequelize = require('sequelize');
 var info = {
     "revision": 1,
     "name": "initial",
-    "created": "2019-04-19T01:48:25.654Z",
+    "created": "2019-04-19T22:32:53.650Z",
     "comment": ""
 };
 
 var migrationCommands = [{
+        fn: "createTable",
+        params: [
+            "Topics",
+            {
+                "id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "id",
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true
+                },
+                "name": {
+                    "type": Sequelize.STRING,
+                    "field": "name",
+                    "allowNull": false
+                },
+                "title": {
+                    "type": Sequelize.STRING,
+                    "field": "title",
+                    "defaultValue": "",
+                    "allowNull": false
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                }
+            },
+            {}
+        ]
+    },
+    {
         fn: "createTable",
         params: [
             "Users",
@@ -217,6 +256,53 @@ var migrationCommands = [{
                         "key": "thread_id"
                     },
                     "allowNull": true
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "post_votes",
+            {
+                "voted": {
+                    "type": Sequelize.INTEGER,
+                    "field": "voted",
+                    "allowNull": false,
+                    "defaultValue": 0
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                },
+                "post_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "post_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Posts",
+                        "key": "post_id"
+                    },
+                    "primaryKey": true
+                },
+                "user_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "user_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "primaryKey": true
                 }
             },
             {}
