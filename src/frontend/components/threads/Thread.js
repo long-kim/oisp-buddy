@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import Post from "./elements/Post";
 import Axios from "axios";
 import Moment from "react-moment";
+import Pagination from "react-js-pagination";
 
 class Thread extends Component {
   static Create = Create;
@@ -21,6 +22,9 @@ class Thread extends Component {
       voted: this.passedProps.voted,
       title: "",
       date: new Date(),
+      currentPage: 1,
+      totalPages: 0,
+      count: 0,
       posts: [],
       votes: [],
       headerResize: false,
@@ -30,38 +34,86 @@ class Thread extends Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     let thread_id = this.props.match.params.threadId;
-    Axios.get(`/api/threads/view/${thread_id}/posts`).then(res => {
-      const posts = res.data.posts;
-      if (this.state.newPost === true) {
+    if (this.state.currentPage !== prevState.currentPage) {
+      Axios.get(
+        `/api/threads/view/${thread_id}/posts?page=${this.state.currentPage}`
+      )
+        .then(res => {
+          const posts = res.data.posts;
+          this.setState({ posts: posts });
+          return Promise.resolve();
+        })
+        .then(() => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+        });
+    }
+    if (this.state.newPost === true) {
+      Axios.get(
+        `/api/threads/view/${thread_id}/posts?page=${this.state.currentPage}`
+      ).then(res => {
+        const posts = res.data.posts;
         this.setState({ posts: posts, newPost: false });
-      }
-      if (this.state.deletePost === true) {
-        this.setState({ posts: posts, deletePost: false });
-      }
-      if (this.state.editPost === true) {
-        this.setState({ posts: posts, editPost: false });
-      }
-    });
+      });
+    }
+    if (this.state.editPost === true) {
+      Axios.get(
+        `/api/threads/view/${thread_id}/posts?page=${this.state.currentPage}`
+      ).then(res => {
+        const posts = res.data.posts;
+        this.setState({ posts: posts, newPost: false });
+      });
+    }
+    if (this.state.deletePost === true) {
+      Axios.get(
+        `/api/threads/view/${thread_id}/posts?page=${this.state.currentPage}`
+      ).then(res => {
+        const posts = res.data.posts;
+        this.setState({ posts: posts, newPost: false });
+      });
+    }
   }
 
   componentDidMount() {
     let thread_id = this.props.match.params.threadId;
-    Axios.get(`/api/threads/view/${thread_id}`).then(res => {
-      this.setState({
-        title: res.data.title,
-        score: res.data.score,
-        date: res.data.createdAt
-      });
-    });
-    Axios.get(`/api/threads/view/${thread_id}/posts`).then(res => {
-      const posts = res.data.posts;
-      this.setState({ posts: posts });
-      Axios.get("/api/users/votes/post").then(res => {
+    Axios.get(`/api/threads/view/${thread_id}`)
+      .then(res => {
+        this.setState({
+          title: res.data.title,
+          score: res.data.score,
+          date: res.data.createdAt
+        });
+        return Promise.resolve();
+      })
+      .then(() => {
+        return Axios.get(`/api/threads/view/${thread_id}/posts/count`);
+      })
+      .then(res => {
+        this.setState({
+          count: res.data.count,
+          totalPages: Math.ceil(res.data.count / 10)
+        });
+        return Promise.resolve();
+      })
+      .then(() => {
+        return Axios.get(`/api/threads/view/${thread_id}/posts?page=1`);
+      })
+      .then(res => {
+        const posts = res.data.posts;
+        this.setState({ posts: posts });
+        return Promise.resolve();
+      })
+      .then(() => {
+        return Axios.get("/api/users/votes/post");
+      })
+      .then(res => {
         this.setState({ votes: res.data });
       });
-    });
+
     window.addEventListener("scroll", this.handleScroll);
   }
 
@@ -104,6 +156,10 @@ class Thread extends Component {
 
   handleEditPost = () => {
     this.setState({ editPost: true });
+  };
+
+  handlePageChange = page => {
+    this.setState({ currentPage: page });
   };
 
   updateScore = val => {
@@ -191,7 +247,7 @@ class Thread extends Component {
               author={post.posted_by}
               author_info={post.User}
               created={post.createdAt}
-              no={idx}
+              no={idx + (this.state.currentPage - 1) * 10}
               delete={this.handleDeletePost}
               edit={this.handleEditPost}
               voted={this.getVote(post.post_id)}
@@ -200,6 +256,17 @@ class Thread extends Component {
           );
         })}
         <div className="card-wrapper trans">
+          <Pagination
+            totalItemsCount={this.state.count}
+            onChange={this.handlePageChange}
+            activePage={this.state.currentPage}
+            prevPageText={`\uf104`}
+            nextPageText={`\uf105`}
+            itemClassNext="next"
+            itemClassPrev="prev"
+            itemClassFirst="first"
+            itemClassLast="last"
+          />
           <form id="thread-reply" onSubmit={this.handleSubmit}>
             <ReplyForm />
           </form>

@@ -1,10 +1,12 @@
 const router = require("express").Router();
 const models = require("../../database/models/index");
 const Thread = models.Thread;
-const User = models.User;
+const Post = models.Post;
 const ThreadVote = models.ThreadVoteModel;
+const PAGE_LIMIT = 10;
 
 module.exports = passport => {
+  const ThreadService = require("../../services/ThreadService")(passport);
   router.get("/index", (req, res, next) => {
     Thread.findAll({
       order: [["createdAt", "DESC"]]
@@ -26,14 +28,18 @@ module.exports = passport => {
   );
 
   router.get("/view/:threadId/posts", (req, res, next) => {
-    Thread.findByPk(req.params.threadId)
-      .then(thread => {
-        return thread.getPosts({ include: [{ model: User }] });
-      })
+    const offset = (req.query.page - 1) * PAGE_LIMIT;
+    ThreadService.getPosts(req.params.threadId, offset, PAGE_LIMIT)
       .then(posts => {
         res.json({ posts: posts.map(post => post.toJSON()) });
       })
       .catch(err => console.error(err));
+  });
+
+  router.get("/view/:threadId/posts/count", (req, res, next) => {
+    Post.count({ where: { parent_id: req.params.threadId } }).then(count => {
+      res.send({ count: count });
+    });
   });
 
   router.post("/create", (req, res, next) => {
