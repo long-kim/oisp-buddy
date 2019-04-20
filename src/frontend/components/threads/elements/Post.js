@@ -66,6 +66,9 @@ class Post extends Component {
     Axios.patch(`/api/posts/edit/${this.props.post_id}/score`, {
       score: score + val
     }).then(res => console.log(res));
+    Axios.post(`/api/posts/${this.props.post_id}/vote`, {
+      voted: voted + val
+    });
   };
 
   focusReplyForm = () => {

@@ -19,12 +19,20 @@ module.exports = passport => {
   });
 
   router.get("/votes/thread", (req, res, next) => {
-    UserService.getVotes(req, "thread").then(result => {
+    UserService.getThreadVotes(req).then(result => {
       res.send(
         result.map(vote => ({ thread_id: vote.thread_id, voted: vote.voted }))
       );
     });
   });
+
+  router.get("/votes/post", (req, res, next) => {
+    UserService.getPostVotes(req).then(result => {
+      res.send(
+        result.map(vote => ({ post_id: vote.post_id, voted: vote.voted }))
+      );
+    })
+  })
 
   return router;
 };

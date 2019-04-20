@@ -5,14 +5,14 @@ const Post = models.Post;
 module.exports = passport => {
   const PostService = require("../../services/PostService")(passport);
   router.post("/new", (req, res, next) => {
-    Post.create({
+    const data = {
       content: req.body.content,
       parent_id: req.body.thread_id,
       posted_by: req.user.user_id
-    })
+    };
+    PostService.addPost(data)
       .then(post => {
-        console.log("Post created.");
-        res.status(200).json({
+        res.json({
           post_id: post.post_id,
           message: "Post created."
         });
@@ -31,31 +31,36 @@ module.exports = passport => {
   });
 
   router.patch("/edit/:postId/score", (req, res, next) => {
-    Post.findByPk(req.params.postId)
-      .then(post => {
-        return post.update({ score: req.body.score });
-      })
-      .then(post => {
+    PostService.editPost({ score: req.body.score }, req.params.postId).then(
+      post => {
         res.json({ post_id: post.post_id, message: "Post edit successful" });
-      });
-    // PostService.editPost({ score: req.body.score }, req.params.postId).then(
-    //   post => {
-    //     res.json({ post_id: post.post_id, message: "Post edit successful" });
-    //   }
-    // );
+      }
+    );
   });
 
   router.delete("/delete/:postId", (req, res, next) => {
-    Post.destroy({
-      where: {
-        post_id: req.params.postId
-      }
-    }).then(post => {
-      console.log(post);
-      res.json({
-        post_id: post.post_id,
-        message: "Post deleted."
+    PostService.deletePost(req.params.postId)
+      .then(post => {
+        res.json({
+          post_id: post.post_id,
+          message: "Post deleted."
+        });
+      })
+      .catch(err => {
+        console.error(err);
       });
+  });
+
+  router.post("/:postId/vote", (req, res, next) => {
+    const user = req.user;
+    Post.findByPk(req.params.postId).then(post => {
+      if (post) {
+        user
+          .addPostVote(post, { through: { voted: req.body.voted } })
+          .then(vote => {
+            res.send("Voted");
+          });
+      }
     });
   });
 

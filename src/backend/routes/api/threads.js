@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const models = require("../../database/models/index");
 const Thread = models.Thread;
-const Post = models.Post;
 const User = models.User;
 const ThreadVote = models.ThreadVoteModel;
 
@@ -26,20 +25,16 @@ module.exports = passport => {
     }
   );
 
-  router.get(
-    "/view/:threadId/posts",
-
-    (req, res, next) => {
-      Thread.findByPk(req.params.threadId)
-        .then(thread => {
-          return thread.getPosts({ include: [{ model: User }] });
-        })
-        .then(posts => {
-          res.json({ posts: posts.map(post => post.toJSON()) });
-        })
-        .catch(err => console.error(err));
-    }
-  );
+  router.get("/view/:threadId/posts", (req, res, next) => {
+    Thread.findByPk(req.params.threadId)
+      .then(thread => {
+        return thread.getPosts({ include: [{ model: User }] });
+      })
+      .then(posts => {
+        res.json({ posts: posts.map(post => post.toJSON()) });
+      })
+      .catch(err => console.error(err));
+  });
 
   router.post("/create", (req, res, next) => {
     Thread.create({ title: req.body.title, author_id: req.user.user_id })

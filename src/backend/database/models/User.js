@@ -72,6 +72,11 @@ module.exports = (sequelize, DataTypes) => {
       through: models.ThreadVoteModel,
       foreignKey: "user_id"
     });
+    User.belongsToMany(models.Post, {
+      as: "PostVote",
+      through: models.PostVoteModel,
+      foreignKey: "user_id"
+    });
   };
 
   User.addHook("beforeSave", (user, _options) => {

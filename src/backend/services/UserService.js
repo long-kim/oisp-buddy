@@ -18,15 +18,11 @@ module.exports = passport => {
     return result;
   }
 
-  function getVotes(req, type) {
+  function getThreadVotes(req) {
     const user_id = req.user ? req.user.user_id : 4;
     const result = User.findByPk(user_id)
       .then(user => {
-        if (type === "thread") {
-          return user.getThreadVote();
-        } else {
-          return;
-        }
+        return user.getThreadVote();
       })
       .then(votes => {
         return Promise.resolve(votes.map(vote => vote.ThreadVoteModel));
@@ -38,5 +34,21 @@ module.exports = passport => {
     return result;
   }
 
-  return { getSubscription, getVotes };
+  function getPostVotes(req) {
+    const user_id = req.user ? req.user.user_id : 4;
+    const result = User.findByPk(user_id)
+      .then(user => {
+        return user.getPostVote();
+      })
+      .then(votes => {
+        return Promise.resolve(votes.map(vote => vote.PostVoteModel));
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
+
+    return result;
+  }
+
+  return { getSubscription, getThreadVotes, getPostVotes };
 };

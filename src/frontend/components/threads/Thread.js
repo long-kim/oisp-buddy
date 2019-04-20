@@ -22,6 +22,7 @@ class Thread extends Component {
       title: "",
       date: new Date(),
       posts: [],
+      votes: [],
       headerResize: false,
       newPost: false,
       deletePost: false,
@@ -57,6 +58,9 @@ class Thread extends Component {
     Axios.get(`/api/threads/view/${thread_id}/posts`).then(res => {
       const posts = res.data.posts;
       this.setState({ posts: posts });
+      Axios.get("/api/users/votes/post").then(res => {
+        this.setState({ votes: res.data });
+      });
     });
     window.addEventListener("scroll", this.handleScroll);
   }
@@ -112,6 +116,16 @@ class Thread extends Component {
     }
     this.setState({ score: score + val });
     this.setState({ voted: voted + val });
+  };
+
+  getVote = post_id => {
+    let result = 0;
+    for (let vote_obj of this.state.votes) {
+      if (vote_obj.post_id === post_id) {
+        result = vote_obj.voted;
+      }
+    }
+    return result;
   };
 
   render() {
@@ -180,6 +194,7 @@ class Thread extends Component {
               no={idx}
               delete={this.handleDeletePost}
               edit={this.handleEditPost}
+              voted={this.getVote(post.post_id)}
               parent_score={post.content_of !== null ? this.passedProps : null}
             />
           );
