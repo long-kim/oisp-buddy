@@ -17,7 +17,7 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    Axios.get("/api/threads/index", {
+    Axios.get(`/api/threads/index${this.props.location.search}`, {
       headers: { Authorization: `Bearer ` + localStorage.getItem("oisp-token") }
     })
       .then(res => {
@@ -41,6 +41,37 @@ class Index extends Component {
       .catch(err => {
         console.error(err);
       });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.search !== prevProps.location.search) {
+      Axios.get(`/api/threads/index${this.props.location.search}`, {
+        headers: {
+          Authorization: `Bearer ` + localStorage.getItem("oisp-token")
+        }
+      })
+        .then(res => {
+          this.setState({ threads: res.data.threads });
+          return Promise.resolve();
+        })
+        .then(() => {
+          return Axios.get("/api/users/subscriptions");
+        })
+        .then(res => {
+          console.log(res);
+          this.setState({ subs: res.data });
+          return Promise.resolve();
+        })
+        .then(() => {
+          return Axios.get("/api/users/votes/thread");
+        })
+        .then(res => {
+          this.setState({ votes: res.data });
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
   }
 
   getVote = thread_id => {
@@ -71,6 +102,7 @@ class Index extends Component {
               score={thread.score}
               title={thread.title}
               key={thread.thread_id}
+              topics={thread.Topics}
               sub={this.state.subs.indexOf(thread.thread_id) !== -1}
               voted={this.getVote(thread.thread_id)}
             />

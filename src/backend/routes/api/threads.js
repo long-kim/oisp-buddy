@@ -1,18 +1,35 @@
 const router = require("express").Router();
 const models = require("../../database/models/index");
+const _ = require("lodash");
 const Thread = models.Thread;
 const Post = models.Post;
+const Topic = models.Topic;
 const ThreadVote = models.ThreadVoteModel;
 const PAGE_LIMIT = 10;
 
 module.exports = passport => {
   const ThreadService = require("../../services/ThreadService")(passport);
   router.get("/index", (req, res, next) => {
-    Thread.findAll({
-      order: [["createdAt", "DESC"]]
-    }).then(thread => {
-      res.json({ threads: thread.map(thread => thread.toJSON()) });
-    });
+    if (!_.isEmpty(req.query)) {
+      const topic = req.query.topic;
+      Topic.findByPk(topic)
+        .then(topic => {
+          return topic.getThreads({
+            order: [["createdAt", "DESC"]],
+            include: [{ model: Topic }]
+          });
+        })
+        .then(threads => {
+          res.json({ threads: threads.map(thread => thread.toJSON()) });
+        });
+    } else {
+      Thread.findAll({
+        order: [["createdAt", "DESC"]],
+        include: [{ model: Topic }]
+      }).then(thread => {
+        res.json({ threads: thread.map(thread => thread.toJSON()) });
+      });
+    }
   });
 
   router.get(

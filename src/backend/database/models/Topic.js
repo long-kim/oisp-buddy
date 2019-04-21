@@ -18,10 +18,21 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: ""
+      },
+      desc: {
+        type: DataTypes.STRING,
+        defaultValue: ""
       }
     },
     {}
   );
+
+  Topic.associate = function(models) {
+    Topic.belongsToMany(models.Thread, {
+      through: models.ThreadTopicModel,
+      foreignKey: "topic_id"
+    })
+  }
 
   return Topic;
 };

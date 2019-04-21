@@ -12,6 +12,7 @@ var Sequelize = require('sequelize');
  * createTable "post_votes", deps: [Posts, Users]
  * createTable "Reports", deps: [Users, Threads]
  * createTable "subscriptions", deps: [Threads, Users]
+ * createTable "thread_topics", deps: [Threads, Topics]
  * createTable "thread_votes", deps: [Threads, Users]
  *
  **/
@@ -19,7 +20,7 @@ var Sequelize = require('sequelize');
 var info = {
     "revision": 1,
     "name": "initial",
-    "created": "2019-04-19T22:32:53.650Z",
+    "created": "2019-04-21T01:36:50.516Z",
     "comment": ""
 };
 
@@ -45,6 +46,11 @@ var migrationCommands = [{
                     "field": "title",
                     "defaultValue": "",
                     "allowNull": false
+                },
+                "desc": {
+                    "type": Sequelize.STRING,
+                    "field": "desc",
+                    "defaultValue": ""
                 },
                 "createdAt": {
                     "type": Sequelize.DATE,
@@ -400,6 +406,47 @@ var migrationCommands = [{
                     "references": {
                         "model": "Users",
                         "key": "user_id"
+                    },
+                    "primaryKey": true
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "thread_topics",
+            {
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                },
+                "thread_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "thread_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Threads",
+                        "key": "thread_id"
+                    },
+                    "primaryKey": true
+                },
+                "topic_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "topic_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Topics",
+                        "key": "id"
                     },
                     "primaryKey": true
                 }

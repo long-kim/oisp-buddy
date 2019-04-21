@@ -2,12 +2,20 @@
 
 body {
   background-color: #f0f0f0 !important;
+  min-height: 100vh !important;
+  #root {
+    min-height: 100vh;
+  }
 }
 
 .oisp-buddy {
   @import "./threads.scss";
   font-family: "LatoWeb";
   color: #373a3c;
+  min-height: 100vh;
+  .app {
+    min-height: 100vh;
+  }
   .primary-nav {
     height: 60px;
     z-index: 1070;

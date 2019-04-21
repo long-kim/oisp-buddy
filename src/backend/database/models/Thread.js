@@ -42,6 +42,10 @@ module.exports = (sequelize, DataTypes) => {
       through: models.ThreadVoteModel,
       foreignKey: "thread_id"
     });
+    Thread.belongsToMany(models.Topic, {
+      through: models.ThreadTopicModel,
+      foreignKey: "thread_id"
+    })
   };
 
   return Thread;

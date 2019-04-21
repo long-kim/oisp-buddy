@@ -262,6 +262,44 @@
             },
             "indexes": []
         },
+        "thread_topics": {
+            "tableName": "thread_topics",
+            "schema": {
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "thread_id": {
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Threads",
+                        "key": "thread_id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "field": "thread_id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "topic_id": {
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Topics",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "field": "topic_id",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "thread_votes": {
             "tableName": "thread_votes",
             "schema": {
@@ -329,6 +367,13 @@
                         "value": ""
                     },
                     "field": "title",
+                    "seqType": "Sequelize.STRING"
+                },
+                "desc": {
+                    "defaultValue": {
+                        "value": ""
+                    },
+                    "field": "desc",
                     "seqType": "Sequelize.STRING"
                 },
                 "createdAt": {

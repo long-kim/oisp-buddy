@@ -65,7 +65,7 @@ class Thread extends Component {
         `/api/threads/view/${thread_id}/posts?page=${this.state.currentPage}`
       ).then(res => {
         const posts = res.data.posts;
-        this.setState({ posts: posts, newPost: false });
+        this.setState({ posts: posts, editPost: false });
       });
     }
     if (this.state.deletePost === true) {
@@ -73,7 +73,7 @@ class Thread extends Component {
         `/api/threads/view/${thread_id}/posts?page=${this.state.currentPage}`
       ).then(res => {
         const posts = res.data.posts;
-        this.setState({ posts: posts, newPost: false });
+        this.setState({ posts: posts, deletePost: false });
       });
     }
   }
@@ -143,11 +143,13 @@ class Thread extends Component {
       thread_id: this.props.match.params.threadId,
       content: document.getElementsByName("content")[0].value
     };
-    Axios.post("/api/posts/new", data).then(res => {
-      console.log("Post created");
-      this.setState({ newPost: true });
-    });
-    document.getElementsByName("content")[0].value = "";
+    if (data.content !== "") {
+      Axios.post("/api/posts/new", data).then(res => {
+        console.log("Post created");
+        this.setState({ newPost: true });
+      });
+      document.getElementsByName("content")[0].value = "";
+    }
   };
 
   handleDeletePost = () => {
@@ -227,7 +229,7 @@ class Thread extends Component {
             <h3 className="title">{this.state.title}</h3>
             <p className="subtitle">
               <Moment format="MMMM DD, YYYY">{this.state.date}</Moment> -{" "}
-              {this.state.posts.length} posts
+              {this.state.count} posts
             </p>
             <div className="topics-wrapper">
               <a className="topic" href="./">
@@ -235,6 +237,17 @@ class Thread extends Component {
               </a>
             </div>
           </div>
+          <Pagination
+            totalItemsCount={this.state.count}
+            onChange={this.handlePageChange}
+            activePage={this.state.currentPage}
+            prevPageText={`\uf104`}
+            nextPageText={`\uf105`}
+            itemClassNext="next"
+            itemClassPrev="prev"
+            itemClassFirst="first"
+            itemClassLast="last"
+          />
         </div>
         {this.state.posts.map((post, idx) => {
           return (
@@ -270,6 +283,12 @@ class Thread extends Component {
           <form id="thread-reply" onSubmit={this.handleSubmit}>
             <ReplyForm />
           </form>
+          <div className="footer-text">
+            You can upload image to a public hosting website. We recommend&nbsp;
+            <a href="https://imgur.com/">imgur</a>.<br />
+            Learn BBCode <a href="https://www.bbcode.org/reference.php">here</a>
+            .
+          </div>
         </div>
       </Container>
     );

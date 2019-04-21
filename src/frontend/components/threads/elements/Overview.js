@@ -101,9 +101,17 @@ class Overview extends Component {
               {this.props.title}
             </Link>
             <div className="topics-wrapper">
-              <a className="topic" href="./">
-                asp.net
-              </a>
+              {this.props.topics.map((topic, idx) => {
+                return (
+                  <Link
+                    className="topic"
+                    to={`?topic=${topic.id}`}
+                    key={idx}
+                  >
+                    {topic.title}
+                  </Link>
+                );
+              })}
             </div>
           </div>
           <div className="control-group interact">
