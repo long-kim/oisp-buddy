@@ -185,6 +185,30 @@
           h3 {
             line-height: 1.75rem;
           }
+          .filter {
+            display: flex;
+            flex-direction: row;
+            font-size: 15px;
+            color: #777777;
+            margin-right: 10px;
+            transition: all 0.3s;
+            .topic-filter {
+              margin-right: 10px;
+              transition: all 0.3s;
+            }
+            .clear-filter {
+              overflow: hidden;
+              white-space: nowrap;
+              opacity: 1;
+              transition: all 0.3s;
+              width: 50px;
+              cursor: pointer;
+              &.hidden {
+                width: 0;
+                opacity: 0;
+              }
+            }
+          }
         }
       }
     }
@@ -364,7 +388,7 @@
             width: 80px;
             height: 30px;
             margin-right: 10px;
-            padding: 0 .5rem;
+            padding: 0 0.5rem;
             background-color: #a56a4b;
             color: #fff;
             font-size: 15px;

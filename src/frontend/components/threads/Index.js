@@ -12,7 +12,8 @@ class Index extends Component {
     this.state = {
       threads: [],
       subs: [],
-      votes: []
+      votes: [],
+      topic: ""
     };
   }
 
@@ -21,7 +22,7 @@ class Index extends Component {
       headers: { Authorization: `Bearer ` + localStorage.getItem("oisp-token") }
     })
       .then(res => {
-        this.setState({ threads: res.data.threads });
+        this.setState({ threads: res.data.threads, topic: res.data.topic });
         return Promise.resolve();
       })
       .then(() => {
@@ -43,6 +44,20 @@ class Index extends Component {
       });
   }
 
+  handleMouseEnter = () => {
+    const clear = document
+      .getElementById("filter")
+      .getElementsByClassName("clear-filter")[0];
+    clear.classList.remove("hidden");
+  };
+
+  handleMouseLeave = () => {
+    const clear = document
+      .getElementById("filter")
+      .getElementsByClassName("clear-filter")[0];
+    clear.classList.add("hidden");
+  };
+
   componentDidUpdate(prevProps) {
     if (this.props.location.search !== prevProps.location.search) {
       Axios.get(`/api/threads/index${this.props.location.search}`, {
@@ -51,7 +66,7 @@ class Index extends Component {
         }
       })
         .then(res => {
-          this.setState({ threads: res.data.threads });
+          this.setState({ threads: res.data.threads, topic: res.data.topic });
           return Promise.resolve();
         })
         .then(() => {
@@ -89,6 +104,24 @@ class Index extends Component {
       <Container className="index">
         <div className="card-wrapper header">
           <h3 className="mr-auto">Threads</h3>
+          {this.props.location.search !== "" && (
+            <div
+              className="filter"
+              id="filter"
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}
+            >
+              <span className="topic-filter">
+                Topic: {`${this.state.topic}`}
+              </span>
+              <div
+                className="clear-filter hidden"
+                onClick={this.handleClearFilter}
+              >
+                Clear <i className="fa fa-times" />
+              </div>
+            </div>
+          )}
           <Link className="post-anchor" to={`./create`}>
             <Button variant="primary" className="post-btn">
               New

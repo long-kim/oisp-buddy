@@ -12,15 +12,20 @@ module.exports = passport => {
   router.get("/index", (req, res, next) => {
     if (!_.isEmpty(req.query)) {
       const topic = req.query.topic;
+      let name;
       Topic.findByPk(topic)
         .then(topic => {
+          name = topic.title;
           return topic.getThreads({
             order: [["createdAt", "DESC"]],
             include: [{ model: Topic }]
           });
         })
         .then(threads => {
-          res.json({ threads: threads.map(thread => thread.toJSON()) });
+          res.json({
+            topic: name,
+            threads: threads.map(thread => thread.toJSON())
+          });
         });
     } else {
       Thread.findAll({
