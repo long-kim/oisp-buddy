@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
-import logo from "../../../assets/img/hcmut.svg";
+import logo from "../../../assets/img/buddy.svg";
 import Button from "react-bootstrap/Button";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Nav from "react-bootstrap/Nav";
@@ -27,12 +27,11 @@ class PrimaryNav extends Component {
           <Navbar.Brand>
             <img
               src={logo}
-              width="30"
-              height="30"
+              // width="30"
+              // height="30"
               className="d-inline-block align-top mr-2"
               alt=""
             />
-            Buddy
           </Navbar.Brand>
         </Link>
 

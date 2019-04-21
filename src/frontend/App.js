@@ -6,8 +6,6 @@ import "assets/fonts/Lato/latofonts.css";
 
 
 class App extends Component {
-
-  
   render() {
     return <Routes />;
   }

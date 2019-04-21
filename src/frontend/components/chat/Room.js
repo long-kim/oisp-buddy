@@ -18,12 +18,20 @@ class Room extends Component {
     axios
       .get(`/api/chats/rooms/${this.props.roomID}`)
       .then(response => {
-        // handle success
-
         this.setState({ roomName: response.data.roomName });
       })
       .catch(function(error) {
-        // handle error
+        console.log(error);
+      });
+    axios
+      .get(`/api/chats/rooms/${this.props.roomID}/last`)
+      .then(response => {
+        this.setState({
+          lastMessage: response.data.content,
+          time: moment(response.data.time)
+        });
+      })
+      .catch(function(error) {
         console.log(error);
       });
   }
@@ -50,7 +58,7 @@ class Room extends Component {
             </p>
           </div>
 
-          <div className="chat-time-sm">{this.state.time.format("LT")}</div>
+          <div className="chat-time-sm">{this.state.time.fromNow()}</div>
         </div>
       </div>
     );

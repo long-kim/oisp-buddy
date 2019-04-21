@@ -1,13 +1,18 @@
 const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema({
-  username: String,
+  userID: Number,
   time: Date,
   content: String
 });
 
 const roomSchema = new mongoose.Schema({
   roomID: Number,
+
+  messLength: {
+    type: Number,
+    default: 0
+  },
 
   participants: {
     type: [Number]

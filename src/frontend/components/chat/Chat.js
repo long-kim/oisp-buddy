@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import MessageList from "./MessageList";
-import FormInput from "./FormInput";
 import RoomList from "./RoomList";
 import { Button } from "react-bootstrap";
 import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
@@ -13,26 +11,21 @@ class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
-      userID: null,
+      userID: 1,
       roomlist: [],
       roomID: ""
     };
-  }
-
-  componentDidMount() {
     axios
-      .get("/api/chats/users/1")
+      .get(`/api/chats/users/${this.state.userID}`)
       .then(response => {
-        // handle success
-        // console.log(response.data);
         this.setState({ roomlist: response.data });
       })
       .catch(function(error) {
-        // handle error
         console.log(error);
       });
   }
+
+  componentDidMount() {}
 
   render() {
     return <RoomList roomlist={this.state.roomlist} />;

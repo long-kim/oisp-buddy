@@ -17,4 +17,12 @@ router.get("/mongo", (req, res) => {
   });
 });
 
+router.get("/mongo/:userID", (req, res) => {
+  User.findOne({ userID: req.params.userID }, function(err, doc) {
+    if (err) return console.error(err);
+  }).then(doc => {
+    res.json(doc.username);
+  });
+});
+
 module.exports = router;
