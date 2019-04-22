@@ -15,7 +15,7 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    return Axios.get("/api/threads/index").then(res =>
+    return Axios.get("/api/threads/index", {headers: {Authorization: `Bearer ` + localStorage.getItem("oisp-token")}}).then(res =>
       this.setState({ threads: res.data.threads })
     );
   }

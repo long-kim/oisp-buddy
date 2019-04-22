@@ -1,7 +1,8 @@
 const router = require("express").Router();
 
-router.use("/users", require("./users"));
-router.use("/threads", require("./threads"));
-router.use("/posts", require("./posts"));
-
-module.exports = router;
+module.exports = passport => {
+  router.use("/users", require("./users"));
+  router.use("/threads", require("./threads")(passport));
+  router.use("/posts", require("./posts")(passport));
+  return router;
+};

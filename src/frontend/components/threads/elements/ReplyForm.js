@@ -60,7 +60,7 @@ class ReplyForm extends Component {
 
   render() {
     return (
-      <div className="ReplyForm">
+      <div className="ReplyForm" id="reply_form">
         <Tabs
           id="reply"
           activeKey={this.state.active}
@@ -76,6 +76,11 @@ class ReplyForm extends Component {
                   placeholder="Type post content here"
                   name="content"
                   onChange={e => {
+                    this.setState({
+                      input: e.target.value
+                    });
+                  }}
+                  onFocus={e => {
                     this.setState({
                       input: e.target.value
                     });
@@ -280,6 +285,23 @@ class ReplyForm extends Component {
                 <i className="fa fa-barcode" />
               </OverlayTrigger>
             </li>
+            <li data-type="quote" onClick={this.insert}>
+              <OverlayTrigger
+                placement="top"
+                overlay={({
+                  placement,
+                  scheduleUpdate,
+                  arrowProps,
+                  ...props
+                }) => (
+                  <div className="mdedit-tooltip" {...props}>
+                    Quote
+                  </div>
+                )}
+              >
+                <i className="fa fa-quote-right" />
+              </OverlayTrigger>
+            </li>
             <label className="fsize-select select-wrapper">
               <span className="select-label">Font Size</span>
               <i className="fa fa-chevron-down" />
@@ -297,8 +319,21 @@ class ReplyForm extends Component {
             </label>
           </ul>
 
+          {this.props.edit && (
+            <div
+              className="control cancel-edit"
+              onClick={this.props.cancel}
+            >
+              Cancel
+            </div>
+          )}
           {!this.props.createThread && (
-            <Button variant="primary" size="sm" className="post-btn">
+            <Button
+              variant="primary"
+              size="sm"
+              className="post-btn"
+              type="submit"
+            >
               Post
             </Button>
           )}

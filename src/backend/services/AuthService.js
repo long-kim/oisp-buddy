@@ -1,4 +1,5 @@
 const models = require("backend/database/models");
+const jwt = require("jsonwebtoken");
 const User = models.User;
 
 module.exports = passport => {
@@ -49,8 +50,11 @@ module.exports = passport => {
           username: req.user.username
         }
       }).then(user => {
+        const token = jwt.sign({id: user.user_id }, process.env.JWT_SECRET);
         res.status(200).send({
           auth: true,
+          token: token,
+          user_id: user.user_id,
           message: "User signed in."
         });
       });
@@ -58,9 +62,10 @@ module.exports = passport => {
   }
 
   function logout(req, res, next) {
-    req.logOut();
+    req.logOut();  
     req.session = null;
-    res.status(400).send("Logged out.");
+    res.clearCookie("connect.sid");
+    res.status(200).send("Logged out.");
   }
 
   return { auth, register, login, logout };

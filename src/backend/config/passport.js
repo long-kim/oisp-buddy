@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const localStrategy = require("passport-local").Strategy;
+const JWTStrategy = require("passport-jwt").Strategy;
+const ExtractJWT = require("passport-jwt").ExtractJwt;
 const models = require("backend/database/models/index");
 const Op = require("sequelize").Op;
 
@@ -12,7 +14,11 @@ module.exports = passport => {
   });
 
   passport.deserializeUser((id, done) => {
-    models.User.findOne({ user_id: id }).then(user => {
+    models.User.findOne({
+      where: {
+        user_id: id
+      }
+    }).then(user => {
       done(null, user);
     });
   });
@@ -60,7 +66,7 @@ module.exports = passport => {
   );
 
   passport.use(
-    "auth",
+    "login",
     new localStrategy(
       {
         usernameField: "username",
@@ -91,6 +97,31 @@ module.exports = passport => {
         } catch (err) {
           done(err);
         }
+      }
+    )
+  );
+
+  passport.use(
+    "jwt",
+    new JWTStrategy(
+      {
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey: process.env.JWT_SECRET
+      },
+      (payload, done) => {
+        User.findByPk(payload.id)
+          .then(user => {
+            if (user) {
+              console.log("Found user");
+              done(null, user);
+            } else {
+              console.log("Not found.");
+              done(null, false);
+            }
+          })
+          .catch(err => {
+            done(err);
+          });
       }
     )
   );
