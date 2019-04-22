@@ -10,15 +10,14 @@ class MessageList extends Component {
       roomID: "",
       messages: [],
       participantsID: [],
-      partiArr: undefined
+      partiArr: undefined,
+      loadAllMess: false
     };
-
-    
 
     axios
       .get(`/api/chats/rooms/${this.props.roomID}/messages`)
-      .then(response => {
-        this.setState({ messages: response.data });
+      .then(async response => {
+        this.setState({ messages: response.data, loadAllMess: true });
       })
       .catch(function(error) {
         console.error(error);
@@ -34,7 +33,7 @@ class MessageList extends Component {
             await newArr.push({ key: element, value: response.data });
             // debugger;
             await this.setState({ partiArr: newArr });
-            console.log(this.state.partiArr);
+            // console.log(this.state.partiArr);
           });
         });
       })
@@ -43,7 +42,20 @@ class MessageList extends Component {
       });
   }
 
-  componentDidMount() {}
+  scrollToBottom = () => {
+    setTimeout(() => {
+      // this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+      this.messagesEnd.scrollIntoView({ behavior: "auto" });
+    }, 0);
+  };
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
 
   render() {
     // console.log(this.state.partiArr);
@@ -62,6 +74,13 @@ class MessageList extends Component {
               />
             );
           })}
+
+        <div
+          style={{ float: "left", clear: "both" }}
+          ref={el => {
+            this.messagesEnd = el;
+          }}
+        />
       </div>
     );
   }

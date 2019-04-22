@@ -27,7 +27,9 @@ class Message extends Component {
     return (
       <div className="message">
         <div className="message-username"> {this.state.username} </div>
-        <div className="message-text"> {this.props.message} </div>
+        <div className="box-mess">
+          <div className="message-text"> {this.props.message} </div>
+        </div>
       </div>
     );
   }

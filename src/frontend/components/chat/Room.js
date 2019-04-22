@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import * as stylee from "./style.css";
+
 var moment = require("moment");
 
 class Room extends Component {

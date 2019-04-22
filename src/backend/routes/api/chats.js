@@ -68,11 +68,11 @@ router.get("/rooms/:roomID/messages", (req, res) => {
     });
 });
 
-router.get("/rooms/:roomID/messagesMore", (req, res) => {
+router.get("/rooms/:roomID/messagesMore/:index/", (req, res) => {
   Room.findOne({ roomID: req.params.roomID }, function(err, room) {
     if (err) return console.error(err);
   })
-    .slice("messages", [-25, 5]) // Only get 7 lastest messages
+    .slice("messages", [res.params.index, 5]) // Only get 7 lastest messages
     .then(room => {
       res.json(room.messages);
     });

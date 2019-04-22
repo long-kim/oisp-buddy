@@ -9,7 +9,7 @@ import Page404 from "./components/404";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import Chat from "./components/chat/Chat";
-import ChatBox from "./components/chat/ChatBox";
+import ChatBox from "./components/chat/box/ChatBox";
 
 class Routes extends Component {
   render() {

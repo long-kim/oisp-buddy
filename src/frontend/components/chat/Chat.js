@@ -28,7 +28,11 @@ class Chat extends Component {
   componentDidMount() {}
 
   render() {
-    return <RoomList roomlist={this.state.roomlist} />;
+    return (
+      <div style={this.props.style_props} className="chat-popup-lst">
+        <RoomList roomlist={this.state.roomlist} />
+      </div>
+    );
   }
 }
 
