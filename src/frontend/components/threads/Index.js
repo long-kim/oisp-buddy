@@ -73,7 +73,6 @@ class Index extends Component {
           return Axios.get("/api/users/subscriptions");
         })
         .then(res => {
-          console.log(res);
           this.setState({ subs: res.data });
           return Promise.resolve();
         })
@@ -99,10 +98,14 @@ class Index extends Component {
     return result;
   };
 
+  handleClearFilter = () => {
+    this.props.history.push("/forum/index")
+  }
+
   render() {
     return (
       <Container className="index">
-        <div className="card-wrapper header">
+        <div className="card-wrapper header sticky">
           <h3 className="mr-auto">Threads</h3>
           {this.props.location.search !== "" && (
             <div

@@ -57,10 +57,27 @@ class Overview extends Component {
     this.setState({ voted: voted + val });
   };
 
+  showControl = () => {
+    const card = document.getElementById(this.props.thread_id);
+    const control = card.getElementsByClassName("interact")[0];
+    control.classList.remove("hidden");
+  };
+
+  hideControl = () => {
+    const card = document.getElementById(this.props.thread_id);
+    const control = card.getElementsByClassName("interact")[0];
+    control.classList.add("hidden");
+  }
+
   render() {
     return (
       <div className="overview">
-        <div className="card-wrapper">
+        <div
+          className="card-wrapper"
+          id={this.props.thread_id}
+          onMouseEnter={this.showControl}
+          onMouseLeave={this.hideControl}
+        >
           <div className="control-group score">
             <div className="control" onClick={this.updateScore.bind(this, 1)}>
               <i
@@ -103,18 +120,14 @@ class Overview extends Component {
             <div className="topics-wrapper">
               {this.props.topics.map((topic, idx) => {
                 return (
-                  <Link
-                    className="topic"
-                    to={`?topic=${topic.id}`}
-                    key={idx}
-                  >
+                  <Link className="topic" to={`?topic=${topic.id}`} key={idx}>
                     {topic.title}
                   </Link>
                 );
               })}
             </div>
           </div>
-          <div className="control-group interact">
+          <div className="control-group interact hidden">
             <div className="control" onClick={this.handleSubscribe}>
               <i
                 className="fa fa-star"

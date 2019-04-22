@@ -448,6 +448,10 @@
                     "field": "last_name",
                     "seqType": "Sequelize.STRING(60)"
                 },
+                "avatar": {
+                    "field": "avatar",
+                    "seqType": "Sequelize.STRING"
+                },
                 "dept": {
                     "field": "dept",
                     "seqType": "Sequelize.STRING(50)"

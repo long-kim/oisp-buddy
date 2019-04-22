@@ -150,19 +150,20 @@ body {
   .popup-content {
     border: unset !important;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16) !important;
+    background-color: #585858 !important;
     width: 80px !important;
     text-align: right !important;
     ul {
       list-style: none;
       padding: 2px;
-      color: #999999;
+      color: #aeaeae;
       margin-bottom: 0;
       li {
         &.delete:hover {
           color: #b45139;
         }
         &:hover {
-          color: #777777;
+          color: #dddddd;
           cursor: pointer;
         }
       }
@@ -170,7 +171,7 @@ body {
         height: 0;
         margin: 0.2rem 0;
         overflow: hidden;
-        border-top: 1px solid #e9ecef;
+        border-top: 1px solid #aeaeae;
       }
       a {
         text-decoration: none;
@@ -196,7 +197,7 @@ body {
         .header {
           width: 100%;
           padding: 0.75rem 1rem;
-          border-bottom: 1px solid #dddddd;
+          border-bottom: 1px solid #777777;
         }
         .content {
           width: 100%;
@@ -213,8 +214,11 @@ body {
           justify-content: flex-end;
           .control {
             font-size: 16px;
-            color: #dddddd;
+            color: #777777;
             transition-duration: 0.2s;
+            &:hover {
+              color: #999999;
+            }
             &:last-child {
               margin-left: 28px;
             }

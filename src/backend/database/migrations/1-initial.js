@@ -20,7 +20,7 @@ var Sequelize = require('sequelize');
 var info = {
     "revision": 1,
     "name": "initial",
-    "created": "2019-04-21T01:36:50.516Z",
+    "created": "2019-04-22T07:40:04.232Z",
     "comment": ""
 };
 
@@ -121,6 +121,10 @@ var migrationCommands = [{
                     "validate": {
                         "isAlpha": true
                     }
+                },
+                "avatar": {
+                    "type": Sequelize.STRING,
+                    "field": "avatar"
                 },
                 "dept": {
                     "type": Sequelize.STRING(50),

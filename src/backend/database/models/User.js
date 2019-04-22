@@ -48,6 +48,9 @@ module.exports = (sequelize, DataTypes) => {
           isAlpha: true
         }
       },
+      avatar: {
+        type: DataTypes.STRING
+      },
       dept: {
         type: DataTypes.STRING(50)
       },

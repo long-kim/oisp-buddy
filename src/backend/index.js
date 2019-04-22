@@ -4,6 +4,7 @@ require("dotenv").config();
 // Set up =====================================================================
 const express = require("express");
 const app = express();
+const path = require("path");
 const Sequelize = require("sequelize");
 const passport = require("passport");
 const flash = require("connect-flash");
@@ -42,13 +43,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cookieSession({
     secret: process.env.SESSION_KEY,
-    maxAge: 24 * 60 * 60 * 1000,
+    maxAge: 24 * 60 * 60 * 1000
   })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(express.static(path.join(__dirname, "public")));
 
 // Routes =====================================================================
 app.use(require("./routes")(passport));

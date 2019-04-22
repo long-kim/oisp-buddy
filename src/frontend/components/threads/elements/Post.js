@@ -16,11 +16,15 @@ class Post extends Component {
       voted: 0,
       posted_by: {},
       modal_is_open: false,
+      popup_is_open: false,
       current_user: false,
-      edit_mode: false
+      edit_mode: false,
+      avatarIsLoaded: false,
+      avatar: `${this.props.author_info.avatar}`
     };
   }
 
+  avatar = null;
   currentUser = false;
 
   componentDidMount() {
@@ -72,6 +76,7 @@ class Post extends Component {
   };
 
   focusReplyForm = () => {
+    this.setState({ popup_is_open: false });
     const quote = `[quote author_id=${this.props.author} name="${[
       this.props.author_info.first_name,
       this.props.author_info.last_name
@@ -89,19 +94,28 @@ class Post extends Component {
   };
 
   closeModal = () => {
-    this.setState({ modal_is_open: false });
+    this.setState({ modal_is_open: false, popup_is_open: false });
     document.getElementsByTagName("body")[0].style.overflow = "initial";
   };
 
   openEdit = () => {
-    this.setState({ edit_mode: true });
+    this.setState({ edit_mode: true, popup_is_open: false });
   };
 
   cancelEdit = () => {
     this.setState({ edit_mode: false });
   };
 
+  openPopup = () => {
+    this.setState({ popup_is_open: true });
+  };
+
+  closePopup = () => {
+    this.setState({ popup_is_open: false });
+  };
+
   handleEditPost = e => {
+    this.setState({ popup_is_open: false });
     e.preventDefault();
     const post = document.getElementById(`${this.props.post_id}`);
     const text = post.getElementsByTagName("textarea")[0];
@@ -126,7 +140,7 @@ class Post extends Component {
       <div className="card-wrapper post" id={this.props.post_id}>
         <div className="post-header">
           <div className="author-avatar">
-            <img src={img} alt="Avatar" />
+            <img src={this.state.avatar} alt="Avatar" />
           </div>
           <div className="header-content mr-auto">
             <div className="author-info">
@@ -155,6 +169,9 @@ class Post extends Component {
             on="click"
             arrow={false}
             closeOnDocumentClick
+            open={this.state.popup_is_open}
+            onOpen={this.openPopup}
+            onClose={this.closePopup}
           >
             <ul>
               <Popup
