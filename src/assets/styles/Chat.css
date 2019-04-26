@@ -12,6 +12,16 @@
   /* padding: 10px; */
 }
 
+.roomName-box {
+  background-color: #ffffff;
+  padding: 10px 30px;
+  
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  position: sticky;
+}
+
 .message .message-username {
   font-size: 12px;
   color: var(--main-text-color);

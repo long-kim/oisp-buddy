@@ -62,6 +62,7 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Thread, { foreignKey: "author_id" });
     User.hasMany(models.Post, { foreignKey: "posted_by" });
     User.hasMany(models.Report, { foreignKey: "reported_by" });
+    User.hasMany(models.Message, { foreignKey: "sent_by" });
   };
 
   User.addHook("beforeSave", (user, _options) => {

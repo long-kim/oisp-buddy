@@ -22,9 +22,11 @@ router.get("/rooms/:roomID", (req, res) => {
   //   res.json("Chat room api");
   Room.findOne({ roomID: req.params.roomID }, function(err, room) {
     if (err) return console.error(err);
-  }).then(doc => {
-    res.json(doc);
-  });
+  })
+    .select("roomName")
+    .then(doc => {
+      res.json(doc);
+    });
 });
 
 // router.get("/rooms/:roomID/participants", (req, res) => {

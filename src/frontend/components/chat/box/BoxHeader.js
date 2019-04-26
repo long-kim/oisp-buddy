@@ -8,7 +8,7 @@ class BoxHeader extends Component {
     };
   }
   render() {
-    return <div>{this.state.roomName}</div>;
+    return <div className="roomName-box">{this.state.roomName}</div>;
   }
 }
 

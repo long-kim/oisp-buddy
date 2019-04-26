@@ -10,14 +10,13 @@ class MessageList extends Component {
       roomID: "",
       messages: [],
       participantsID: [],
-      partiArr: undefined,
-      loadAllMess: false
+      partiArr: undefined
     };
 
     axios
       .get(`/api/chats/rooms/${this.props.roomID}/messages`)
-      .then(async response => {
-        this.setState({ messages: response.data, loadAllMess: true });
+      .then(response => {
+        this.setState({ messages: response.data });
       })
       .catch(function(error) {
         console.error(error);
@@ -31,9 +30,7 @@ class MessageList extends Component {
         response.data.forEach(element => {
           axios.get(`/api/users/mongo/${element}`).then(async response => {
             await newArr.push({ key: element, value: response.data });
-            // debugger;
             await this.setState({ partiArr: newArr });
-            // console.log(this.state.partiArr);
           });
         });
       })
