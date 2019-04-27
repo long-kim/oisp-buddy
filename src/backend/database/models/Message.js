@@ -24,17 +24,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      // status: {
-      //   type: DataTypes.BOOLEAN,
-      //   defaultValue: 0
-      // },
-      timestramp: DataTypes.DATE
+      timestramp: {
+        type: DataTypes.DATE,
+        allowNull: false
+      }
     },
     {}
   );
   Message.associate = function(models) {
     // associations can be defined here
-    // Message.belongsTo(models.Room, { foreignKey: "author_id" });
+    Message.belongsTo(models.Room, { foreignKey: "mess_id" });
+    Message.belongsTo(models.User, { foreignKey: "mess_id" });
     // Message.hasMany(models.Post, { foreignKey: "parent_id" });
     // Message.hasMany(models.Report, { foreignKey: "thread_id" });
   };
