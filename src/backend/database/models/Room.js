@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       roomName: {
         type: DataTypes.STRING,
         allowNull: false
+      },
+      messageLength: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
       }
       //   timestramp: {
       //     type: DataTypes.DATE,
