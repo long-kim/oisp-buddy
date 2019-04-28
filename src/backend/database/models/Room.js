@@ -1,4 +1,4 @@
-("use strict");
+'use strict';
 
 module.exports = (sequelize, DataTypes) => {
   const Room = sequelize.define(
@@ -18,17 +18,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         defaultValue: 0
       }
-      //   timestramp: {
-      //     type: DataTypes.DATE,
-      //     allowNull: false
-      //   }
     },
     {}
   );
-  Room.associate = function(models) {
+  Room.associate = function (models) {
     // associations can be defined here
-    Room.belongsToMany(models.User, { foreignKey: "room_id" });
+    Room.belongsToMany(models.User, { through: "UserRooms" });
     Room.hasMany(models.Message, { foreignKey: "room_id" });
   };
-  return Message;
+  return Room;
 };

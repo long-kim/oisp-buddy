@@ -117,7 +117,7 @@ class NavbarUser extends Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <Chat style_props={{ display: this.state.messPopUp }} />
+        {/* <Chat style_props={{ display: this.state.messPopUp }} /> */}
       </div>
     );
   }
