@@ -112,7 +112,7 @@ class Overview extends Component {
               className="thread-title"
               to={{
                 pathname: `thread/${this.props.thread_id}`,
-                state: this.state
+                state: {topics: this.props.topics, ...this.state}
               }}
             >
               {this.props.title}

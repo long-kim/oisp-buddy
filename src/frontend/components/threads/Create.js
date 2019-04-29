@@ -38,7 +38,7 @@ export class Create extends Component {
     return (
       <Container className="CreateThread">
         <Form id="form" method="POST" onSubmit={this.handleSubmit}>
-          <div className="card-wrapper header">
+          <div className="card-wrapper header sticky">
             <h3 className="mr-auto">Create new Thread</h3>
             <Button variant="primary" className="post-btn" type="submit">
               Post

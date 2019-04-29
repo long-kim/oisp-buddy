@@ -7,6 +7,7 @@ import Post from "./elements/Post";
 import Axios from "axios";
 import Moment from "react-moment";
 import Pagination from "react-js-pagination";
+import { Link } from "react-router-dom";
 
 class Thread extends Component {
   static Create = Create;
@@ -232,9 +233,13 @@ class Thread extends Component {
               {this.state.count} posts
             </p>
             <div className="topics-wrapper">
-              <a className="topic" href="./">
-                asp.net
-              </a>
+              {this.props.location.state.topics.map((topic, idx) => {
+                return (
+                  <Link className="topic" to={`?topic=${topic.id}`} key={idx}>
+                    {topic.title}
+                  </Link>
+                );
+              })}
             </div>
           </div>
           <Pagination

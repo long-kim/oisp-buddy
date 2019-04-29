@@ -13,6 +13,17 @@ body {
   font-family: "LatoWeb";
   color: #373a3c;
   min-height: 100vh;
+  .pc-only {
+    @include mobile {
+      display: none !important;
+    }
+  }
+  .sp-only {
+    display: none !important;
+    @include mobile {
+      display: block !important;
+    }
+  }
   .app {
     min-height: 100vh;
   }
@@ -122,6 +133,11 @@ body {
     }
   }
   .select-wrapper {
+    @include mobile {
+      font-size: 14px !important;
+      margin-right: 5px;
+      margin-bottom: 0 !important;
+    }
     align-items: center;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     background-color: #fff;
