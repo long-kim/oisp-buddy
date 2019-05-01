@@ -3,6 +3,9 @@
 const faker = require("faker");
 
 const seed_data = [];
+
+
+
 for (let i = 0; i < 30; ++i) {
   seed_data.push({
     content: faker.lorem.words(),

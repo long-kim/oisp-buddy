@@ -1,464 +1,461 @@
 {
-    "tables": {
-        "Messages": {
-            "tableName": "Messages",
-            "schema": {
-                "msg_id": {
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false,
-                    "field": "msg_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "content": {
-                    "allowNull": false,
-                    "field": "content",
-                    "seqType": "Sequelize.STRING"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "sender_id": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Users",
-                        "key": "user_id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "sender_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "room_id": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Rooms",
-                        "key": "room_id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "room_id",
-                    "seqType": "Sequelize.INTEGER"
-                }
-            },
-            "indexes": []
+  "tables": {
+    "Messages": {
+      "tableName": "Messages",
+      "schema": {
+        "msg_id": {
+          "autoIncrement": true,
+          "primaryKey": true,
+          "allowNull": false,
+          "field": "msg_id",
+          "seqType": "Sequelize.INTEGER"
         },
-        "Posts": {
-            "tableName": "Posts",
-            "schema": {
-                "post_id": {
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false,
-                    "field": "post_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "content": {
-                    "allowNull": false,
-                    "field": "content",
-                    "seqType": "Sequelize.STRING(2000)"
-                },
-                "score": {
-                    "allowNull": false,
-                    "defaultValue": {
-                        "value": 0
-                    },
-                    "field": "score",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "posted_by": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Users",
-                        "key": "user_id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "posted_by",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "parent_id": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Threads",
-                        "key": "thread_id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "parent_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "content_of": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Threads",
-                        "key": "thread_id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "content_of",
-                    "seqType": "Sequelize.INTEGER"
-                }
-            },
-            "indexes": []
+        "content": {
+          "allowNull": false,
+          "field": "content",
+          "seqType": "Sequelize.STRING"
         },
-        "post_votes": {
-            "tableName": "post_votes",
-            "schema": {
-                "voted": {
-                    "defaultValue": {
-                        "value": 0
-                    },
-                    "allowNull": false,
-                    "field": "voted",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "post_id": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Posts",
-                        "key": "post_id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "post_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "user_id": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Users",
-                        "key": "user_id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "user_id",
-                    "seqType": "Sequelize.INTEGER"
-                }
-            },
-            "indexes": []
+        "createdAt": {
+          "allowNull": false,
+          "field": "createdAt",
+          "seqType": "Sequelize.DATE"
         },
-        "Reports": {
-            "tableName": "Reports",
-            "indexes": []
+        "updatedAt": {
+          "allowNull": false,
+          "field": "updatedAt",
+          "seqType": "Sequelize.DATE"
         },
-        "Rooms": {
-            "tableName": "Rooms",
-            "indexes": []
+        "sender_id": {
+          "allowNull": true,
+          "references": {
+            "model": "Users",
+            "key": "user_id"
+          },
+          "onDelete": "SET NULL",
+          "onUpdate": "CASCADE",
+          "field": "sender_id",
+          "seqType": "Sequelize.INTEGER"
         },
-        "Rooms": {
-            "tableName": "Rooms",
-            "schema": {
-                "room_id": {
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false,
-                    "field": "room_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "name": {
-                    "allowNull": false,
-                    "field": "name",
-                    "seqType": "Sequelize.STRING"
-                },
-                "avatar": {
-                    "allowNull": true,
-                    "field": "avatar",
-                    "seqType": "Sequelize.STRING"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                }
-            },
-            "indexes": []
-        },
-        "subscriptions": {
-            "tableName": "subscriptions",
-            "schema": {
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "thread_id": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Threads",
-                        "key": "thread_id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "thread_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "user_id": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Users",
-                        "key": "user_id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "user_id",
-                    "seqType": "Sequelize.INTEGER"
-                }
-            },
-            "indexes": []
-        },
-        "Threads": {
-            "tableName": "Threads",
-            "indexes": []
-        },
-        "thread_topics": {
-            "tableName": "thread_topics",
-            "schema": {
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "thread_id": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Threads",
-                        "key": "thread_id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "thread_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "topic_id": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Topics",
-                        "key": "id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "topic_id",
-                    "seqType": "Sequelize.INTEGER"
-                }
-            },
-            "indexes": []
-        },
-        "thread_votes": {
-            "tableName": "thread_votes",
-            "schema": {
-                "voted": {
-                    "defaultValue": {
-                        "value": 0
-                    },
-                    "allowNull": false,
-                    "field": "voted",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "thread_id": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Threads",
-                        "key": "thread_id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "thread_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "user_id": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Users",
-                        "key": "user_id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "user_id",
-                    "seqType": "Sequelize.INTEGER"
-                }
-            },
-            "indexes": []
-        },
-        "Topics": {
-            "tableName": "Topics",
-            "schema": {
-                "id": {
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false,
-                    "field": "id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "name": {
-                    "allowNull": false,
-                    "field": "name",
-                    "seqType": "Sequelize.STRING"
-                },
-                "title": {
-                    "allowNull": false,
-                    "defaultValue": {
-                        "value": ""
-                    },
-                    "field": "title",
-                    "seqType": "Sequelize.STRING"
-                },
-                "desc": {
-                    "defaultValue": {
-                        "value": ""
-                    },
-                    "field": "desc",
-                    "seqType": "Sequelize.STRING"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                }
-            },
-            "indexes": []
-        },
-        "Users": {
-            "tableName": "Users",
-            "schema": {
-                "user_id": {
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false,
-                    "field": "user_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "username": {
-                    "unique": true,
-                    "validate": {
-                        "is": {},
-                        "len": [
-                            6,
-                            20
-                        ]
-                    },
-                    "allowNull": false,
-                    "field": "username",
-                    "seqType": "Sequelize.STRING(20)"
-                },
-                "email": {
-                    "unique": true,
-                    "allowNull": false,
-                    "validate": {
-                        "isEmail": true
-                    },
-                    "field": "email",
-                    "seqType": "Sequelize.STRING"
-                },
-                "password": {
-                    "allowNull": false,
-                    "field": "password",
-                    "seqType": "Sequelize.STRING"
-                },
-                "role": {
-                    "defaultValue": {
-                        "value": "user"
-                    },
-                    "allowNull": false,
-                    "field": "role",
-                    "seqType": "Sequelize.ENUM('user', 'admin')"
-                },
-                "first_name": {
-                    "validate": {
-                        "isAlpha": true
-                    },
-                    "field": "first_name",
-                    "seqType": "Sequelize.STRING(30)"
-                },
-                "last_name": {
-                    "validate": {
-                        "isAlpha": true
-                    },
-                    "field": "last_name",
-                    "seqType": "Sequelize.STRING(60)"
-                },
-                "avatar": {
-                    "field": "avatar",
-                    "seqType": "Sequelize.STRING"
-                },
-                "dept": {
-                    "field": "dept",
-                    "seqType": "Sequelize.STRING(50)"
-                },
-                "year": {
-                    "field": "year",
-                    "seqType": "Sequelize.TINYINT"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                }
-            },
-            "indexes": []
+        "room_id": {
+          "allowNull": true,
+          "references": {
+            "model": "Rooms",
+            "key": "room_id"
+          },
+          "onDelete": "SET NULL",
+          "onUpdate": "CASCADE",
+          "field": "room_id",
+          "seqType": "Sequelize.INTEGER"
         }
+      },
+      "indexes": []
     },
-    "revision": 1
+    "Posts": {
+      "tableName": "Posts",
+      "schema": {
+        "post_id": {
+          "autoIncrement": true,
+          "primaryKey": true,
+          "allowNull": false,
+          "field": "post_id",
+          "seqType": "Sequelize.INTEGER"
+        },
+        "content": {
+          "allowNull": false,
+          "field": "content",
+          "seqType": "Sequelize.STRING(2000)"
+        },
+        "score": {
+          "allowNull": false,
+          "defaultValue": {
+            "value": 0
+          },
+          "field": "score",
+          "seqType": "Sequelize.INTEGER"
+        },
+        "createdAt": {
+          "allowNull": false,
+          "field": "createdAt",
+          "seqType": "Sequelize.DATE"
+        },
+        "updatedAt": {
+          "allowNull": false,
+          "field": "updatedAt",
+          "seqType": "Sequelize.DATE"
+        },
+        "posted_by": {
+          "allowNull": true,
+          "references": {
+            "model": "Users",
+            "key": "user_id"
+          },
+          "onDelete": "SET NULL",
+          "onUpdate": "CASCADE",
+          "field": "posted_by",
+          "seqType": "Sequelize.INTEGER"
+        },
+        "parent_id": {
+          "allowNull": true,
+          "references": {
+            "model": "Threads",
+            "key": "thread_id"
+          },
+          "onDelete": "SET NULL",
+          "onUpdate": "CASCADE",
+          "field": "parent_id",
+          "seqType": "Sequelize.INTEGER"
+        },
+        "content_of": {
+          "allowNull": true,
+          "references": {
+            "model": "Threads",
+            "key": "thread_id"
+          },
+          "onDelete": "SET NULL",
+          "onUpdate": "CASCADE",
+          "field": "content_of",
+          "seqType": "Sequelize.INTEGER"
+        }
+      },
+      "indexes": []
+    },
+    "post_votes": {
+      "tableName": "post_votes",
+      "schema": {
+        "voted": {
+          "defaultValue": {
+            "value": 0
+          },
+          "allowNull": false,
+          "field": "voted",
+          "seqType": "Sequelize.INTEGER"
+        },
+        "createdAt": {
+          "allowNull": false,
+          "field": "createdAt",
+          "seqType": "Sequelize.DATE"
+        },
+        "updatedAt": {
+          "allowNull": false,
+          "field": "updatedAt",
+          "seqType": "Sequelize.DATE"
+        },
+        "post_id": {
+          "primaryKey": true,
+          "references": {
+            "model": "Posts",
+            "key": "post_id"
+          },
+          "onDelete": "CASCADE",
+          "onUpdate": "CASCADE",
+          "field": "post_id",
+          "seqType": "Sequelize.INTEGER"
+        },
+        "user_id": {
+          "primaryKey": true,
+          "references": {
+            "model": "Users",
+            "key": "user_id"
+          },
+          "onDelete": "CASCADE",
+          "onUpdate": "CASCADE",
+          "field": "user_id",
+          "seqType": "Sequelize.INTEGER"
+        }
+      },
+      "indexes": []
+    },
+    "Reports": {
+      "tableName": "Reports",
+      "indexes": []
+    },
+    "Rooms": {
+      "tableName": "Rooms",
+      "indexes": []
+    },
+    "Rooms": {
+      "tableName": "Rooms",
+      "schema": {
+        "room_id": {
+          "autoIncrement": true,
+          "primaryKey": true,
+          "allowNull": false,
+          "field": "room_id",
+          "seqType": "Sequelize.INTEGER"
+        },
+        "name": {
+          "allowNull": false,
+          "field": "name",
+          "seqType": "Sequelize.STRING"
+        },
+        "avatar": {
+          "allowNull": true,
+          "field": "avatar",
+          "seqType": "Sequelize.STRING"
+        },
+        "createdAt": {
+          "allowNull": false,
+          "field": "createdAt",
+          "seqType": "Sequelize.DATE"
+        },
+        "updatedAt": {
+          "allowNull": false,
+          "field": "updatedAt",
+          "seqType": "Sequelize.DATE"
+        }
+      },
+      "indexes": []
+    },
+    "subscriptions": {
+      "tableName": "subscriptions",
+      "schema": {
+        "createdAt": {
+          "allowNull": false,
+          "field": "createdAt",
+          "seqType": "Sequelize.DATE"
+        },
+        "updatedAt": {
+          "allowNull": false,
+          "field": "updatedAt",
+          "seqType": "Sequelize.DATE"
+        },
+        "thread_id": {
+          "primaryKey": true,
+          "references": {
+            "model": "Threads",
+            "key": "thread_id"
+          },
+          "onDelete": "CASCADE",
+          "onUpdate": "CASCADE",
+          "field": "thread_id",
+          "seqType": "Sequelize.INTEGER"
+        },
+        "user_id": {
+          "primaryKey": true,
+          "references": {
+            "model": "Users",
+            "key": "user_id"
+          },
+          "onDelete": "CASCADE",
+          "onUpdate": "CASCADE",
+          "field": "user_id",
+          "seqType": "Sequelize.INTEGER"
+        }
+      },
+      "indexes": []
+    },
+    "Threads": {
+      "tableName": "Threads",
+      "indexes": []
+    },
+    "thread_topics": {
+      "tableName": "thread_topics",
+      "schema": {
+        "createdAt": {
+          "allowNull": false,
+          "field": "createdAt",
+          "seqType": "Sequelize.DATE"
+        },
+        "updatedAt": {
+          "allowNull": false,
+          "field": "updatedAt",
+          "seqType": "Sequelize.DATE"
+        },
+        "thread_id": {
+          "primaryKey": true,
+          "references": {
+            "model": "Threads",
+            "key": "thread_id"
+          },
+          "onDelete": "CASCADE",
+          "onUpdate": "CASCADE",
+          "field": "thread_id",
+          "seqType": "Sequelize.INTEGER"
+        },
+        "topic_id": {
+          "primaryKey": true,
+          "references": {
+            "model": "Topics",
+            "key": "id"
+          },
+          "onDelete": "CASCADE",
+          "onUpdate": "CASCADE",
+          "field": "topic_id",
+          "seqType": "Sequelize.INTEGER"
+        }
+      },
+      "indexes": []
+    },
+    "thread_votes": {
+      "tableName": "thread_votes",
+      "schema": {
+        "voted": {
+          "defaultValue": {
+            "value": 0
+          },
+          "allowNull": false,
+          "field": "voted",
+          "seqType": "Sequelize.INTEGER"
+        },
+        "createdAt": {
+          "allowNull": false,
+          "field": "createdAt",
+          "seqType": "Sequelize.DATE"
+        },
+        "updatedAt": {
+          "allowNull": false,
+          "field": "updatedAt",
+          "seqType": "Sequelize.DATE"
+        },
+        "thread_id": {
+          "primaryKey": true,
+          "references": {
+            "model": "Threads",
+            "key": "thread_id"
+          },
+          "onDelete": "CASCADE",
+          "onUpdate": "CASCADE",
+          "field": "thread_id",
+          "seqType": "Sequelize.INTEGER"
+        },
+        "user_id": {
+          "primaryKey": true,
+          "references": {
+            "model": "Users",
+            "key": "user_id"
+          },
+          "onDelete": "CASCADE",
+          "onUpdate": "CASCADE",
+          "field": "user_id",
+          "seqType": "Sequelize.INTEGER"
+        }
+      },
+      "indexes": []
+    },
+    "Topics": {
+      "tableName": "Topics",
+      "schema": {
+        "id": {
+          "autoIncrement": true,
+          "primaryKey": true,
+          "allowNull": false,
+          "field": "id",
+          "seqType": "Sequelize.INTEGER"
+        },
+        "name": {
+          "allowNull": false,
+          "field": "name",
+          "seqType": "Sequelize.STRING"
+        },
+        "title": {
+          "allowNull": false,
+          "defaultValue": {
+            "value": ""
+          },
+          "field": "title",
+          "seqType": "Sequelize.STRING"
+        },
+        "desc": {
+          "defaultValue": {
+            "value": ""
+          },
+          "field": "desc",
+          "seqType": "Sequelize.STRING"
+        },
+        "createdAt": {
+          "allowNull": false,
+          "field": "createdAt",
+          "seqType": "Sequelize.DATE"
+        },
+        "updatedAt": {
+          "allowNull": false,
+          "field": "updatedAt",
+          "seqType": "Sequelize.DATE"
+        }
+      },
+      "indexes": []
+    },
+    "Users": {
+      "tableName": "Users",
+      "schema": {
+        "user_id": {
+          "autoIncrement": true,
+          "primaryKey": true,
+          "allowNull": false,
+          "field": "user_id",
+          "seqType": "Sequelize.INTEGER"
+        },
+        "username": {
+          "unique": true,
+          "validate": {
+            "is": {},
+            "len": [6, 20]
+          },
+          "allowNull": false,
+          "field": "username",
+          "seqType": "Sequelize.STRING(20)"
+        },
+        "email": {
+          "unique": true,
+          "allowNull": false,
+          "validate": {
+            "isEmail": true
+          },
+          "field": "email",
+          "seqType": "Sequelize.STRING"
+        },
+        "password": {
+          "allowNull": false,
+          "field": "password",
+          "seqType": "Sequelize.STRING"
+        },
+        "role": {
+          "defaultValue": {
+            "value": "user"
+          },
+          "allowNull": false,
+          "field": "role",
+          "seqType": "Sequelize.ENUM('user', 'admin')"
+        },
+        "first_name": {
+          "validate": {
+            "isAlpha": true
+          },
+          "field": "first_name",
+          "seqType": "Sequelize.STRING(30)"
+        },
+        "last_name": {
+          "validate": {
+            "isAlpha": true
+          },
+          "field": "last_name",
+          "seqType": "Sequelize.STRING(60)"
+        },
+        "avatar": {
+          "field": "avatar",
+          "seqType": "Sequelize.STRING"
+        },
+        "dept": {
+          "field": "dept",
+          "seqType": "Sequelize.STRING(50)"
+        },
+        "year": {
+          "field": "year",
+          "seqType": "Sequelize.TINYINT"
+        },
+        "createdAt": {
+          "allowNull": false,
+          "field": "createdAt",
+          "seqType": "Sequelize.DATE"
+        },
+        "updatedAt": {
+          "allowNull": false,
+          "field": "updatedAt",
+          "seqType": "Sequelize.DATE"
+        }
+      },
+      "indexes": []
+    }
+  },
+  "revision": 1
 }

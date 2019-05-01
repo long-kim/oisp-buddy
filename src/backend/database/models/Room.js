@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true
     }
   );
-  
-  Room.associate = function (models) {
+
+  Room.associate = function(models) {
     // associations can be defined here
     Room.belongsToMany(models.User, {
       through: "user_rooms",
