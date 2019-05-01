@@ -61,10 +61,11 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
 
-  User.associate = function(models) {
+  User.associate = function (models) {
     User.hasMany(models.Thread, { foreignKey: "author_id" });
     User.hasMany(models.Post, { foreignKey: "posted_by" });
     User.hasMany(models.Report, { foreignKey: "reported_by" });
+    User.hasMany(models.Message, { foreignKey: "sender_id" });
     User.belongsToMany(models.Thread, {
       as: "Subscription",
       through: models.SubscriptionModel,
@@ -79,6 +80,10 @@ module.exports = (sequelize, DataTypes) => {
       as: "PostVote",
       through: models.PostVoteModel,
       foreignKey: "user_id"
+    });
+    User.belongsToMany(models.Room, {
+      through: "user_rooms",
+      foreignKey: "room_id"
     });
   };
 

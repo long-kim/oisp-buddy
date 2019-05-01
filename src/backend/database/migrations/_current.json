@@ -1,5 +1,55 @@
 {
     "tables": {
+        "Messages": {
+            "tableName": "Messages",
+            "schema": {
+                "msg_id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "allowNull": false,
+                    "field": "msg_id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "content": {
+                    "allowNull": false,
+                    "field": "content",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "sender_id": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "sender_id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "room_id": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Rooms",
+                        "key": "room_id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "room_id",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "Posts": {
             "tableName": "Posts",
             "schema": {
@@ -166,6 +216,39 @@
                     "onUpdate": "CASCADE",
                     "field": "thread_id",
                     "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "Rooms": {
+            "tableName": "Rooms",
+            "schema": {
+                "room_id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "allowNull": false,
+                    "field": "room_id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "name": {
+                    "allowNull": false,
+                    "field": "name",
+                    "seqType": "Sequelize.STRING"
+                },
+                "avatar": {
+                    "allowNull": true,
+                    "field": "avatar",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
                 }
             },
             "indexes": []
@@ -469,6 +552,44 @@
                     "allowNull": false,
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "user_rooms": {
+            "tableName": "user_rooms",
+            "schema": {
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "user_id": {
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Rooms",
+                        "key": "room_id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "field": "user_id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "room_id": {
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "field": "room_id",
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
