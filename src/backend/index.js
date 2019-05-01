@@ -4,6 +4,7 @@ require("dotenv").config();
 // Set up =====================================================================
 const express = require("express");
 const app = express();
+const path = require("path");
 const Sequelize = require("sequelize");
 const passport = require("passport");
 const flash = require("connect-flash");
@@ -57,6 +58,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(express.static(path.join(__dirname, "public")));
 
 // Routes =====================================================================
 app.use(require("./routes")(passport));

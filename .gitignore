@@ -91,3 +91,4 @@ yarn-error.log*
 
 # Visual Studio
 .vs/
+src/backend/database/config/config.json

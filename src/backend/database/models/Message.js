@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 module.exports = (sequelize, DataTypes) => {
   const Message = sequelize.define(
     "Message",
     {
-      mess_id: {
+      msg_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -13,18 +13,16 @@ module.exports = (sequelize, DataTypes) => {
       content: {
         type: DataTypes.STRING,
         allowNull: false
-      },
-      timestramp: {
-        type: DataTypes.DATE,
-        allowNull: false
       }
     },
-    {}
+    {
+      timestamps: true
+    }
   );
-  Message.associate = function (models) {
+  Message.associate = function(models) {
     // associations can be defined here
-    Message.belongsTo(models.Room, { foreignKey: "mess_id" });
-    Message.belongsTo(models.User, { foreignKey: "mess_id" });
+    Message.belongsTo(models.User, { foreignKey: "sender_id" });
+    Message.belongsTo(models.Room, { foreignKey: "room_id" });
   };
   return Message;
 };

@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Axios from "axios";
-import { Redirect } from "react-router";
 
 class Admin extends Component {
   constructor(props) {
@@ -8,7 +6,7 @@ class Admin extends Component {
     this.state = {
       number: 0,
       isLoading: true,
-      error: true,
+      error: true
     };
     this.handleClick = this.handleClick.bind(this);
   }
