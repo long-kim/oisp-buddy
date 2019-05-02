@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         },
         allowNull: false
       },
+      avatar: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
       email: {
         type: DataTypes.STRING,
         unique: true,
@@ -58,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
 
-  User.associate = function (models) {
+  User.associate = function(models) {
     User.hasMany(models.Thread, { foreignKey: "author_id" });
     User.hasMany(models.Post, { foreignKey: "posted_by" });
     User.hasMany(models.Report, { foreignKey: "reported_by" });
@@ -80,7 +84,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     User.belongsToMany(models.Room, {
       through: "user_rooms",
-      foreignKey: "room_id"
+      foreignKey: "user_id"
     });
   };
 

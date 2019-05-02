@@ -11,7 +11,9 @@ const seed_data = [];
 for (let i = 0; i < 15; i++) {
   seed_data.push({
     name: toTitleCase(faker.lorem.words(Math.floor(Math.random() * 2) + 2)),
-    avatar: faker.image.avatar()
+    avatar: faker.image.avatar(),
+    createdAt: new Date(),
+    updatedAt: new Date()
   });
 }
 

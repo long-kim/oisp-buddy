@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 const bcrypt = require("bcrypt");
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    const seed_pwd = bcrypt.hashSync("123456", 10)
+    const seed_pwd = bcrypt.hashSync("123456", 10);
     return queryInterface.bulkInsert("Users", [
       {
         username: "longkh",
@@ -22,6 +22,16 @@ module.exports = {
         first_name: "Long",
         last_name: "Kim",
         avatar: "/images/avatars/avatar_long.jpg",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        username: "jimtran98",
+        email: "jimtran98@gmail.com",
+        password: seed_pwd,
+        first_name: "Thinh",
+        last_name: "Tran",
+        avatar: "/images/avatars/avatar_jim.jpg",
         createdAt: new Date(),
         updatedAt: new Date()
       },

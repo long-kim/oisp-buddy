@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Room.belongsToMany(models.User, {
       through: "user_rooms",
-      foreignKey: "user_id"
+      foreignKey: "room_id"
     });
     Room.hasMany(models.Message, { foreignKey: "room_id" });
   };
