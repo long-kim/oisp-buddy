@@ -37,5 +37,5 @@ Including two collections
 ]
 
 User.getRooms()
-Room.getMessages()
+Room.getMsg()
 User.send(roomid, message)

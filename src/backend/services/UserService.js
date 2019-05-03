@@ -18,6 +18,27 @@ module.exports = passport => {
     return result;
   }
 
+  //---------------
+  // Chat API here
+
+  function getRooms(req) {
+    const user_id = req.user ? req.user.user_id : 1;
+    const result = User.findByPk(user_id)
+      .then(user => {
+        return user.getRooms();
+      })
+      .then(rooms => {
+        return Promise.resolve(rooms);
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
+
+    return result;
+  }
+
+  //---------------
+
   function getThreadVotes(req) {
     const user_id = req.user ? req.user.user_id : 4;
     const result = User.findByPk(user_id)
@@ -50,5 +71,5 @@ module.exports = passport => {
     return result;
   }
 
-  return { getSubscription, getThreadVotes, getPostVotes };
+  return { getSubscription, getThreadVotes, getPostVotes, getRooms };
 };

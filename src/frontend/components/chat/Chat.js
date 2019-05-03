@@ -11,12 +11,10 @@ class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userID: 1,
-      roomlist: [],
-      roomID: ""
+      roomlist: []
     };
     axios
-      .get(`/api/chats/users/${this.state.userID}`)
+      .get(`/api/chats/`)
       .then(response => {
         this.setState({ roomlist: response.data });
       })
@@ -24,8 +22,6 @@ class Chat extends Component {
         console.log(error);
       });
   }
-
-  componentDidMount() {}
 
   render() {
     return (

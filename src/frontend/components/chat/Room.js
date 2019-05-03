@@ -7,34 +7,25 @@ class Room extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      roomName: "",
       lastMessage: "",
-      time: moment(),
-      roomImgURL: ""
+      time: moment().format("LT")
     };
+
+    axios
+      .get(`/api/chats/${this.props.id}/last`)
+      .then(response => {
+        // console.log(response.data.content);
+        this.setState({
+          lastMessage: response.data[0].content,
+          time: moment(response.data[0].createdAt).format("LT")
+        });
+        // debugger;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
-  componentDidMount() {
-    axios
-      .get(`/api/chats/rooms/${this.props.roomID}`)
-      .then(response => {
-        this.setState({ roomName: response.data.roomName });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    axios
-      .get(`/api/chats/rooms/${this.props.roomID}/last`)
-      .then(response => {
-        this.setState({
-          lastMessage: response.data.content,
-          time: moment(response.data.time)
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
   render() {
     return (
       <div>
@@ -51,14 +42,14 @@ class Room extends Component {
 
         <div className="chat">
           <div className="left">
-            <img src={this.state.roomImgURL} />
-            <p>
-              {this.state.roomName} <br />
+            <img src={this.props.avatar} />
+            <div>
+              <div className="roomName">{this.props.name}</div>
               {this.state.lastMessage} <br />
-            </p>
+            </div>
           </div>
 
-          <div className="chat-time-sm">{this.state.time.fromNow()}</div>
+          <div className="chat-time-sm">{this.state.time}</div>
         </div>
       </div>
     );

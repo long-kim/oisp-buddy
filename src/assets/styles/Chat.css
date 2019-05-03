@@ -15,7 +15,7 @@
 .roomName-box {
   background-color: #ffffff;
   padding: 10px 30px;
-  
+
   border: none;
   border-radius: 0;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
@@ -75,6 +75,7 @@
 }
 
 .chat {
+  color: black;
   margin: auto;
   column-count: 2;
   column-gap: 0px;
@@ -85,12 +86,19 @@
 .left > img {
   border-radius: 50%;
   margin-right: 15px;
+
+  width: 48px;
+  height: 48px;
 }
 
 .left > div {
   /* display: flex;
     position: relative; */
   align-items: left;
+}
+
+.roomName {
+  font-weight: 700;
 }
 
 .left {
