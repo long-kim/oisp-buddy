@@ -13,13 +13,14 @@
 }
 
 .roomName-box {
+  display: flex;
   background-color: #ffffff;
-  padding: 10px 30px;
-
+  padding: 8px 8px;
   border: none;
   border-radius: 0;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
   position: sticky;
+  align-items: center;
 }
 
 .message .message-username {
@@ -50,20 +51,11 @@
   /* word-wrap: break-word; */
 }
 
-.message-list {
-  box-sizing: border-box;
-  padding-left: 6px;
-  width: 100%;
-  height: 270px;
-  overflow: scroll;
-  background: var(--secondary-color);
-  /* box-shadow: #000000; */
-}
-
 .chat-popup-lst {
   position: absolute;
   width: 430px;
   right: 5%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
   /* display: none; */
 }
 
@@ -71,7 +63,7 @@
   position: absolute;
   bottom: 0%;
   width: 284px;
-  right: 0%;
+  right: 5%;
 }
 
 .chat {
@@ -86,7 +78,6 @@
 .left > img {
   border-radius: 50%;
   margin-right: 15px;
-
   width: 48px;
   height: 48px;
 }

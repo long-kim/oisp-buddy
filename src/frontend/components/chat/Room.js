@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import ChatBox from "./box/ChatBox";
 
 var moment = require("moment");
 
@@ -8,7 +9,9 @@ class Room extends Component {
     super(props);
     this.state = {
       lastMessage: "",
-      time: moment().format("LT")
+      time: moment().format("LT"),
+      boxHidden: false,
+      info: {}
     };
 
     axios
@@ -24,22 +27,22 @@ class Room extends Component {
       .catch(function(error) {
         console.log(error);
       });
+
+    axios
+      .get(`/api/chats/${this.props.id}/info`)
+      .then(response => {
+        this.setState({
+          info: response.data
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   render() {
     return (
       <div>
-        {/* <div className="room-lst-left">
-          <div className="room-small-avt">
-            <img src={this.state.roomImgURL} />
-          </div>
-          <div className="room-info">
-            <div className="room-name-sm">{this.state.groupName}</div>
-            <div className="room-last-ms"> {this.state.lastMessage} </div>
-          </div>
-        </div>
-        <div className="room-lst-right"> {this.state.time.format("LT")}</div> */}
-
         <div className="chat">
           <div className="left">
             <img src={this.props.avatar} />
@@ -51,6 +54,10 @@ class Room extends Component {
 
           <div className="chat-time-sm">{this.state.time}</div>
         </div>
+
+        {/* {this.state.boxHidden && (
+          <ChatBox name={this.props.name} id={this.props.id} />
+        )} */}
       </div>
     );
   }

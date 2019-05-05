@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import FormInput from "./FormInput";
+
 import axios from "axios";
 import MessageList from "./MessageList";
 import BoxHeader from "./BoxHeader.js";
@@ -11,35 +11,33 @@ class ChatBox extends Component {
       roomName: undefined,
       messages: [],
       userID: 1,
-      roomID: this.props.match.params.roomID
+      roomID: this.props.match.params.roomID,
+      avatar: ""
     };
-    ///api/chats/rooms/1/
-    ///chat/api/chats/rooms/1
+
     axios
-      .get(`/api/chats/rooms/${this.state.roomID}`)
+      .get(`/api/chats/${this.state.roomID}/info`)
       .then(response => {
-        this.setState({ roomName: response.data.roomName });
+        this.setState({
+          roomName: response.data.name,
+          avatar: response.data.avatar
+        });
       })
       .catch(function(error) {
         console.error(error);
       });
   }
-  // componentDidMount() {
-  //   let roomID = this.props.match.params.roomID;
-  //   this.setState({ roomID: roomID });
-  // }
 
   render() {
     return (
       <div>
         {this.state.roomName && (
           <div className="chatbox-bottomShow">
-            <BoxHeader roomName={this.state.roomName} />
-            <MessageList
-              roomID={this.state.roomID}
-              userID={this.state.userID}
+            <BoxHeader
+              roomName={this.state.roomName}
+              avatar={this.state.avatar}
             />
-            <FormInput roomID={this.state.roomID} userID={this.state.userID} />
+            <MessageList roomID={this.state.roomID} />
           </div>
         )}
         {/* <div className="chatbox-bottomShow"> */}

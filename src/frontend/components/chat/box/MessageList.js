@@ -2,40 +2,26 @@ import React, { Component } from "react";
 import "assets/styles/Chat.css";
 import Message from "./Message";
 import axios from "axios";
+import { Form } from "react-bootstrap";
 
 class MessageList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      roomID: "",
-      messages: [],
-      participantsID: [],
-      partiArr: undefined
+      roomID: this.props.roomID,
+      content: "",
+      messages: undefined,
+      currentPage: 1
     };
 
     axios
-      .get(`/api/chats/rooms/${this.props.roomID}/messages`)
-      .then(response => {
-        this.setState({ messages: response.data });
+      .get(`/api/chats/${this.props.roomID}?page=${this.state.currentPage}`)
+      .then(res => {
+        this.setState({ messages: res.data });
+        // console.log("Hello", res.data);
       })
-      .catch(function(error) {
-        console.error(error);
-      });
-
-    axios
-      .get(`/api/chats/rooms/${this.props.roomID}/participants`)
-      .then(response => {
-        this.setState({ participantsID: response.data });
-        const newArr = this.state.partiArr ? this.state.partiArr : [];
-        response.data.forEach(element => {
-          axios.get(`/api/users/mongo/${element}`).then(async response => {
-            await newArr.push({ key: element, value: response.data });
-            await this.setState({ partiArr: newArr });
-          });
-        });
-      })
-      .catch(function(error) {
-        console.error(error);
+      .catch(err => {
+        console.error(err);
       });
   }
 
@@ -45,6 +31,34 @@ class MessageList extends Component {
       this.messagesEnd.scrollIntoView({ behavior: "auto" });
     }, 0);
   };
+
+  handleKeyPress(event) {
+    if (event.key !== "Enter") return;
+    if (this.state.content === "") return;
+    this.handleSend();
+  }
+
+  handleChange(event) {
+    this.setState({ content: event.target.value });
+  }
+
+  handleSend() {
+    let mess = {
+      content: this.state.content
+    };
+
+    axios
+      .post(`/api/chats/${this.state.roomID}/new`, mess)
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.error(error);
+      });
+    this.setState({
+      content: ""
+    });
+  }
 
   componentDidMount() {
     this.scrollToBottom();
@@ -56,21 +70,29 @@ class MessageList extends Component {
 
   render() {
     // console.log(this.state.partiArr);
+
     return (
       <div className="message-list">
-        {this.state.partiArr &&
-          this.state.partiArr.length === 2 &&
+        {this.state.messages &&
           this.state.messages.map((item, index) => {
             return (
               <Message
                 key={index}
-                userID={item.userID}
+                username={item.User.username}
+                avatar={item.User.avatar}
                 message={item.content}
-                time={item.time}
-                partiArr={this.state.partiArr}
+                createdAt={item.createdAt}
               />
             );
           })}
+
+        <Form.Control
+          type="text"
+          placeholder="type something"
+          value={this.state.content}
+          onChange={this.handleChange.bind(this)}
+          onKeyPress={this.handleKeyPress.bind(this)}
+        />
 
         <div
           style={{ float: "left", clear: "both" }}

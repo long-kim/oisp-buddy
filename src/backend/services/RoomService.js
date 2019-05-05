@@ -9,12 +9,14 @@ module.exports = passport => {
     });
   }
 
-  function getMessages(req, limit) {
+  function getMessages(req, offset, limit) {
     const room_id = req.room_id ? req.room_id : 1;
+    // console.log(offset);
     const result = Room.findByPk(room_id)
       .then(room => {
         return room.getMessages({
           include: [{ model: User }],
+          offset: offset,
           order: [["msg_id", "DESC"]],
           limit: limit
         });
@@ -26,6 +28,18 @@ module.exports = passport => {
         return Promise.reject(err);
       });
 
+    return result;
+  }
+
+  function getRoom(req) {
+    const room_id = req.room_id ? req.room_id : 1;
+    const result = Room.findByPk(room_id)
+      .then(room => {
+        return Promise.resolve(room);
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
     return result;
   }
 
@@ -66,5 +80,12 @@ module.exports = passport => {
     });
   }
 
-  return { addRoom, editRoom, deleteRoom, getMessages, getLastMessages };
+  return {
+    addRoom,
+    editRoom,
+    deleteRoom,
+    getMessages,
+    getLastMessages,
+    getRoom
+  };
 };

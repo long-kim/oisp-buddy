@@ -16,7 +16,7 @@ class RoomList extends Component {
         {this.props.roomlist.map(function(room, index) {
           return (
             <ListGroup.Item key={index}>
-              <Link className="chat-obj" to={`chat/./${room}`}>
+              <Link className="chat-obj" to={`chat/./${room.room_id}`}>
                 <Room id={room.room_id} name={room.name} avatar={room.avatar} />
               </Link>
             </ListGroup.Item>

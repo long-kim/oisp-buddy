@@ -10,6 +10,7 @@ body {
 
 .oisp-buddy {
   @import "./threads.scss";
+  @import "./chat.scss";
   font-family: "LatoWeb";
   color: #373a3c;
   min-height: 100vh;

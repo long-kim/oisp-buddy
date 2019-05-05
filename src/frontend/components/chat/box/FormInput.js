@@ -7,7 +7,6 @@ class FormInput extends Component {
     super(props);
     this.state = {
       content: "",
-      userID: this.props.userID,
       roomID: this.props.roomID
     };
   }
@@ -19,34 +18,7 @@ class FormInput extends Component {
     // this.setState({ roomID: this.props.roomID, userID: this.props.userID });
   }
 
-  handleKeyPress(event) {
-    if (event.key !== "Enter") return;
-    if (this.state.content === "") return;
-    this.handleSend();
-  }
 
-  handleChange(event) {
-    this.setState({ content: event.target.value });
-  }
-
-  handleSend() {
-    let mess = {
-      content: this.state.content,
-      userID: this.state.userID
-    };
-
-    axios
-      .post(`/api/chats/rooms/${this.state.roomID}/post`, mess)
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.error(error);
-      });
-    this.setState({
-      content: ""
-    });
-  }
 
   render() {
     return (

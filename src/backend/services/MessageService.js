@@ -3,6 +3,7 @@ const Message = models.Message;
 
 module.exports = passport => {
   function sendMsg(data) {
+   
     return Message.create(data).then(mes => {
       return mes;
     });
