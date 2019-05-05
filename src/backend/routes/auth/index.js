@@ -16,16 +16,21 @@ module.exports = passport => {
     "/register",
     passport.authenticate("register"),
     (req, res, next) => {
-      AuthService.register(req, res, next);
+      AuthService.register(req, res, next).then(result => {
+        res.json({ user_id: result, message: "User created." });
+      });
     }
   );
 
   router.post("/login", passport.authenticate("login"), (req, res, next) => {
-    AuthService.login(req, res, next);
+    AuthService.login(req, res, next).then(result => {
+      res.json(result);
+    });
   });
 
   router.get("/logout", (req, res, next) => {
     AuthService.logout(req, res, next);
+    res.send("Logged out.");
   });
 
   return router;

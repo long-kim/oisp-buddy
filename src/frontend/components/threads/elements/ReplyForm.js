@@ -97,7 +97,7 @@ class ReplyForm extends Component {
           </Tab>
         </Tabs>
         <div className="reply-controls">
-          <ul className="mr-auto">
+          <ul className="mr-auto pc-only">
             <li data-type="bold" onClick={this.insert}>
               <OverlayTrigger
                 placement="top"
@@ -318,12 +318,31 @@ class ReplyForm extends Component {
               </select>
             </label>
           </ul>
+          <label className="format-select select-wrapper sp-only">
+            <span className="select-label">Format</span>
+            <i className="fa fa-chevron-down" />
+            <select className="fsize select-menu" data-type="fsize">
+              <option value="" disabled hidden defaultValue />
+              <option value="50">Bold</option>
+              <option value="85">Italic</option>
+              <option value="100">Underline</option>
+              <option value="150">Strikethrough</option>
+            </select>
+          </label>
+          <label className="format-select select-wrapper sp-only mr-auto">
+            <span className="select-label">Font Size</span>
+            <i className="fa fa-chevron-down" />
+            <select className="fsize select-menu" data-type="fsize">
+              <option value="" disabled hidden defaultValue />
+              <option value="50">Tiny</option>
+              <option value="85">Small</option>
+              <option value="100">Normal</option>
+              <option value="150">Large</option>
+            </select>
+          </label>
 
           {this.props.edit && (
-            <div
-              className="control cancel-edit"
-              onClick={this.props.cancel}
-            >
+            <div className="control cancel-edit" onClick={this.props.cancel}>
               Cancel
             </div>
           )}

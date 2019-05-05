@@ -53,6 +53,9 @@ module.exports = (sequelize, DataTypes) => {
           isAlpha: true
         }
       },
+      avatar: {
+        type: DataTypes.STRING
+      },
       dept: {
         type: DataTypes.STRING(50)
       },
@@ -62,12 +65,35 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  User.associate = function(models) {
-    // associations can be defined here
+
+  User.associate = function (models) {
     User.hasMany(models.Thread, { foreignKey: "author_id" });
     User.hasMany(models.Post, { foreignKey: "posted_by" });
     User.hasMany(models.Report, { foreignKey: "reported_by" });
+<<<<<<< HEAD
     User.hasMany(models.Friend, { foreignKey: "befriend_id"})
+=======
+    User.hasMany(models.Message, { foreignKey: "sender_id" });
+    User.belongsToMany(models.Thread, {
+      as: "Subscription",
+      through: models.SubscriptionModel,
+      foreignKey: "user_id"
+    });
+    User.belongsToMany(models.Thread, {
+      as: "ThreadVote",
+      through: models.ThreadVoteModel,
+      foreignKey: "user_id"
+    });
+    User.belongsToMany(models.Post, {
+      as: "PostVote",
+      through: models.PostVoteModel,
+      foreignKey: "user_id"
+    });
+    User.belongsToMany(models.Room, {
+      through: "user_rooms",
+      foreignKey: "room_id"
+    });
+>>>>>>> ae2d4070bd7864fe18df33c3ac7a275787714e27
   };
 
   User.addHook("beforeSave", (user, _options) => {
@@ -84,5 +110,6 @@ module.exports = (sequelize, DataTypes) => {
   User.prototype.getFullName = () => {
     return [this.first_name, this.last_name].join(" ");
   };
+
   return User;
 };

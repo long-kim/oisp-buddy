@@ -2,12 +2,31 @@
 
 body {
   background-color: #f0f0f0 !important;
+  min-height: 100vh !important;
+  #root {
+    min-height: 100vh;
+  }
 }
 
 .oisp-buddy {
   @import "./threads.scss";
   font-family: "LatoWeb";
   color: #373a3c;
+  min-height: 100vh;
+  .pc-only {
+    @include mobile {
+      display: none !important;
+    }
+  }
+  .sp-only {
+    display: none !important;
+    @include mobile {
+      display: block !important;
+    }
+  }
+  .app {
+    min-height: 100vh;
+  }
   .primary-nav {
     height: 60px;
     z-index: 1070;
@@ -114,6 +133,11 @@ body {
     }
   }
   .select-wrapper {
+    @include mobile {
+      font-size: 14px !important;
+      margin-right: 5px;
+      margin-bottom: 0 !important;
+    }
     align-items: center;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     background-color: #fff;
@@ -142,19 +166,20 @@ body {
   .popup-content {
     border: unset !important;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16) !important;
+    background-color: #585858 !important;
     width: 80px !important;
     text-align: right !important;
     ul {
       list-style: none;
       padding: 2px;
-      color: #999999;
+      color: #aeaeae;
       margin-bottom: 0;
       li {
         &.delete:hover {
           color: #b45139;
         }
         &:hover {
-          color: #777777;
+          color: #dddddd;
           cursor: pointer;
         }
       }
@@ -162,7 +187,7 @@ body {
         height: 0;
         margin: 0.2rem 0;
         overflow: hidden;
-        border-top: 1px solid #e9ecef;
+        border-top: 1px solid #aeaeae;
       }
       a {
         text-decoration: none;
@@ -188,7 +213,7 @@ body {
         .header {
           width: 100%;
           padding: 0.75rem 1rem;
-          border-bottom: 1px solid #dddddd;
+          border-bottom: 1px solid #777777;
         }
         .content {
           width: 100%;
@@ -205,8 +230,11 @@ body {
           justify-content: flex-end;
           .control {
             font-size: 16px;
-            color: #dddddd;
+            color: #777777;
             transition-duration: 0.2s;
+            &:hover {
+              color: #999999;
+            }
             &:last-child {
               margin-left: 28px;
             }

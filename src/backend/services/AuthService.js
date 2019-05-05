@@ -27,23 +27,26 @@ module.exports = passport => {
         where: {
           username: data.username
         }
-      }).then(user => {
-        user
-          .update({
-            first_name: data.first_name,
-            last_name: data.last_name,
-            dept: data.dept,
-            year: data.dept
-          })
-          .then(() => {
-            console.log("User created.");
-            res.status(200).send({ message: "User created." });
-          })
-      });
+      })
+        .then(user => {
+          if (user) {
+            return user.update({
+              first_name: data.first_name,
+              last_name: data.last_name,
+              dept: data.dept,
+              year: data.dept
+            });
+          }
+        })
+        .then(user => {
+          console.log("User created.");
+          return Promise.resolve(user.user_id);
+        });
     });
   }
 
   function login(req, res, next) {
+<<<<<<< HEAD
     req.logIn(req.user, err => {
       User.findOne({
         where: {
@@ -62,15 +65,30 @@ module.exports = passport => {
           message: "User signed in."
         });
       });
+=======
+    const result = User.findOne({
+      where: {
+        username: req.user.username
+      }
+    }).then(user => {
+      const token = jwt.sign({ id: user.user_id }, process.env.JWT_SECRET);
+      const data = {
+        auth: true,
+        token: token,
+        user_id: user.user_id,
+        message: "User signed in."
+      };
+      return Promise.resolve(data);
+>>>>>>> ae2d4070bd7864fe18df33c3ac7a275787714e27
     });
+    return result;
   }
 
 
   function logout(req, res, next) {
-    req.logOut();  
+    req.logOut();
     req.session = null;
-    res.clearCookie("connect.sid");
-    res.status(200).send("Logged out.");
+    res.clearCookie("session");
   }
 
   return { auth, register, login, logout };

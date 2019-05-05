@@ -5,21 +5,107 @@ var Sequelize = require('sequelize');
 /**
  * Actions summary:
  *
+ * createTable "Rooms", deps: []
+ * createTable "Topics", deps: []
  * createTable "Users", deps: []
  * createTable "Threads", deps: [Users]
- * createTable "Posts", deps: [Users, Threads]
+ * createTable "Messages", deps: [Users, Rooms]
+ * createTable "subscriptions", deps: [Threads, Users]
+ * createTable "Posts", deps: [Users, Threads, Threads]
+ * createTable "thread_topics", deps: [Threads, Topics]
+ * createTable "thread_votes", deps: [Threads, Users]
+ * createTable "post_votes", deps: [Posts, Users]
  * createTable "Reports", deps: [Users, Threads]
+ * createTable "user_rooms", deps: [Rooms, Users]
  *
  **/
 
 var info = {
     "revision": 1,
     "name": "initial",
-    "created": "2019-04-08T00:28:48.616Z",
+    "created": "2019-05-01T11:40:46.957Z",
     "comment": ""
 };
 
 var migrationCommands = [{
+        fn: "createTable",
+        params: [
+            "Rooms",
+            {
+                "room_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "room_id",
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true
+                },
+                "name": {
+                    "type": Sequelize.STRING,
+                    "field": "name",
+                    "allowNull": false
+                },
+                "avatar": {
+                    "type": Sequelize.STRING,
+                    "field": "avatar",
+                    "allowNull": true
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "Topics",
+            {
+                "id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "id",
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true
+                },
+                "name": {
+                    "type": Sequelize.STRING,
+                    "field": "name",
+                    "allowNull": false
+                },
+                "title": {
+                    "type": Sequelize.STRING,
+                    "field": "title",
+                    "defaultValue": "",
+                    "allowNull": false
+                },
+                "desc": {
+                    "type": Sequelize.STRING,
+                    "field": "desc",
+                    "defaultValue": ""
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                }
+            },
+            {}
+        ]
+    },
+    {
         fn: "createTable",
         params: [
             "Users",
@@ -79,6 +165,10 @@ var migrationCommands = [{
                     "validate": {
                         "isAlpha": true
                     }
+                },
+                "avatar": {
+                    "type": Sequelize.STRING,
+                    "field": "avatar"
                 },
                 "dept": {
                     "type": Sequelize.STRING(50),
@@ -189,6 +279,100 @@ var migrationCommands = [{
     {
         fn: "createTable",
         params: [
+            "Messages",
+            {
+                "msg_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "msg_id",
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true
+                },
+                "content": {
+                    "type": Sequelize.STRING,
+                    "field": "content",
+                    "allowNull": false
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                },
+                "sender_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "sender_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "SET NULL",
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "allowNull": true
+                },
+                "room_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "room_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "SET NULL",
+                    "references": {
+                        "model": "Rooms",
+                        "key": "room_id"
+                    },
+                    "allowNull": true
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "subscriptions",
+            {
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                },
+                "thread_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "thread_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Threads",
+                        "key": "thread_id"
+                    },
+                    "primaryKey": true
+                },
+                "user_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "user_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "primaryKey": true
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
             "Posts",
             {
                 "post_id": {
@@ -240,6 +424,152 @@ var migrationCommands = [{
                         "key": "thread_id"
                     },
                     "allowNull": true
+                },
+                "content_of": {
+                    "type": Sequelize.INTEGER,
+                    "field": "content_of",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "SET NULL",
+                    "references": {
+                        "model": "Threads",
+                        "key": "thread_id"
+                    },
+                    "allowNull": true
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "thread_topics",
+            {
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                },
+                "thread_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "thread_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Threads",
+                        "key": "thread_id"
+                    },
+                    "primaryKey": true
+                },
+                "topic_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "topic_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Topics",
+                        "key": "id"
+                    },
+                    "primaryKey": true
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "thread_votes",
+            {
+                "voted": {
+                    "type": Sequelize.INTEGER,
+                    "field": "voted",
+                    "allowNull": false,
+                    "defaultValue": 0
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                },
+                "thread_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "thread_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Threads",
+                        "key": "thread_id"
+                    },
+                    "primaryKey": true
+                },
+                "user_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "user_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "primaryKey": true
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "post_votes",
+            {
+                "voted": {
+                    "type": Sequelize.INTEGER,
+                    "field": "voted",
+                    "allowNull": false,
+                    "defaultValue": 0
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                },
+                "post_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "post_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Posts",
+                        "key": "post_id"
+                    },
+                    "primaryKey": true
+                },
+                "user_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "user_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "primaryKey": true
                 }
             },
             {}
@@ -298,6 +628,47 @@ var migrationCommands = [{
                         "key": "thread_id"
                     },
                     "allowNull": true
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "user_rooms",
+            {
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                },
+                "user_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "user_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Rooms",
+                        "key": "room_id"
+                    },
+                    "primaryKey": true
+                },
+                "room_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "room_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "primaryKey": true
                 }
             },
             {}

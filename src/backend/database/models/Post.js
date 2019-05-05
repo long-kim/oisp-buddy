@@ -28,6 +28,11 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Post.belongsTo(models.User, { foreignKey: "posted_by" });
     Post.belongsTo(models.Thread, { foreignKey: "parent_id" });
+    Post.belongsToMany(models.User, {
+      as: "PostVote",
+      through: models.PostVoteModel,
+      foreignKey: "post_id"
+    });
   };
   return Post;
 };
