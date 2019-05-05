@@ -55,6 +55,11 @@ var migrationCommands = [{
                     "field": "password",
                     "allowNull": false
                 },
+                // "about": {
+                //     "type": Sequelize.STRING(120),
+                //     "field": "about",
+                //     "allowNull": true
+                // },
                 "role": {
                     "type": Sequelize.ENUM('user', 'admin'),
                     "field": "role",
@@ -95,6 +100,37 @@ var migrationCommands = [{
                 }
             },
             {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "Friends",
+            {
+                "friend_id": {
+                    type: Sequelize.INTEGER,
+                    "field": "friend_id",
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "befriend_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "befriend_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "SET NULL",
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "allowNull": true
+                }
+            }
         ]
     },
     {

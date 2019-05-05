@@ -73,6 +73,9 @@ header > h6 {
     .container {
         display: none;
     }
+    .calendar {
+        display: none;
+    }
 }
 
 header > h6 >button{
@@ -140,12 +143,22 @@ header > h6 > button:hover {
     font-size: 13px;
 }
 
+.container > hr {
+    margin: 2%
+}
+
+.info {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.8;
+}
+
 .title {
     font-size: 10px;
     border: none
 }
 
-.readmore {
+.readmore{
     color: rgb(160, 25, 25);
     font-size: 12px;
     font-weight: 150;
@@ -158,5 +171,20 @@ header > h6 > button:hover {
     position: absolute;
     z-index: 3;
     top: 250px;
-    left: 410px;
+    right: 0%
+}
+
+.calendar > button {
+    opacity: 0.5;
+}
+
+.calendar >button:hover {
+    opacity: 1;
+}
+
+.info_page {
+    position: absolute;
+    z-index: 3;
+    top: 300px;
+    left: 50%;
 }

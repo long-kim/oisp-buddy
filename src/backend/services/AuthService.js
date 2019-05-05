@@ -51,15 +51,20 @@ module.exports = passport => {
         }
       }).then(user => {
         const token = jwt.sign({id: user.user_id }, process.env.JWT_SECRET);
+        // const test = jwt.decode(token); // test token
+        // console.log(test.id);//test token
+        // console.log("data:" + JSON.stringify(user));
         res.status(200).send({
           auth: true,
           token: token,
           user_id: user.user_id,
+          // json: JSON.stringify(user),
           message: "User signed in."
         });
       });
     });
   }
+
 
   function logout(req, res, next) {
     req.logOut();  

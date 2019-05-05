@@ -31,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
+      // about: {
+      //   type: DataTypes.STRING(120),
+      //   unique: false,
+      //   allowNull: true,
+      // },
       role: {
         type: DataTypes.ENUM("user", "admin"),
         defaultValue: "user",
@@ -62,6 +67,7 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Thread, { foreignKey: "author_id" });
     User.hasMany(models.Post, { foreignKey: "posted_by" });
     User.hasMany(models.Report, { foreignKey: "reported_by" });
+    User.hasMany(models.Friend, { foreignKey: "befriend_id"})
   };
 
   User.addHook("beforeSave", (user, _options) => {

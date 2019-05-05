@@ -20,7 +20,7 @@ module.exports = {
         email: "kimhoanglong.cs@gmail.com",
         password: seed_pwd,
         first_name: "Long",
-        last_name: "Kim",
+        last_name: "K",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -38,7 +38,9 @@ module.exports = {
         email: "sarah@gmail.com",
         password: seed_pwd,
         first_name: "Sarah",
-        last_name: "Vo",
+        last_name: "V",
+        dept: "Computer Science",
+        year: 2016,
         createdAt: new Date(),
         updatedAt: new Date()
       },
