@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import Axios from "axios";
-import $ from "jquery";
+import cover from "assets/img/forum-bg.jpg";
 
 class Index extends Component {
   constructor(props) {
@@ -18,31 +18,35 @@ class Index extends Component {
     };
   }
 
-  componentDidMount() {
-    Axios.get(`/api/threads/index${this.props.location.search}`, {
-      headers: { Authorization: `Bearer ` + localStorage.getItem("oisp-token") }
+  async componentDidMount() {
+    const response = await Axios.get(
+      `/api/threads/index${this.props.location.search}`
+    );
+    const data = response.data;
+    this.setState({
+      threads: data
     })
-      .then(res => {
-        this.setState({ threads: res.data.threads, topic: res.data.topic });
-        return Promise.resolve();
-      })
-      .then(() => {
-        return Axios.get("/api/users/subscriptions");
-      })
-      .then(res => {
-        console.log(res);
-        this.setState({ subs: res.data });
-        return Promise.resolve();
-      })
-      .then(() => {
-        return Axios.get("/api/users/votes/thread");
-      })
-      .then(res => {
-        this.setState({ votes: res.data });
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    // Axios.get(`/api/threads/index${this.props.location.search}`)
+    //   .then(res => {
+    //     this.setState({ threads: res.data.threads, topic: res.data.topic });
+    //     return Promise.resolve();
+    //   })
+    //   .then(() => {
+    //     return Axios.get("/api/users/subscriptions");
+    //   })
+    //   .then(res => {
+    //     this.setState({ subs: res.data });
+    //     return Promise.resolve();
+    //   })
+    //   .then(() => {
+    //     return Axios.get("/api/users/votes/thread");
+    //   })
+    //   .then(res => {
+    //     this.setState({ votes: res.data });
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
   }
 
   handleMouseEnter = () => {
@@ -59,33 +63,40 @@ class Index extends Component {
     clear.classList.add("hidden");
   };
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     if (this.props.location.search !== prevProps.location.search) {
-      Axios.get(`/api/threads/index${this.props.location.search}`, {
-        headers: {
-          Authorization: `Bearer ` + localStorage.getItem("oisp-token")
-        }
+      const response = await Axios.get(
+        `/api/threads/index${this.props.location.search}`
+      );
+      const data = response.data;
+      this.setState({
+        threads: data
       })
-        .then(res => {
-          this.setState({ threads: res.data.threads, topic: res.data.topic });
-          return Promise.resolve();
-        })
-        .then(() => {
-          return Axios.get("/api/users/subscriptions");
-        })
-        .then(res => {
-          this.setState({ subs: res.data });
-          return Promise.resolve();
-        })
-        .then(() => {
-          return Axios.get("/api/users/votes/thread");
-        })
-        .then(res => {
-          this.setState({ votes: res.data });
-        })
-        .catch(err => {
-          console.error(err);
-        });
+      // Axios.get(`/api/threads/index${this.props.location.search}`, {
+      //   headers: {
+      //     Authorization: `Bearer ` + localStorage.getItem("oisp-token")
+      //   }
+      // })
+      //   .then(res => {
+      //     this.setState({ threads: res.data.threads, topic: res.data.topic });
+      //     return Promise.resolve();
+      //   })
+      //   .then(() => {
+      //     return Axios.get("/api/users/subscriptions");
+      //   })
+      //   .then(res => {
+      //     this.setState({ subs: res.data });
+      //     return Promise.resolve();
+      //   })
+      //   .then(() => {
+      //     return Axios.get("/api/users/votes/thread");
+      //   })
+      //   .then(res => {
+      //     this.setState({ votes: res.data });
+      //   })
+      //   .catch(err => {
+      //     console.error(err);
+      //   });
     }
   }
 
@@ -100,13 +111,38 @@ class Index extends Component {
   };
 
   handleClearFilter = () => {
-    this.props.history.push("/forum/index")
-  }
+    this.props.history.push("/forum/index");
+  };
 
   render() {
     return (
       <Container className="index">
-        <div className="card-wrapper header sticky">
+        <div className="forum-header">
+          <img src={cover} />
+          <h1 className="title">Forum</h1>
+        </div>
+        <div className="thread-wrapper threads-list">
+          <h2>Threads</h2>
+          <ul className="threads">
+            {this.state.threads.map(thread => {
+              return (
+                <Overview
+                  thread_id={thread.thread_id}
+                  author={thread.author}
+                  last_reply={thread.last_reply}
+                  posts_count={thread.posts_count}
+                  score={thread.score}
+                  title={thread.title}
+                  key={thread.thread_id}
+                  topics={thread.Topics}
+                  sub={this.state.subs.indexOf(thread.thread_id) !== -1}
+                  voted={this.getVote(thread.thread_id)}
+                />
+              );
+            })}
+          </ul>
+        </div>
+        {/* <div className="card-wrapper header sticky">
           <h3 className="mr-auto">Threads</h3>
           {this.props.location.search !== "" && (
             <div
@@ -131,20 +167,7 @@ class Index extends Component {
               New
             </Button>
           </Link>
-        </div>
-        {this.state.threads.map(thread => {
-          return (
-            <Overview
-              thread_id={thread.thread_id}
-              score={thread.score}
-              title={thread.title}
-              key={thread.thread_id}
-              topics={thread.Topics}
-              sub={this.state.subs.indexOf(thread.thread_id) !== -1}
-              voted={this.getVote(thread.thread_id)}
-            />
-          );
-        })}
+        </div> */}
       </Container>
     );
   }

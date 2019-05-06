@@ -1,40 +1,34 @@
 import React, { Component } from "react";
 import Navbar from "./components/common/Navbar";
-import Header from "./components/Header";
+import HomeNav from "./components/common/HomeNav";
+import Home from "./components/Home";
 import Admin from "./components/Admin";
 import Test from "./components/Test";
 import Thread from "./components/threads/Thread";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Page404 from "./components/404";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import ChatBox from "./components/chat/ChatBox";
+import _ from "lodash";
 
 class Routes extends Component {
   render() {
     return (
       <div className="app">
-        <Navbar />
         <Switch>
           <Route
             exact
             path="/"
             render={props => (
-              <div className="HomePage" itemProp={props}>
-                <Header />
+              <div className="HomePage">
+                <HomeNav {...props} />
+                <Home />
               </div>
             )}
           />
           <Route path="/login" render={props => <Login {...props} />} />
           <Route path="/chat" component={ChatBox} />
-          <Route
-            path="/test"
-            render={props => (
-              <div className="TestPage" itemProp={props}>
-                <Test />
-              </div>
-            )}
-          />
           <Route
             path="/admin"
             render={props => (
@@ -44,19 +38,24 @@ class Routes extends Component {
               </div>
             )}
           />
-          <PrivateRoute
-            path="/secret"
-            component={Admin}
-            auth={this.props.auth}
-          />
-
           <Route
             path="/forum"
             render={({ match: { url } }) => (
               <div className="Thread">
-                <Route path={`${url}/index`} component={Thread.Index} exact />
-                <Route path={`${url}/create`} component={Thread.Create} />
-                <Route path={`${url}/thread/:threadId`} component={Thread} />
+                <Navbar />
+                <PrivateRoute
+                  path={`${url}/index`}
+                  component={Thread.Index}
+                  exact
+                />
+                <PrivateRoute
+                  path={`${url}/create`}
+                  component={Thread.Create}
+                />
+                <PrivateRoute
+                  path={`${url}/thread/:threadId`}
+                  component={Thread}
+                />
               </div>
             )}
           />

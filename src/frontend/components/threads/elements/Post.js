@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Badge from "react-bootstrap/Badge";
-import img from "assets/img/avatar_nhu.jpg";
 import BBParser from "./BBParser";
 import Axios from "axios";
 import Moment from "react-moment";
@@ -138,7 +138,101 @@ class Post extends Component {
   render() {
     return (
       <div className="card-wrapper post" id={this.props.post_id}>
-        <div className="post-header">
+        <div className="info-panel">
+          <div className="info-main">
+            <Link
+              to={`/users/${this.props.author}`}
+              style={{
+                backgroundImage: `url(${this.props.author_info.avatar})`
+              }}
+              className="user-avatar"
+            />
+            <Link to={`/users/${this.props.author}`} className="username">
+              {[
+                this.props.author_info.first_name,
+                this.props.author_info.last_name
+              ].join(" ")}
+            </Link>
+          </div>
+          <div className="info-extra">
+            <div className="extra-top">
+              <Badge variant="primary" className="badge">
+                senior
+              </Badge>
+            </div>
+            <div className="extra-bottom">
+              <span>Joined April 2019</span>
+              <span>10 posts</span>
+            </div>
+          </div>
+        </div>
+        <div className="post-body">
+          <div className="timestamp">
+            posted&nbsp;
+            <Moment fromNow>{this.props.created}</Moment>
+          </div>
+          <div className="post-content">
+            <form
+              id={`edit-form-${this.props.post_id}`}
+              onSubmit={this.handleEditPost}
+            >
+              {this.state.edit_mode && (
+                <ReplyForm edit={true} cancel={this.cancelEdit} />
+              )}
+            </form>
+            {!this.state.edit_mode && <BBParser input={this.props.content} />}
+          </div>
+          {!this.state.edit_mode && (
+            <div className="post-control">
+              <div
+                className="control-group vote"
+                style={this.props.parent_score && { pointerEvents: "none" }}
+              >
+                <div
+                  className="control"
+                  onClick={this.updateScore.bind(this, 1)}
+                >
+                  <i
+                    className="fa fa-angle-up"
+                    style={
+                      this.state.voted === 1
+                        ? {
+                            color: "#777777",
+                            fontWeight: "bold"
+                          }
+                        : {}
+                    }
+                  />
+                </div>
+                <span className="score">{this.state.score}</span>
+                <div
+                  className="control"
+                  onClick={this.updateScore.bind(this, -1)}
+                >
+                  <i
+                    className="fa fa-angle-down"
+                    style={
+                      this.state.voted === -1
+                        ? {
+                            color: "#777777",
+                            fontWeight: "bold"
+                          }
+                        : {}
+                    }
+                  />
+                </div>
+              </div>
+              <AnchorLink
+                href="#reply_form"
+                className="control"
+                onClick={this.focusReplyForm}
+              >
+                reply
+              </AnchorLink>
+            </div>
+          )}
+        </div>
+        {/* <div className="post-header">
           <div className="author-avatar">
             <img src={this.state.avatar} alt="Avatar" />
           </div>
@@ -223,64 +317,7 @@ class Post extends Component {
               )}
             </ul>
           </Popup>
-        </div>
-        <div className="post-content">
-          <form
-            id={`edit-form-${this.props.post_id}`}
-            onSubmit={this.handleEditPost}
-          >
-            {this.state.edit_mode && (
-              <ReplyForm edit={true} cancel={this.cancelEdit} />
-            )}
-          </form>
-          {!this.state.edit_mode && <BBParser input={this.props.content} />}
-        </div>
-        {!this.state.edit_mode && (
-          <div className="post-control">
-            <div
-              className="control-group vote"
-              style={this.props.parent_score && { pointerEvents: "none" }}
-            >
-              <div className="control" onClick={this.updateScore.bind(this, 1)}>
-                <i
-                  className="fa fa-angle-up"
-                  style={
-                    this.state.voted === 1
-                      ? {
-                          color: "#777777",
-                          fontWeight: "bold"
-                        }
-                      : {}
-                  }
-                />
-              </div>
-              <span className="score">{this.state.score}</span>
-              <div
-                className="control"
-                onClick={this.updateScore.bind(this, -1)}
-              >
-                <i
-                  className="fa fa-angle-down"
-                  style={
-                    this.state.voted === -1
-                      ? {
-                          color: "#777777",
-                          fontWeight: "bold"
-                        }
-                      : {}
-                  }
-                />
-              </div>
-            </div>
-            <AnchorLink
-              href="#reply_form"
-              className="control"
-              onClick={this.focusReplyForm}
-            >
-              reply
-            </AnchorLink>
-          </div>
-        )}
+        </div> */}
       </div>
     );
   }

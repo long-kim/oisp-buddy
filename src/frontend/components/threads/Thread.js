@@ -8,6 +8,11 @@ import Axios from "axios";
 import Moment from "react-moment";
 import Pagination from "react-js-pagination";
 import { Link } from "react-router-dom";
+import cover from "assets/img/thread-default-cover.jpg";
+import Button from "react-bootstrap/Button";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import $ from "jquery";
 
 class Thread extends Component {
   static Create = Create;
@@ -18,6 +23,7 @@ class Thread extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: undefined,
       score: this.passedProps.score,
       subscribed: this.passedProps.subscribed,
       voted: this.passedProps.voted,
@@ -33,6 +39,10 @@ class Thread extends Component {
       deletePost: false,
       editPost: false
     };
+  }
+
+  componentWillMount() {
+    this.setState({ user: JSON.parse(localStorage.getItem("user")) });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -115,7 +125,12 @@ class Thread extends Component {
         this.setState({ votes: res.data });
       });
 
-    window.addEventListener("scroll", this.handleScroll);
+    // window.addEventListener("scroll", this.handleScroll);
+    $(".reply-btn").on("click", function() {
+      $(this).toggleClass("active");
+      $("#thread-reply").toggleClass("sticky");
+    });
+    $(".bookmark-btn").on("click", this.handleSubscribe);
   }
 
   componentWillUnmount() {
@@ -134,21 +149,27 @@ class Thread extends Component {
   };
 
   handleSubscribe = () => {
+    $(".bookmark-btn").toggleClass("active");
     const sub = this.state.subscribed;
-    this.setState({ subscribed: !sub });
+    const thread_id = this.props.match.params.threadId;
+    if (!sub) {
+      this.setState({ subscribed: true });
+      Axios.get(`/api/threads/${thread_id}/subscribe`);
+    } else {
+      this.setState({ subscribed: false });
+      Axios.get(`/api/threads/${thread_id}/unsubscribe`);
+    }
   };
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
     const data = {
       thread_id: this.props.match.params.threadId,
       content: document.getElementsByName("content")[0].value
     };
     if (data.content !== "") {
-      Axios.post("/api/posts/new", data).then(res => {
-        console.log("Post created");
-        this.setState({ newPost: true });
-      });
+      let response = await Axios.post("/api/posts/new", data);
+      this.setState({ newPost: true });
       document.getElementsByName("content")[0].value = "";
     }
   };
@@ -189,14 +210,31 @@ class Thread extends Component {
 
   render() {
     return (
-      <Container className="single-thread">
-        <div className="card-wrapper sticky-header" id="sticky-header">
-          <h3 className="title mr-auto">{this.state.title}</h3>
-          <div className="menu-expand">
-            <i className="fa fa-ellipsis-h" />
+      <div className="SingleThread">
+        <Container className="single-thread">
+          <div
+            className="forum-header"
+            style={{ backgroundImage: `url(${cover})` }}
+          >
+            <div className="title-wrapper">
+              <h1 className="title">{this.state.title}</h1>
+              <div className="post-count-wrapper">
+                <div className="post-count">
+                  <div className="inner-wrapper">
+                    Total Posts
+                    <span>{this.state.count}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div id="thread-header" className="card-wrapper header">
+          <div className="card-wrapper sticky-header" id="sticky-header">
+            <h3 className="title mr-auto">{this.state.title}</h3>
+            <div className="menu-expand">
+              <i className="fa fa-ellipsis-h" />
+            </div>
+          </div>
+          {/* <div id="thread-header" className="card-wrapper header">
           <div className="control-group score">
             <div className="control" onClick={this.updateScore.bind(this, 1)}>
               <i
@@ -253,27 +291,43 @@ class Thread extends Component {
             itemClassFirst="first"
             itemClassLast="last"
           />
+        </div> */}
+          {this.state.posts.map((post, idx) => {
+            return (
+              <Post
+                key={post.post_id}
+                parent_id={post.parent_id}
+                post_id={post.post_id}
+                content={post.content}
+                score={post.score}
+                author={post.posted_by}
+                author_info={post.User}
+                created={post.createdAt}
+                no={idx + (this.state.currentPage - 1) * 10}
+                delete={this.handleDeletePost}
+                edit={this.handleEditPost}
+                voted={this.getVote(post.post_id)}
+                parent_score={
+                  post.content_of !== null ? this.passedProps : null
+                }
+              />
+            );
+          })}
+        </Container>
+        <form id="thread-reply" onSubmit={this.handleSubmit}>
+          <div className="form-inner">
+            <div className="info-panel">
+              <img src={`${this.state.user.avatar}`} />
+            </div>
+            <ReplyForm />
+          </div>
+        </form>
+        <div className="footer-text">
+          You can upload image to a public hosting website. We recommend&nbsp;
+          <a href="https://imgur.com/">imgur</a>.<br />
+          Learn BBCode <a href="https://www.bbcode.org/reference.php">here</a>.
         </div>
-        {this.state.posts.map((post, idx) => {
-          return (
-            <Post
-              key={post.post_id}
-              parent_id={post.parent_id}
-              post_id={post.post_id}
-              content={post.content}
-              score={post.score}
-              author={post.posted_by}
-              author_info={post.User}
-              created={post.createdAt}
-              no={idx + (this.state.currentPage - 1) * 10}
-              delete={this.handleDeletePost}
-              edit={this.handleEditPost}
-              voted={this.getVote(post.post_id)}
-              parent_score={post.content_of !== null ? this.passedProps : null}
-            />
-          );
-        })}
-        <div className="card-wrapper trans">
+        <div className="btm-control">
           <Pagination
             totalItemsCount={this.state.count}
             onChange={this.handlePageChange}
@@ -285,17 +339,31 @@ class Thread extends Component {
             itemClassFirst="first"
             itemClassLast="last"
           />
-          <form id="thread-reply" onSubmit={this.handleSubmit}>
-            <ReplyForm />
-          </form>
-          <div className="footer-text">
-            You can upload image to a public hosting website. We recommend&nbsp;
-            <a href="https://imgur.com/">imgur</a>.<br />
-            Learn BBCode <a href="https://www.bbcode.org/reference.php">here</a>
-            .
-          </div>
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip>Bookmark this thread</Tooltip>}
+          >
+            <Button
+              type="button"
+              variant="secondary"
+              className={`bookmark-btn ${
+                this.passedProps.subscribed ? "active" : ""
+              }`}
+            >
+              <i className="fas fa-fw fa-bookmark" />
+            </Button>
+          </OverlayTrigger>
+          <Button
+            type="button"
+            variant="secondary"
+            className="reply-btn"
+            onClick={this.openReply}
+          >
+            <i className="fas fa-fw fa-comment" />
+            &nbsp; Reply
+          </Button>
         </div>
-      </Container>
+      </div>
     );
   }
 }

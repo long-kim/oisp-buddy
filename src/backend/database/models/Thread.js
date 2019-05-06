@@ -43,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "thread_id"
     });
     Thread.belongsToMany(models.Topic, {
+      as: "topics",
       through: models.ThreadTopicModel,
       foreignKey: "thread_id"
     })

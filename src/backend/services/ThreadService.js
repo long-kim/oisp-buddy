@@ -3,13 +3,12 @@ const Thread = models.Thread;
 const User = models.User;
 
 module.exports = passport => {
-  function getPosts(id, offset, limit) {
-    return Thread.findByPk(id).then(thread => {
-      return thread.getPosts({
-        include: [{ model: User }],
-        offset: offset,
-        limit: limit
-      });
+  async function getPosts(id, offset, limit) {
+    const thread = await Thread.findByPk(id);
+    return await thread.getPosts({
+      include: [{ model: User }],
+      offset: offset,
+      limit: limit
     });
   }
 

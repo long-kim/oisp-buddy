@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Moment from "react-moment";
 import Axios from "axios";
 
 class Overview extends Component {
@@ -67,12 +68,74 @@ class Overview extends Component {
     const card = document.getElementById(this.props.thread_id);
     const control = card.getElementsByClassName("interact")[0];
     control.classList.add("hidden");
-  }
+  };
 
   render() {
     return (
-      <div className="overview">
-        <div
+      <Link
+        to={{
+          pathname: `thread/${this.props.thread_id}`,
+          state: { topics: this.props.topics, ...this.state }
+        }}
+        className="status"
+        style={{ textDecoration: "none" }}
+      >
+        <li className="overview" id={`thread-id__${this.props.thread_id}`}>
+          <div className="overview-inner">
+            <Link
+              to={{
+                pathname: `thread/${this.props.thread_id}`,
+                state: { topics: this.props.topics, ...this.state }
+              }}
+              className="status"
+            >
+              <i className="fas fa-fw fa-comment" />
+            </Link>
+            <div className="overview-content">
+              <div className="main-info">
+                <Link
+                  to={{
+                    pathname: `thread/${this.props.thread_id}`,
+                    state: { topics: this.props.topics, ...this.state }
+                  }}
+                  className="title"
+                >
+                  {this.props.title}
+                </Link>
+                <span className="author">
+                  by&nbsp;
+                  <Link to={`/users/${this.props.author.id}`} className="user-link">
+                    <b>{this.props.author.name}</b>
+                  </Link>
+                </span>
+              </div>
+            </div>
+            <div className="overview-middle">
+              <span>
+                0&nbsp;
+                <i className="fas fa-fw fa-eye" />
+              </span>
+              <span>
+                {this.props.posts_count}&nbsp;
+                <i className="far fa-fw fa-comment" />
+              </span>
+            </div>
+            <div className="overview-last-post">
+              <span>
+                last reply by&nbsp;
+                <Link to={`users/${this.props.last_reply.posted_by}`}>
+                  <b>{this.props.last_reply.name}</b>
+                </Link>
+              </span>
+              <span>
+                <Moment fromNow>{this.props.last_reply.at}</Moment>
+                </span>
+            </div>
+            <div className="overview-arrow">
+              <i className="fas fa-chevron-right" />
+            </div>
+          </div>
+          {/* <div
           className="card-wrapper"
           id={this.props.thread_id}
           onMouseEnter={this.showControl}
@@ -112,7 +175,7 @@ class Overview extends Component {
               className="thread-title"
               to={{
                 pathname: `thread/${this.props.thread_id}`,
-                state: {topics: this.props.topics, ...this.state}
+                state: { topics: this.props.topics, ...this.state }
               }}
             >
               {this.props.title}
@@ -149,8 +212,9 @@ class Overview extends Component {
               <i className="fa fa-share-alt" />
             </div>
           </div>
-        </div>
-      </div>
+        </div> */}
+        </li>
+      </Link>
     );
   }
 }

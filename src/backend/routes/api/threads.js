@@ -1,15 +1,18 @@
 const router = require("express").Router();
+const sequelize = require("sequelize");
 const models = require("../../database/models/index");
 const _ = require("lodash");
 const Thread = models.Thread;
 const Post = models.Post;
 const Topic = models.Topic;
+const User = models.User;
 const ThreadVote = models.ThreadVoteModel;
 const PAGE_LIMIT = 10;
 
 module.exports = passport => {
   const ThreadService = require("../../services/ThreadService")(passport);
   router.get("/index", (req, res, next) => {
+    const response = [];
     if (!_.isEmpty(req.query)) {
       const topic = req.query.topic;
       let name;
@@ -30,9 +33,36 @@ module.exports = passport => {
     } else {
       Thread.findAll({
         order: [["createdAt", "DESC"]],
-        include: [{ model: Topic }]
-      }).then(thread => {
-        res.json({ threads: thread.map(thread => thread.toJSON()) });
+        include: [
+          { model: Topic, as: "topics" },
+          { model: User },
+          {
+            model: Post,
+            order: [["createdAt", "DESC"]],
+            include: [{ model: User }]
+          }
+        ]
+      }).then(threads => {
+        for (let thread of threads) {
+          const temp = thread.toJSON();
+          const latest_post = _.last(temp.Posts);
+          const data = {
+            thread_id: temp.thread_id,
+            title: temp.title,
+            author: {
+              id: temp.author_id,
+              name: _.join([temp.User.first_name, temp.User.last_name], " ")
+            },
+            posts_count: _.size(temp.Posts),
+            last_reply: {
+              posted_by: latest_post.posted_by,
+              name: _.join([latest_post.User.first_name, latest_post.User.last_name], " "),
+              at: latest_post.updatedAt
+            }
+          };
+          response.push(data);
+        }
+        res.send(response);
       });
     }
   });

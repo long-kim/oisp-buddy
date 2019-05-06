@@ -12,17 +12,23 @@ class Login extends Component {
     };
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
     const form = new FormData(document.getElementById("loginfrm"));
-    Axios.post("/auth/login", {
+    const response = await Axios.post("/auth/login", {
       username: form.get("username"),
       password: form.get("password")
-    }).then(res => {
-      localStorage.setItem("oisp-token", res.data.token);
-      localStorage.setItem("user_id", res.data.user_id);
-      this.setState({ redirectToReferrer: true });
     });
+    const user_obj = response.data.user_obj;
+    const user = {
+      firstName: user_obj.first_name,
+      user_id: user_obj.user_id,
+      username: user_obj.username,
+      avatar: user_obj.avatar
+    };
+    localStorage.setItem("oisp-token", response.data.token);
+    localStorage.setItem("user", JSON.stringify(user));
+    this.setState({ redirectToReferrer: true });
   };
 
   render() {

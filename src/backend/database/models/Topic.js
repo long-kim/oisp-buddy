@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Topic.associate = function(models) {
     Topic.belongsToMany(models.Thread, {
+      as: "topics",
       through: models.ThreadTopicModel,
       foreignKey: "topic_id"
     })

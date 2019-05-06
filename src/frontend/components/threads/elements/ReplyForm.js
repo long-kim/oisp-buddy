@@ -72,7 +72,7 @@ class ReplyForm extends Component {
               <div className="mdedit-wrapper">
                 <Form.Control
                   as="textarea"
-                  rows="15"
+                  rows="8"
                   placeholder="Type post content here"
                   name="content"
                   onChange={e => {

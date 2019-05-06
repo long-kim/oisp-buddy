@@ -45,22 +45,16 @@ module.exports = passport => {
     });
   }
 
-  function login(req, res, next) {
-    const result = User.findOne({
-      where: {
-        username: req.user.username
-      }
-    }).then(user => {
-      const token = jwt.sign({ id: user.user_id }, process.env.JWT_SECRET);
-      const data = {
-        auth: true,
-        token: token,
-        user_id: user.user_id,
-        message: "User signed in."
-      };
-      return Promise.resolve(data);
-    });
-    return result;
+  async function login(req, res, next) {
+    const user = await User.findOne({ where: { username: req.user.username } });
+    const token = jwt.sign({ id: user.user_id }, process.env.JWT_SECRET);
+    const data = {
+      auth: true,
+      token: token,
+      user_obj: user,
+      message: "User signed in."
+    };
+    return data;
   }
 
   function logout(req, res, next) {
