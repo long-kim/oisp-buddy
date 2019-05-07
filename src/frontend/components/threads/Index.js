@@ -25,7 +25,7 @@ class Index extends Component {
     const data = response.data;
     this.setState({
       threads: data
-    })
+    });
     // Axios.get(`/api/threads/index${this.props.location.search}`)
     //   .then(res => {
     //     this.setState({ threads: res.data.threads, topic: res.data.topic });
@@ -71,7 +71,7 @@ class Index extends Component {
       const data = response.data;
       this.setState({
         threads: data
-      })
+      });
       // Axios.get(`/api/threads/index${this.props.location.search}`, {
       //   headers: {
       //     Authorization: `Bearer ` + localStorage.getItem("oisp-token")
@@ -122,7 +122,19 @@ class Index extends Component {
           <h1 className="title">Forum</h1>
         </div>
         <div className="thread-wrapper threads-list">
-          <h2>Threads</h2>
+          <div className="wrapper-header">
+            <h2>Threads</h2>
+            <Link to="/forum/create">
+              <Button
+                type="button"
+                variant="secondary"
+                className="forum-btn new-thread"
+              >
+                <span>New Thread</span>
+                <i className="fas fa-fw fa-plus" />
+              </Button>
+            </Link>
+          </div>
           <ul className="threads">
             {this.state.threads.map(thread => {
               return (

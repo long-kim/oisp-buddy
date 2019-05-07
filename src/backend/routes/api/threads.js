@@ -7,11 +7,14 @@ const Post = models.Post;
 const Topic = models.Topic;
 const User = models.User;
 const ThreadVote = models.ThreadVoteModel;
+const Subscriptions = models.SubscriptionModel;
 const PAGE_LIMIT = 10;
 
 module.exports = passport => {
   const ThreadService = require("../../services/ThreadService")(passport);
-  router.get("/index", (req, res, next) => {
+  router.get("/index", async (req, res, next) => {
+    const user = req.user;
+    console.log(user);
     const response = [];
     if (!_.isEmpty(req.query)) {
       const topic = req.query.topic;
@@ -31,7 +34,7 @@ module.exports = passport => {
           });
         });
     } else {
-      Thread.findAll({
+      const threads = await Thread.findAll({
         order: [["createdAt", "DESC"]],
         include: [
           { model: Topic, as: "topics" },
@@ -40,44 +43,51 @@ module.exports = passport => {
             model: Post,
             order: [["createdAt", "DESC"]],
             include: [{ model: User }]
+          },
+          {
+            model: User,
+            as: "Subscription",
           }
         ]
-      }).then(threads => {
-        for (let thread of threads) {
-          const temp = thread.toJSON();
-          const latest_post = _.last(temp.Posts);
-          const data = {
-            thread_id: temp.thread_id,
-            title: temp.title,
-            author: {
-              id: temp.author_id,
-              name: _.join([temp.User.first_name, temp.User.last_name], " ")
-            },
-            posts_count: _.size(temp.Posts),
-            last_reply: {
-              posted_by: latest_post.posted_by,
-              name: _.join([latest_post.User.first_name, latest_post.User.last_name], " "),
-              at: latest_post.updatedAt
-            }
-          };
-          response.push(data);
-        }
-        res.send(response);
       });
+      for (let thread of threads) {
+        const temp = thread.toJSON();
+        const latest_post = _.last(temp.Posts);
+        const subscriptions = temp.Subscription;
+        const logged_in = req.user.user_id;
+        const isSubbed =
+          _.find(subscriptions, ["user_id", logged_in]) !== undefined;
+        const data = {
+          thread_id: temp.thread_id,
+          title: temp.title,
+          author: {
+            id: temp.author_id,
+            name: _.join([temp.User.first_name, temp.User.last_name], " ")
+          },
+          posts_count: _.size(temp.Posts),
+          last_reply: {
+            posted_by: latest_post.posted_by,
+            name: _.join(
+              [latest_post.User.first_name, latest_post.User.last_name],
+              " "
+            ),
+            at: latest_post.updatedAt
+          },
+          sub: isSubbed
+        };
+        response.push(data);
+      }
+      res.send(response);
     }
   });
 
-  router.get(
-    "/view/:threadId",
-
-    (req, res, next) => {
-      Thread.findByPk(req.params.threadId)
-        .then(thread => {
-          res.json(thread.toJSON());
-        })
-        .catch(err => console.error(err));
-    }
-  );
+  router.get("/view/:threadId", (req, res, next) => {
+    Thread.findByPk(req.params.threadId)
+      .then(thread => {
+        res.json(thread.toJSON());
+      })
+      .catch(err => console.error(err));
+  });
 
   router.get("/view/:threadId/posts", (req, res, next) => {
     const offset = (req.query.page - 1) * PAGE_LIMIT;

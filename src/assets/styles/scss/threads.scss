@@ -129,6 +129,43 @@
   background-image: url(../../img/background.png);
   background-attachment: fixed;
   height: fit-content;
+  a {
+    text-decoration: none;
+  }
+  .forum-btn {
+    border-radius: 15px;
+    background-image: url("../../img/buttonblue@2x.png");
+    background-size: cover;
+    background-position: 50% 50%;
+    font-size: 13px;
+    text-shadow: 0 1px 1px rgba(65, 69, 73, 0.55),
+      0 1px 3px rgba(65, 69, 73, 0.85);
+    transition: all 0.12s;
+    box-shadow: unset;
+    i {
+      text-shadow: 0 1px 1px rgba(65, 69, 73, 0.55),
+        0 1px 3px rgba(65, 69, 73, 0.85);
+    }
+    &:hover {
+      background-position: calc(50% - 20px) 50%;
+    }
+    &.btn-secondary:not(:disabled):not(.disabled):active:focus {
+      box-shadow: unset;
+    }
+    &.new-thread {
+      width: 150px;
+      height: 36px;
+      border-radius: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-right: 5px;
+      span,
+      i {
+        margin: 0 4px;
+      }
+    }
+  }
   .forum-header {
     height: 200px;
     position: relative;
@@ -161,10 +198,16 @@
     &.threads-list {
       background-color: #fff;
       min-height: calc(100vh - 290px);
-      h2 {
-        padding: 30px 25px 5px 25px;
-        font-size: 20px;
-        color: #777777;
+      .wrapper-header {
+        padding: 30px 40px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h2 {
+          font-size: 20px;
+          color: #777777;
+          margin-bottom: 0;
+        }
       }
       .threads {
         padding: 0;
