@@ -1,0 +1,46 @@
+.wrapper{
+    height: 100%;
+    position: relative;
+    /* overflow-x: hidden;
+    overflow-y: auto;    */
+}
+
+.main-header{
+    background: #367fa9; 
+    position: relative;
+    max-height: 60px;
+    z-index: 1030;
+}
+
+.navbar{
+    margin: 0;
+    width: 100%;
+    float: none;
+    border: none;
+    min-height: 30px;
+    position: relative;
+}
+
+.logo {
+    color: #fff;
+    border-bottom: 0 solid transparent;
+}
+
+.logo-lg{
+    display: block;
+}
+
+.main-header .logo{
+    transition: ease-in-out;
+    display: block;
+    float: left;
+    height: 50px;
+    font-size: 20px;
+    line-height: 50px;
+    text-align: center;
+    width: 230px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 15px;
+    font-weight: 300;
+    overflow: hidden;
+}

@@ -39,7 +39,7 @@ class Routes extends Component {
             path="/admin"
             render={props => (
               <div className="AdminPage">
-                <h2>AdminPage</h2>
+                {/* <h2>AdminPage</h2> */}
                 <Admin />
               </div>
             )}
