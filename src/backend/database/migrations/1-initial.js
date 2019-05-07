@@ -141,11 +141,10 @@ var migrationCommands = [{
                     "field": "password",
                     "allowNull": false
                 },
-                // "about": {
-                //     "type": Sequelize.STRING(120),
-                //     "field": "about",
-                //     "allowNull": true
-                // },
+                "about":{
+                    "type": Sequelize.STRING(120),
+                    "field": "about"
+                },
                 "role": {
                     "type": Sequelize.ENUM('user', 'admin'),
                     "field": "role",
@@ -170,12 +169,16 @@ var migrationCommands = [{
                     "type": Sequelize.STRING,
                     "field": "avatar"
                 },
+                "cover": {
+                    "type": Sequelize.STRING,
+                    "field": "cover"
+                },
                 "dept": {
                     "type": Sequelize.STRING(50),
                     "field": "dept"
                 },
                 "year": {
-                    "type": Sequelize.TINYINT,
+                    "type": Sequelize.SMALLINT,
                     "field": "year"
                 },
                 "createdAt": {
@@ -190,37 +193,6 @@ var migrationCommands = [{
                 }
             },
             {}
-        ]
-    },
-    {
-        fn: "createTable",
-        params: [
-            "Friends",
-            {
-                "friend_id": {
-                    type: Sequelize.INTEGER,
-                    "field": "friend_id",
-                    "allowNull": false,
-                    "primaryKey": true,
-                    "autoIncrement": true
-                },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
-                },
-                "befriend_id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "befriend_id",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
-                    "references": {
-                        "model": "Users",
-                        "key": "user_id"
-                    },
-                    "allowNull": true
-                }
-            }
         ]
     },
     {
@@ -688,12 +660,10 @@ module.exports = {
                     let command = migrationCommands[index];
                     console.log("[#"+index+"] execute: " + command.fn);
                     index++;
-                    console.log(command.params+'\n');
                     queryInterface[command.fn].apply(queryInterface, command.params).then(next, reject);
                 }
                 else
                     resolve();
-                
             }
             next();
         });

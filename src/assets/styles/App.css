@@ -8,14 +8,24 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 70vh;
+  /* background-color: #282c34; */
+  background-image: url("https://images.unsplash.com/photo-1509716159367-0180b75063d0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80");
+  background-position: center;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  /* font-size: calc(80px + 2vmin);
+  color:#A5694B; */
+  /* text-shadow: 5px 5px 5px whitesmoke; */
+  
+  color: azure;
+  font-family: "Raleway", sans-serif
+}
+
+.App-header > h1{
+  font-size: 80px;
 }
 
 .App-link {

@@ -2,12 +2,7 @@ import React, { Component } from "react";
 import Overview from "./elements/Overview";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
-<<<<<<< HEAD
-//import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
-import { BrowserRouter as  Link } from "react-router-dom";
-=======
 import { Link } from "react-router-dom";
->>>>>>> ae2d4070bd7864fe18df33c3ac7a275787714e27
 import Axios from "axios";
 import $ from "jquery";
 

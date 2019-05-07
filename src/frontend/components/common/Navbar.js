@@ -61,7 +61,7 @@ class PrimaryNav extends Component {
         <Link to="/">
           <Navbar.Brand>
             <img
-              src={logo}
+              src="https://cdn.shopify.com/s/files/1/0168/0462/products/Meddy-Teddy-Lotus-Prayer-Pose_1024x1024.png?v=1543129183"
               width="30"
               height="30"
               className="d-inline-block align-top mr-2"
@@ -89,7 +89,7 @@ class PrimaryNav extends Component {
             </NavDropdown>
             <Nav.Item>
               <NavLink className="nav-link" to="/test" activeClassName="active"> 
-                {this.props.isLogInn? "in" : "out"}                  
+                Test               
               </NavLink>
             </Nav.Item>
             <Form inline className="my-2 my-lg-0">
@@ -111,27 +111,6 @@ class PrimaryNav extends Component {
           </Nav>
           <Nav>
 
-            {/* <Link to="/login">
-              <Button
-                type="button"
-                variant="secondary"
-                className="mr-lg-2 mb-2 mb-lg-0"
-              >
-                Sign In
-              </Button>
-            </Link>
-
-            <Button type="button" variant="primary" onClick={this.logOut}>
-              Sign Up
-            </Button>
-            <Link to="/">
-              <Button style = {this.isLogIn? display = "none": }
-                type = "button"
-                variant="primary"
-                onClick={this.logOut}>
-                Log Out
-              </Button>
-            </Link> */}
             {localStorage.getItem("oisp-token")!= null? 
               <Link to = "/profile">
                 <Button

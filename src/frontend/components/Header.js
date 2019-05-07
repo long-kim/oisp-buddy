@@ -9,8 +9,8 @@ class Header extends Component {
   render() {
     return (
       <div className="Header">
-        <header className="App-header">
-          <img src={logo} className="App-logo mb-3" alt="logo" />
+        <header className="App-header" >
+          {/* <img src={logo} className="App-logo mb-3" alt="logo" />
           <p>
             {this.props.currentPage === "test"
               ? "OISP Buddy Test Page"
@@ -23,7 +23,9 @@ class Header extends Component {
             rel="noopener noreferrer"
           >
             Learn React
-          </a>
+          </a> */}
+          <h1 class="w3-animate-top">OISP BUDDY Test Page</h1>
+          
         </header>
       </div>
     );

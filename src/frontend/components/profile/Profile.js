@@ -17,32 +17,35 @@ class Profile extends Component {
         super(props);
         this.state = { 
             name: "",
-            about: "I am a third year student majoring in CS. I love making new friends and learning new things.",
-            avatar: "https://s22295.pcdn.co/wp-content/uploads/Avatar-couple.jpg",
-            cover: "https://scontent.fdad3-2.fna.fbcdn.net/v/t1.0-9/52373523_1938412499617544_6909351250995707904_o.jpg?_nc_cat=101&_nc_oc=AQkZ0RvqrA1orXKn7SC4QRDynCEblv53i48g6tVUE1N8RWFbYOtiVP0Ahs0plBHdNrs&_nc_ht=scontent.fdad3-2.fna&oh=b1ece9c4ef053c7cb92ffc0fd12c5d8d&oe=5D4F11B4",
+            about: "",
+            avatar: "",
+            cover: "",
             year: undefined,
             major: "",
             friends: "0",
             thread: "0",
             achivement: "0",
             toggle: false,
-            idd: JSON.parse(localStorage.getItem("userdb")).username,
-            id: localStorage.getItem("oisp-token") ,// lay id tu token
+            // idd: localStorage.getItem("id"),
+            // id: localStorage.getItem("oisp-token") ,// lay id tu token
             test:""
         }
          this.handleButton=this.handleButton.bind(this)
     }
     //test
     componentDidMount() {
-        let user_id = this.state.id;
+        // const user_id = jwt.decode(this.state.id).id;
+        // console.log("test: "+user_id);
         // data
-        Axios.get(`/api/users/view/${user_id}`).then(res => {
+        Axios.get(`/api/users/view`).then(res => {
 
           this.setState({
-            name: res.data.first_name+" "+res.data.last_name,
+            name: res.data.first_name+" "+ res.data.last_name,
             year: res.data.year,
             major: res.data.dept,
-            
+            avatar: res.data.avatar,
+            cover: res.data.cover,
+            about: res.data.about,
           });
         });
         
@@ -58,6 +61,7 @@ class Profile extends Component {
     }
 
     render() {
+        
         return ( 
             <div>
                 {

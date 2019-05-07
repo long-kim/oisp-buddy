@@ -62,7 +62,8 @@
     "sequelize": "^5.7.1",
     "sequelize-auto-migrations": "^1.0.3",
     "sequelize-cli": "^5.4.0",
-    "slugify": "^1.3.4"
+    "slugify": "^1.3.4",
+    "startbootstrap-creative": "^5.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

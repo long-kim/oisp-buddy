@@ -509,6 +509,10 @@
                     "field": "password",
                     "seqType": "Sequelize.STRING"
                 },
+                "about": {
+                    "field": "about",
+                    "seqType": "Sequelize.STRING(210)"
+                },
                 "role": {
                     "defaultValue": {
                         "value": "user"
@@ -533,6 +537,10 @@
                 },
                 "avatar": {
                     "field": "avatar",
+                    "seqType": "Sequelize.STRING"
+                },
+                "cover": {
+                    "field": "cover",
                     "seqType": "Sequelize.STRING"
                 },
                 "dept": {

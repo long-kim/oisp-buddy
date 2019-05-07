@@ -50,5 +50,37 @@ module.exports = passport => {
     return result;
   }
 
-  return { getSubscription, getThreadVotes, getPostVotes };
+  function getUserInfo(req) {
+    const user_id = req.user ? req.user.user_id : 1;
+    const result = User.findByPk(user_id)
+      .then(user => {
+        return Promise.resolve(user);
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
+    return result;
+  }
+
+  function editUser(req) {
+    const user_id = req.user ? req.user.user_id : 1;
+    // console.log("this is req:",req)
+    return User.findByPk(user_id)
+      .then(user => {
+        return user.update({
+          about: req.about
+        });
+      })
+      .then(user => {
+        return user;
+      });
+  }
+
+  return {
+    getSubscription,
+    getThreadVotes,
+    getPostVotes,
+    getUserInfo,
+    editUser
+  };
 };

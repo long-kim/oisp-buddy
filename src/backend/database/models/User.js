@@ -31,11 +31,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      // about: {
-      //   type: DataTypes.STRING(120),
-      //   unique: false,
-      //   allowNull: true,
-      // },
+      about: {
+        type: DataTypes.STRING(120),
+        unique: false,
+        allowNull: true,
+      },
       role: {
         type: DataTypes.ENUM("user", "admin"),
         defaultValue: "user",
@@ -56,11 +56,14 @@ module.exports = (sequelize, DataTypes) => {
       avatar: {
         type: DataTypes.STRING
       },
+      cover: {
+        type: DataTypes.STRING
+      },
       dept: {
         type: DataTypes.STRING(50)
       },
       year: {
-        type: DataTypes.TINYINT
+        type: DataTypes.SMALLINT
       }
     },
     {}
@@ -70,9 +73,6 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Thread, { foreignKey: "author_id" });
     User.hasMany(models.Post, { foreignKey: "posted_by" });
     User.hasMany(models.Report, { foreignKey: "reported_by" });
-<<<<<<< HEAD
-    User.hasMany(models.Friend, { foreignKey: "befriend_id"})
-=======
     User.hasMany(models.Message, { foreignKey: "sender_id" });
     User.belongsToMany(models.Thread, {
       as: "Subscription",
@@ -93,19 +93,18 @@ module.exports = (sequelize, DataTypes) => {
       through: "user_rooms",
       foreignKey: "room_id"
     });
->>>>>>> ae2d4070bd7864fe18df33c3ac7a275787714e27
   };
 
-  User.addHook("beforeSave", (user, _options) => {
-    return bcrypt
-      .hash(user.password, 10)
-      .then(hash => {
-        user.password = hash;
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  });
+  // User.addHook("beforeSave", (user, _options) => {
+  //   return bcrypt
+  //     .hash(user.password, 10)
+  //     .then(hash => {
+  //       user.password = hash;
+  //     })
+  //     .catch(err => {
+  //       console.error(err);
+  //     });
+  // });
 
   User.prototype.getFullName = () => {
     return [this.first_name, this.last_name].join(" ");

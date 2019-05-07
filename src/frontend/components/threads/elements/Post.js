@@ -174,11 +174,6 @@ class Post extends Component {
             onClose={this.closePopup}
           >
             <ul>
-<<<<<<< HEAD
-              <li>
-                <a href="https://www.google.com">Share</a>
-              </li>
-=======
               <Popup
                 on="click"
                 trigger={<li>Share</li>}
@@ -189,7 +184,6 @@ class Post extends Component {
                 open={this.state.modal_is_open}
               />
 
->>>>>>> ae2d4070bd7864fe18df33c3ac7a275787714e27
               <li onClick={this.focusReplyForm}>Quote</li>
               {this.state.current_user && (
                 <div className="divider" role="separator" />

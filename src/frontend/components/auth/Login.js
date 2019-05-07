@@ -21,7 +21,7 @@ class Login extends Component {
       password: form.get("password")
     }).then(res => {
       localStorage.setItem("oisp-token", res.data.token);
-      // localStorage.setItem("userdb", res.data.json);
+       localStorage.setItem("id", res.data.user_id);
       window.location.reload();
       this.setState({ redirectToReferrer: true});
       

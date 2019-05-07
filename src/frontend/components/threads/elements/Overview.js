@@ -1,11 +1,6 @@
 import React, { Component } from "react";
-<<<<<<< HEAD
-//import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
-import { BrowserRouter as Link } from "react-router-dom";
-=======
 import { Link } from "react-router-dom";
 import Axios from "axios";
->>>>>>> ae2d4070bd7864fe18df33c3ac7a275787714e27
 
 class Overview extends Component {
   constructor(props) {
