@@ -3,6 +3,7 @@ const User = models.User;
 
 module.exports = passport => {
   function getSubscription(req) {
+    // Queston here??
     const user_id = req.user ? req.user.user_id : 4;
     const result = User.findByPk(user_id)
       .then(user => {

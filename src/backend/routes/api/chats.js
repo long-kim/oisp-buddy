@@ -36,7 +36,7 @@ module.exports = passport => {
 
   router.post("/:room_id/new", (req, res, next) => {
     const user_id = req.user ? req.user.user_id : 2;
-    console.log(req.body);
+    // console.log(req.body);
     const data = {
       content: req.body.content,
       sender_id: user_id,

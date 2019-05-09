@@ -1,9 +1,77 @@
+.chatWarp {
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+
+  .targetForBox {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+
+    .chatbox-row {
+      bottom: 0%;
+      height: fit-content;
+    }
+  }
+}
+.list-group-item {
+  padding: 0px;
+}
+.clickPurpose {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.chat {
+  color: black;
+  margin: auto;
+  column-count: 2;
+  column-gap: 0px;
+  display: flex;
+  padding: 12px 20px;
+  justify-content: space-between;
+}
+
+.chat-popup-lst {
+  background-color: #fff;
+  position: absolute;
+  width: 430px;
+  right: 5%;
+  @include shadow(0.16);
+  .header {
+    padding: 5px 20px 5px 5px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    text-align: right;
+    font-size: 80%;
+    margin: 0px 0px -1px;
+    // border-top-left-radius: 0.25rem;
+    // border-top-right-radius: 0.25rem;
+  }
+  .hidden {
+    display: none;
+  }
+
+  .list-group {
+    .list-group-item {
+      cursor: pointer;
+      // background-color: aquamarine;
+      &:hover {
+        background-color: rgb(245, 245, 245);
+      }
+    }
+  }
+}
+
 .chatbox-bottomShow {
   background-color: #fff;
-  .roomName-box {
+  border-radius: 8px 8px 0 0;
+  margin: 0px 10px;
+  width: 284px;
+  .boxHeader {
+    cursor: pointer;
     display: flex;
     align-items: center;
-    background-color: #ffffff;
     padding: 8px 8px;
     border: none;
     border-radius: 0;
@@ -30,19 +98,25 @@
     }
   }
   .message-list {
+    display: flex;
+    flex-direction: column;
     padding-left: 0px;
     box-sizing: border-box;
 
     width: 100%;
     height: 270px;
-    overflow: scroll;
 
-    .message {
-      padding-left: 4px;
+    .msg-lst {
+      height: 284px;
+      overflow: scroll;
+      box-shadow: 0 0px 6px rgba(0, 0, 0, 0.16);
+      .message {
+        padding-left: 4px;
+      }
     }
 
     .form-control {
-      position: relative;
+      align-self: flex-end;
     }
     // background:
   }

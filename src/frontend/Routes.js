@@ -9,12 +9,13 @@ import Page404 from "./components/404";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import Chat from "./components/chat/Chat";
-import ChatBox from "./components/chat/box/ChatBox";
+import BottomBar from "./components/common/BottomBar";
 
 class Routes extends Component {
   render() {
     return (
       <div className="app">
+        <BottomBar />
         <Navbar />
         <Switch>
           <Route
@@ -27,8 +28,8 @@ class Routes extends Component {
             )}
           />
           <Route path="/login" render={props => <Login {...props} />} />
-          <Route exact path="/chat" component={Chat} />
-          <Route path="/chat/:roomID" component={ChatBox} />
+          <Route path="/chat" component={Chat} />
+          {/* <Route path="/chat/:roomID" component={ChatBox} /> */}
           <Route
             path="/test"
             render={props => (

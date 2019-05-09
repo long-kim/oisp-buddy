@@ -24,16 +24,12 @@ class NavbarUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messPopUp: "none"
+      show: false
     };
   }
 
   onClickMessPopUp = () => {
-    if (this.state.messPopUp === "none") {
-      this.setState({ messPopUp: "block" });
-    } else {
-      this.setState({ messPopUp: "none" });
-    }
+    this.setState({ show: !this.state.show });
   };
 
   render() {
@@ -117,7 +113,7 @@ class NavbarUser extends Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        {/* <Chat style_props={{ display: this.state.messPopUp }} /> */}
+        <Chat show={this.state.show} />
       </div>
     );
   }

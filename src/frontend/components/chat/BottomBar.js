@@ -1,16 +1,15 @@
 import React, { Component } from "react";
+import ChatBox from "frontend/components/chat/ChatBox.js";
 
 class BottomBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      length: 0
+    };
   }
   render() {
-    return (
-      <div className="chatWarp">
-        <div className="targetForBox" />
-      </div>
-    );
+    return <ChatBox  />;
   }
 }
 

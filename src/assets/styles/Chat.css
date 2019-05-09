@@ -12,7 +12,7 @@
   /* padding: 10px; */
 }
 
-.roomName-box {
+.boxHeader {
   display: flex;
   background-color: #ffffff;
   padding: 8px 8px;
@@ -49,30 +49,6 @@
   resize: horizontal;
 
   /* word-wrap: break-word; */
-}
-
-.chat-popup-lst {
-  position: absolute;
-  width: 430px;
-  right: 5%;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-  /* display: none; */
-}
-
-.chatbox-bottomShow {
-  position: absolute;
-  bottom: 0%;
-  width: 284px;
-  right: 5%;
-}
-
-.chat {
-  color: black;
-  margin: auto;
-  column-count: 2;
-  column-gap: 0px;
-  display: flex;
-  justify-content: space-between;
 }
 
 .left > img {

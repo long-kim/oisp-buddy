@@ -73,18 +73,27 @@ class MessageList extends Component {
 
     return (
       <div className="message-list">
-        {this.state.messages &&
-          this.state.messages.map((item, index) => {
-            return (
-              <Message
-                key={index}
-                username={item.User.username}
-                avatar={item.User.avatar}
-                message={item.content}
-                createdAt={item.createdAt}
-              />
-            );
-          })}
+        <div className="msg-lst">
+          {this.state.messages &&
+            this.state.messages.map((item, index) => {
+              return (
+                <Message
+                  key={index}
+                  username={item.User.username}
+                  avatar={item.User.avatar}
+                  message={item.content}
+                  createdAt={item.createdAt}
+                />
+              );
+            })}
+
+          <div
+            style={{ float: "left", clear: "both" }}
+            ref={el => {
+              this.messagesEnd = el;
+            }}
+          />
+        </div>
 
         <Form.Control
           type="text"
@@ -92,13 +101,6 @@ class MessageList extends Component {
           value={this.state.content}
           onChange={this.handleChange.bind(this)}
           onKeyPress={this.handleKeyPress.bind(this)}
-        />
-
-        <div
-          style={{ float: "left", clear: "both" }}
-          ref={el => {
-            this.messagesEnd = el;
-          }}
         />
       </div>
     );

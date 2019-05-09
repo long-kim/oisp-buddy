@@ -10,7 +10,7 @@ module.exports = passport => {
   }
 
   function getMessages(req, offset, limit) {
-    const room_id = req.room_id ? req.room_id : 1;
+    const room_id = req.room_id;
     // console.log(offset);
     const result = Room.findByPk(room_id)
       .then(room => {

@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   Report.associate = function(models) {
-    // associations can be defined here
+    // associations can be defined here  
     Report.belongsTo(models.User, { foreignKey: "reported_by" });
     Report.belongsTo(models.Thread, { foreignKey: "thread_id" });
   };

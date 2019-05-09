@@ -88,16 +88,16 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  User.addHook("beforeSave", (user, _options) => {
-    return bcrypt
-      .hash(user.password, 10)
-      .then(hash => {
-        user.password = hash;
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  });
+  // User.addHook("beforeSave", (user, _options) => {
+  //   return bcrypt
+  //     .hash(user.password, 10)
+  //     .then(hash => {
+  //       user.password = hash;
+  //     })
+  //     .catch(err => {
+  //       console.error(err);
+  //     });
+  // });
 
   User.prototype.getFullName = () => {
     return [this.first_name, this.last_name].join(" ");

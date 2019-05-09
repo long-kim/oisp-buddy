@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import ChatBox from "./box/ChatBox";
+import BoxPortal from "./BoxPortal";
 
 var moment = require("moment");
 
@@ -40,24 +41,34 @@ class Room extends Component {
       });
   }
 
+  handleClick = () => {
+    console.log("hmmmm");
+    this.setState({ boxHidden: !this.state.boxHidden });
+  };
+
   render() {
     return (
       <div>
-        <div className="chat">
-          <div className="left">
-            <img src={this.props.avatar} />
-            <div>
-              <div className="roomName">{this.props.name}</div>
-              {this.state.lastMessage} <br />
+        <div onClick={this.handleClick.bind(this)}>
+          <div className="chat">
+            <div className="left">
+              <img src={this.props.avatar} />
+              <div>
+                <div className="roomName">{this.props.name}</div>
+                {this.state.lastMessage} <br />
+              </div>
             </div>
+
+            <div className="chat-time-sm">{this.state.time}</div>
           </div>
-
-          <div className="chat-time-sm">{this.state.time}</div>
         </div>
-
-        {/* {this.state.boxHidden && (
-          <ChatBox name={this.props.name} id={this.props.id} />
-        )} */}
+        <div>
+          {this.state.boxHidden && (
+            <BoxPortal target="targetForBox">
+              <ChatBox roomID={this.props.id} />
+            </BoxPortal>
+          )}
+        </div>
       </div>
     );
   }

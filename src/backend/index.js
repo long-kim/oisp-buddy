@@ -15,6 +15,12 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 
+const http = require("http");
+const socketio = require("socket.io");
+const passportSocketIo = require("passport.socketio");
+const server = http.Server(app);
+const io = socketio(server);
+
 // Configuration ==============================================================
 const sequelize = new Sequelize({
   database: process.env.DB_NAME,
@@ -51,6 +57,43 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use(express.static(path.join(__dirname, "public")));
+// Socket
+io.use(
+  passportSocketIo.authorize({
+    key: "connect.sid",
+    secret: process.env.SESSION_KEY,
+    passport: passport,
+    cookieParser: cookieParser
+  })
+);
+// let interval;
+// io.on("connection", socket => {
+//   console.log("New client connected");
+//   if (interval) {
+//     clearInterval(interval);
+//   }
+//   interval = setInterval(() => getApiAndEmit(socket), 10000);
+//   socket.on("disconnect", () => {
+//     console.log("Client disconnected");
+//   });
+// });
+
+io.on("connection", client => {
+  client.on("message", handleMessage);
+  client.on("chatrooms", handleGetChatrooms);
+  client.on("availableUsers", handleGetAvailableUsers);
+  client.on("disconnect", function() {
+    console.log("client disconnect...", client.id);
+    handleDisconnect();
+  });
+
+  client.on("error", function(err) {
+    console.log("received error from client:", client.id);
+    console.log(err);
+  });
+});
+
+io.listen(8000);
 
 // Routes =====================================================================
 app.use(require("./routes")(passport));
