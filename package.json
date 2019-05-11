@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.4.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
@@ -41,6 +42,7 @@
     "passport-local": "^1.0.0",
     "popper.js": "^1.14.7",
     "prettify": "^0.1.7",
+    "prop-types": "^15.7.2",
     "query-string": "^6.4.2",
     "rc-pagination": "^1.17.14",
     "react": "^16.8.4",
