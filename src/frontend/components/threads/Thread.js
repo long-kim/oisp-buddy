@@ -239,12 +239,12 @@ class Thread extends Component {
               </div>
             </div>
           </div>
-          <div className="card-wrapper sticky-header" id="sticky-header">
+          {/* <div className="card-wrapper sticky-header" id="sticky-header">
             <h3 className="title mr-auto">{this.state.title}</h3>
             <div className="menu-expand">
               <i className="fa fa-ellipsis-h" />
             </div>
-          </div>
+          </div> */}
           {/* <div id="thread-header" className="card-wrapper header">
           <div className="control-group score">
             <div className="control" onClick={this.updateScore.bind(this, 1)}>

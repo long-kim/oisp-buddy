@@ -3,7 +3,6 @@ import Navbar from "./components/common/Navbar";
 import HomeNav from "./components/common/HomeNav";
 import Home from "./components/Home";
 import Admin from "./components/Admin";
-import Test from "./components/Test";
 import Thread from "./components/threads/Thread";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Page404 from "./components/404";
