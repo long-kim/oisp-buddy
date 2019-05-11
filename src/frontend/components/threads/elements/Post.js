@@ -7,6 +7,9 @@ import Moment from "react-moment";
 import Popup from "reactjs-popup";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import ReplyForm from "./ReplyForm";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import classNames from "classnames";
 
 class Post extends Component {
   constructor(props) {
@@ -19,8 +22,9 @@ class Post extends Component {
       popup_is_open: false,
       current_user: false,
       edit_mode: false,
-      avatarIsLoaded: false,
-      avatar: `${this.props.author_info.avatar}`
+      avatar: `${this.props.author.avatar}`,
+      showControl: false,
+      ownPost: false
     };
   }
 
@@ -57,6 +61,11 @@ class Post extends Component {
     }
   }
 
+  toggleControls = () => {
+    const state = this.state.showControl;
+    this.setState({ showControl: !state });
+  };
+
   updateScore = val => {
     const score = this.state.score;
     let voted = this.state.voted;
@@ -83,6 +92,7 @@ class Post extends Component {
     ].join(" ")}" parent_id=${this.props.parent_id} post_id=${
       this.props.post_id
     }]${this.props.content}[/quote]`;
+    document.getElementById("reply-btn").click();
     const textarea = document.getElementsByName("content")[0];
     textarea.value = quote;
     textarea.focus();
@@ -99,6 +109,7 @@ class Post extends Component {
   };
 
   openEdit = () => {
+    this.toggleControls();
     this.setState({ edit_mode: true, popup_is_open: false });
   };
 
@@ -143,15 +154,15 @@ class Post extends Component {
             <Link
               to={`/users/${this.props.author}`}
               style={{
-                backgroundImage: `url(${this.props.author_info.avatar})`
+                backgroundImage: `url(${this.props.author.avatar})`
               }}
               className="user-avatar"
             />
-            <Link to={`/users/${this.props.author}`} className="username">
-              {[
-                this.props.author_info.first_name,
-                this.props.author_info.last_name
-              ].join(" ")}
+            <Link
+              to={`/users/${this.props.author.user_id}`}
+              className="username"
+            >
+              {this.props.author.name}
             </Link>
           </div>
           <div className="info-extra">
@@ -166,10 +177,52 @@ class Post extends Component {
             </div>
           </div>
         </div>
-        <div className="post-body">
+        <div
+          className="post-body"
+          onMouseOver={this.toggleControls}
+          onMouseOut={this.toggleControls}
+        >
+          <div
+            className={classNames("control-wrapper", {
+              show: this.state.showControl
+            })}
+          >
+            <OverlayTrigger
+              placement="right"
+              overlay={<Tooltip>Quote and reply</Tooltip>}
+              container={this}
+            >
+              <div
+                className="btn-reply control-btn"
+                onClick={this.focusReplyForm}
+              >
+                <i className="fa fa-fw fa-reply" />
+              </div>
+            </OverlayTrigger>
+            {this.props.ownPost && (
+              <OverlayTrigger
+                placement="right"
+                overlay={<Tooltip>Edit Post</Tooltip>}
+              >
+                <div className="btn-edit control-btn" onClick={this.openEdit}>
+                  <i className="fa fa-fw fa-pencil" />
+                </div>
+              </OverlayTrigger>
+            )}
+            {this.props.ownPost && (
+              <OverlayTrigger
+                placement="right"
+                overlay={<Tooltip>Delete Post</Tooltip>}
+              >
+                <div className="btn-delete btn-danger control-btn">
+                  <i className="fa fa-fw fa-trash-o" />
+                </div>
+              </OverlayTrigger>
+            )}
+          </div>
           <div className="timestamp">
             posted&nbsp;
-            <Moment fromNow>{this.props.created}</Moment>
+            <Moment fromNow>{this.props.timestamp}</Moment>
           </div>
           <div className="post-content">
             <form
@@ -222,13 +275,6 @@ class Post extends Component {
                   />
                 </div>
               </div>
-              <AnchorLink
-                href="#reply_form"
-                className="control"
-                onClick={this.focusReplyForm}
-              >
-                reply
-              </AnchorLink>
             </div>
           )}
         </div>

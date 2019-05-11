@@ -46,7 +46,7 @@ module.exports = passport => {
           },
           {
             model: User,
-            as: "Subscription",
+            as: "Subscription"
           }
         ]
       });
@@ -81,22 +81,27 @@ module.exports = passport => {
     }
   });
 
-  router.get("/view/:threadId", (req, res, next) => {
-    Thread.findByPk(req.params.threadId)
-      .then(thread => {
-        res.json(thread.toJSON());
-      })
-      .catch(err => console.error(err));
+  router.get("/view/:threadId", async (req, res, next) => {
+    const page = !_.isUndefined(req.query.page) ? req.query.page : 1;
+    const offset = (page - 1) * PAGE_LIMIT;
+    const response = await ThreadService.getPosts(
+      req.params.threadId,
+      offset,
+      PAGE_LIMIT,
+      req.user.user_id
+    );
+    res.send(response);
   });
 
-  router.get("/view/:threadId/posts", (req, res, next) => {
-    const offset = (req.query.page - 1) * PAGE_LIMIT;
-    ThreadService.getPosts(req.params.threadId, offset, PAGE_LIMIT)
-      .then(posts => {
-        res.json({ posts: posts.map(post => post.toJSON()) });
-      })
-      .catch(err => console.error(err));
-  });
+  // router.get("/view/:threadId/posts", async (req, res, next) => {
+  //   const page = req.query.page - 1 || 1;
+  //   const offset = page * PAGE_LIMIT;
+  //   ThreadService.getPosts(req.params.threadId, offset, PAGE_LIMIT)
+  //     .then(posts => {
+  //       res.json({ posts: posts.map(post => post.toJSON()) });
+  //     })
+  //     .catch(err => console.error(err));
+  // });
 
   router.get("/view/:threadId/posts/count", (req, res, next) => {
     Post.count({ where: { parent_id: req.params.threadId } }).then(count => {

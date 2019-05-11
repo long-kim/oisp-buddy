@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import cover from "assets/img/forum-bg.jpg";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class Index extends Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class Index extends Component {
       threads: [],
       subs: [],
       votes: [],
-      topic: ""
+      topic: "",
+      isLoading: true
     };
   }
 
@@ -24,7 +26,8 @@ class Index extends Component {
     );
     const data = response.data;
     this.setState({
-      threads: data
+      threads: data,
+      isLoading: false
     });
     // Axios.get(`/api/threads/index${this.props.location.search}`)
     //   .then(res => {
@@ -122,6 +125,12 @@ class Index extends Component {
           <h1 className="title">Forum</h1>
         </div>
         <div className="thread-wrapper threads-list">
+          {this.state.isLoading && (
+            <div className="loading">
+              <CircularProgress color="secondary" />
+              <h4>Hang in there...</h4>
+            </div>
+          )}
           <div className="wrapper-header">
             <h2>Threads</h2>
             <Link to="/forum/create">
@@ -136,22 +145,23 @@ class Index extends Component {
             </Link>
           </div>
           <ul className="threads">
-            {this.state.threads.map(thread => {
-              return (
-                <Overview
-                  thread_id={thread.thread_id}
-                  author={thread.author}
-                  last_reply={thread.last_reply}
-                  posts_count={thread.posts_count}
-                  score={thread.score}
-                  title={thread.title}
-                  key={thread.thread_id}
-                  topics={thread.Topics}
-                  sub={this.state.subs.indexOf(thread.thread_id) !== -1}
-                  voted={this.getVote(thread.thread_id)}
-                />
-              );
-            })}
+            {!this.state.isLoading &&
+              this.state.threads.map(thread => {
+                return (
+                  <Overview
+                    thread_id={thread.thread_id}
+                    author={thread.author}
+                    last_reply={thread.last_reply}
+                    posts_count={thread.posts_count}
+                    score={thread.score}
+                    title={thread.title}
+                    key={thread.thread_id}
+                    topics={thread.Topics}
+                    sub={thread.sub}
+                    voted={this.getVote(thread.thread_id)}
+                  />
+                );
+              })}
           </ul>
         </div>
         {/* <div className="card-wrapper header sticky">

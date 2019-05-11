@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const _ = require("lodash");
 
 module.exports = passport => {
   const AuthService = require("../../services/AuthService")(passport);

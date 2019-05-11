@@ -198,6 +198,22 @@
     &.threads-list {
       background-color: #fff;
       min-height: calc(100vh - 290px);
+      position: relative;
+      .loading {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        h4 {
+          font-size: 14px;
+          margin-top: 10px;
+          font-weight: bold;
+          color: #777777;
+        }
+      }
       .wrapper-header {
         padding: 30px 40px 25px;
         display: flex;
@@ -211,6 +227,11 @@
       }
       .threads {
         padding: 0;
+        width: 100%;
+        height: fit-content;
+        position: relative;
+        margin-bottom: 0;
+        padding-bottom: 25px;
         .overview {
           list-style: none;
           cursor: pointer;
@@ -449,7 +470,7 @@
       &.active {
         background: #66ccff;
         box-shadow: inset 0 1px 3px 0 rgba(65, 69, 73, 0.65);
-        color: #262626;
+        color: #444;
         text-shadow: unset;
         font-weight: bold;
         i {
@@ -701,6 +722,43 @@
             flex: 1;
             position: relative;
             box-shadow: -1px 0 2px rgba(0, 0, 0, 0.16);
+            .control-wrapper {
+              position: absolute;
+              right: -15px;
+              top: 20px;
+              display: flex;
+              flex-direction: column;
+              opacity: 0;
+              transition: opacity 0.2s;
+              &.show {
+                opacity: 1;
+                transition: opacity 0.2s;
+              }
+              .control-btn {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background-color: #2299bb;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+                box-shadow: 0 1px 1px 0 rgba(65, 69, 73, 0.3),
+                  0 1px 3px 1px rgba(65, 69, 73, 0.15);
+                cursor: pointer;
+                i {
+                  font-size: 13px;
+                  text-shadow: 0 1px 1px rgba(65, 69, 73, 0.55),
+                    0 1px 3px rgba(65, 69, 73, 0.85);
+                }
+                &:not(:last-child) {
+                  margin-bottom: 10px;
+                }
+                &.btn-delete {
+                  background-color: #dc3545;
+                }
+              }
+            }
             .timestamp {
               padding: 20px 30px 0;
               font-size: 13px;
@@ -792,9 +850,12 @@
       @include shadow(0.16);
       background-color: #fff;
       display: flex;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       padding: 1rem 2rem;
       position: relative;
+      &:last-child {
+        margin-bottom: 30px;
+      }
       &.header {
         @include shadow(0.36);
         width: 900px;

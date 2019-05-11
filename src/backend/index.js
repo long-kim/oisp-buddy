@@ -42,8 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Set up passport
 app.use(
   cookieSession({
-    secret: process.env.SESSION_KEY,
-    maxAge: 24 * 60 * 60 * 1000
+    secret: process.env.SESSION_KEY
   })
 );
 

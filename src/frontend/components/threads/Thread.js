@@ -13,6 +13,8 @@ import Button from "react-bootstrap/Button";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import $ from "jquery";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import classNames from "classnames";
 
 class Thread extends Component {
   static Create = Create;
@@ -31,13 +33,13 @@ class Thread extends Component {
       date: new Date(),
       currentPage: 1,
       totalPages: 0,
-      count: 0,
       posts: [],
       votes: [],
       headerResize: false,
       newPost: false,
       deletePost: false,
-      editPost: false
+      editPost: false,
+      isLoading: false
     };
   }
 
@@ -45,23 +47,25 @@ class Thread extends Component {
     this.setState({ user: JSON.parse(localStorage.getItem("user")) });
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  getPosts = async () => {
+    let thread_id = this.props.match.params.threadId;
+    const response = await Axios.get(
+      `/api/threads/view/${thread_id}?page=${this.state.currentPage}`
+    );
+    this.setState({
+      ...response.data,
+      totalPages: Math.ceil(response.data.posts_count / 10)
+    });
+  };
+
+  async componentDidUpdate(_, prevState) {
     let thread_id = this.props.match.params.threadId;
     if (this.state.currentPage !== prevState.currentPage) {
-      Axios.get(
-        `/api/threads/view/${thread_id}/posts?page=${this.state.currentPage}`
-      )
-        .then(res => {
-          const posts = res.data.posts;
-          this.setState({ posts: posts });
-          return Promise.resolve();
-        })
-        .then(() => {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-          });
-        });
+      this.getPosts();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     }
     if (this.state.newPost === true) {
       Axios.get(
@@ -89,41 +93,47 @@ class Thread extends Component {
     }
   }
 
-  componentDidMount() {
-    let thread_id = this.props.match.params.threadId;
-    Axios.get(`/api/threads/view/${thread_id}`)
-      .then(res => {
-        this.setState({
-          title: res.data.title,
-          score: res.data.score,
-          date: res.data.createdAt
-        });
-        return Promise.resolve();
-      })
-      .then(() => {
-        return Axios.get(`/api/threads/view/${thread_id}/posts/count`);
-      })
-      .then(res => {
-        this.setState({
-          count: res.data.count,
-          totalPages: Math.ceil(res.data.count / 10)
-        });
-        return Promise.resolve();
-      })
-      .then(() => {
-        return Axios.get(`/api/threads/view/${thread_id}/posts?page=1`);
-      })
-      .then(res => {
-        const posts = res.data.posts;
-        this.setState({ posts: posts });
-        return Promise.resolve();
-      })
-      .then(() => {
-        return Axios.get("/api/users/votes/post");
-      })
-      .then(res => {
-        this.setState({ votes: res.data });
-      });
+  async componentDidMount() {
+    this.getPosts();
+    // let thread_id = this.props.match.params.threadId;
+    // const response = await Axios.get(`/api/threads/view/${thread_id}?page=1`);
+    // this.setState({
+    //   ...response.data,
+    //   totalPages: Math.ceil(response.data.posts_count / 10)
+    // });
+    // Axios.get(`/api/threads/view/${thread_id}?page=1`)
+    //   .then(res => {
+    //     this.setState({
+    //       title: res.data.title,
+    //       score: res.data.score,
+    //       date: res.data.createdAt
+    //     });
+    //     return Promise.resolve();
+    //   })
+    //   .then(() => {
+    //     return Axios.get(`/api/threads/view/${thread_id}/posts/count`);
+    //   })
+    //   .then(res => {
+    //     this.setState({
+    //       count: res.data.count,
+    //       totalPages: Math.ceil(res.data.count / 10)
+    //     });
+    //     return Promise.resolve();
+    //   })
+    //   .then(() => {
+    //     return Axios.get(`/api/threads/view/${thread_id}/posts?page=1`);
+    //   })
+    //   .then(res => {
+    //     const posts = res.data.posts;
+    //     this.setState({ posts: posts });
+    //     return Promise.resolve();
+    //   })
+    //   .then(() => {
+    //     return Axios.get("/api/users/votes/post");
+    //   })
+    //   .then(res => {
+    //     this.setState({ votes: res.data });
+    //   });
 
     // window.addEventListener("scroll", this.handleScroll);
     $(".reply-btn").on("click", function() {
@@ -139,7 +149,7 @@ class Thread extends Component {
 
   handleScroll = () => {
     const distanceY = window.pageYOffset || document.documentElement.scrollTop;
-    const shrinkOn = document.getElementById("thread-header").offsetHeight;
+    const shrinkOn = document.getElementById("forum-header").offsetHeight;
     const smallHeader = document.getElementById("sticky-header");
     if (distanceY > shrinkOn) {
       smallHeader.classList.add("show");
@@ -213,6 +223,7 @@ class Thread extends Component {
       <div className="SingleThread">
         <Container className="single-thread">
           <div
+            id="forum-header"
             className="forum-header"
             style={{ backgroundImage: `url(${cover})` }}
           >
@@ -222,7 +233,7 @@ class Thread extends Component {
                 <div className="post-count">
                   <div className="inner-wrapper">
                     Total Posts
-                    <span>{this.state.count}</span>
+                    <span>{this.state.posts_count}</span>
                   </div>
                 </div>
               </div>
@@ -292,6 +303,12 @@ class Thread extends Component {
             itemClassLast="last"
           />
         </div> */}
+          {this.state.isLoading && (
+            <div className="loading">
+              <CircularProgress color="secondary" />
+              <h4>Hang in there...</h4>
+            </div>
+          )}
           {this.state.posts.map((post, idx) => {
             return (
               <Post
@@ -301,8 +318,7 @@ class Thread extends Component {
                 content={post.content}
                 score={post.score}
                 author={post.posted_by}
-                author_info={post.User}
-                created={post.createdAt}
+                timestamp={post.timestamp}
                 no={idx + (this.state.currentPage - 1) * 10}
                 delete={this.handleDeletePost}
                 edit={this.handleEditPost}
@@ -310,6 +326,7 @@ class Thread extends Component {
                 parent_score={
                   post.content_of !== null ? this.passedProps : null
                 }
+                ownPost={post.posted_by.user_id === this.state.user.user_id}
               />
             );
           })}
@@ -329,7 +346,7 @@ class Thread extends Component {
         </div>
         <div className="btm-control">
           <Pagination
-            totalItemsCount={this.state.count}
+            totalItemsCount={this.state.posts_count}
             onChange={this.handlePageChange}
             activePage={this.state.currentPage}
             prevPageText={`\uf104`}
@@ -346,9 +363,9 @@ class Thread extends Component {
             <Button
               type="button"
               variant="secondary"
-              className={`bookmark-btn ${
-                this.passedProps.subscribed ? "active" : ""
-              }`}
+              className={classNames("bookmark-btn", {
+                active: this.state.isSubbed
+              })}
             >
               <i className="fas fa-fw fa-bookmark" />
             </Button>
@@ -357,6 +374,7 @@ class Thread extends Component {
             type="button"
             variant="secondary"
             className="reply-btn"
+            id="reply-btn"
             onClick={this.openReply}
           >
             <i className="fas fa-fw fa-comment" />

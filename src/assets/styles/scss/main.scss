@@ -777,14 +777,14 @@ body {
   }
   .arrow {
     z-index: 9999 !important;
-    &::before {
-      border-top-color: #777777 !important;
-      border-bottom-color: #777777 !important;
-    }
+    // &::before {
+    //   border-top-color: #777777 !important;
+    //   border-bottom-color: #777777 !important;
+    // }
   }
-  .tooltip-inner {
-    max-width: 300px;
-    background-color: #777777;
-    padding: 0.25rem 0.75rem;
-  }
+  // .tooltip-inner {
+  //   max-width: 300px;
+  //   background-color: #777777;
+  //   padding: 0.25rem 0.75rem;
+  // }
 }
