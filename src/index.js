@@ -15,7 +15,7 @@ ReactDOM.render(
   <div className="oisp-buddy">
     <BrowserRouter>
       <App />
-    </BrowserRouter>
+    </BrowserRouter>  
   </div>,
   document.getElementById("root")
 );

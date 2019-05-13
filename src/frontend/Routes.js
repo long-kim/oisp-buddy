@@ -10,6 +10,16 @@ import Login from "./components/auth/Login";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import ChatBox from "./components/chat/ChatBox";
 
+import ReactDOM from "react-dom";
+import { createBrowserHistory } from "history";
+import { Router, Redirect } from "react-router-dom";
+
+import RTL from "frontend/components/RTL.jsx";
+
+import "assets/css/material-dashboard-react.css?v=1.6.0";
+
+const hist = createBrowserHistory();
+
 class Routes extends Component {
   render() {
     return (
@@ -35,15 +45,19 @@ class Routes extends Component {
               </div>
             )}
           />
-          <Route
+          {/* <Route
             path="/admin"
             render={props => (
               <div className="AdminPage">
-                {/* <h2>AdminPage</h2> */}
                 <Admin />
+                
               </div>
             )}
-          />
+          /> */}
+          <Route path="/admin" component={Admin} />
+          <Route path="/rtl" component={RTL} />
+          <Redirect from="/" to="/admin/dashboard" />
+          
           <PrivateRoute
             path="/secret"
             component={Admin}
