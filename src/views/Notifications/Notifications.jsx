@@ -82,16 +82,14 @@ class Notifications extends React.Component {
         <CardHeader color="primary">
           <h4 className={classes.cardTitleWhite}>Notifications</h4>
           <p className={classes.cardCategoryWhite}>
-            Handcrafted by our friends from{" "}
-            <a target="_blank" href="https://material-ui-next.com/">
-              Material UI
+            Handcrafted by our friends, mock-up for the project from{" "}
+            <a target="_blank" href="https://xd.adobe.com/spec/25a61aa6-764d-47a4-5147-ae863e5798c1-5397/">
+              Adobe XD
             </a>{" "}
-            and styled by{" "}
-            <a target="_blank" href="https://www.creative-tim.com/">
-              Creative Tim
-            </a>
+            {/* and styled by {" "} */}
+            {/* <a target="_blank" href="https://www.creative-tim.com/">Creative Tim </a> */}
             . Please checkout the{" "}
-            <a href="#pablo" target="_blank">
+            <a href="https://github.com/long-kim/oisp-buddy" target="_blank">
               full documentation
             </a>
             .
@@ -100,60 +98,63 @@ class Notifications extends React.Component {
         <CardBody>
           <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
-              <h5>Notifications Style</h5>
+              <h5>Documentation</h5>
               <br />
-              <SnackbarContent message={"This is a plain notification"} />
-              <SnackbarContent
-                message={"This is a notification with close button."}
-                close
-              />
-              <SnackbarContent
-                message={"This is a notification with close button and icon."}
-                close
-                icon={AddAlert}
-              />
-              <SnackbarContent
-                message={
-                  "This is a notification with close button and icon and have many lines. You can see that the icon and the close button are always vertically aligned. This is a beautiful notification. So you don't have to worry about the style."
-                }
-                close
-                icon={AddAlert}
-              />
+              <SnackbarContent message={<p><b>If you need to contact Computing Support, here's where to find us:</b><br></br>
+              - The Support Office is in the B4 tower - room 405 <br></br>
+              - Open Monday–Friday, 7.30 am–11.30 am and 1–5 pm <br></br>
+              - Phone: 0123 257 2680 <br></br>
+              - Email: 1652758@hcmut.edu.vn
+              </p>}/>
+              
+              <SnackbarContent message={<p><b>Online:</b> <br></br>
+              - Forum: https://oisp-buddy/ <br></br>
+              - Message: https://www.facebook.com/longkim1508
+                            </p>}/>
+
+              <SnackbarContent message={<p><b>Frontline Support staff:</b><br></br>
+              - Long Kim Hoang (Manager)<br></br>
+              - Thinh Tran Duc (Procurement)<br></br>
+              - An Nguyen Phuc (Procurement)<br></br>
+              - Nhu Nguyen Ngoc Quynh (Procurement)
+                            </p>}/>              
+            
+              
             </GridItem>
             <GridItem xs={12} sm={12} md={6}>
-              <h5>Notifications States</h5>
+              <h5>Event Notes</h5>
               <br />
               <SnackbarContent
                 message={
-                  'INFO - This is a regular notification made with color="info"'
+                  'Assignment in Practice on Engineering Software - 15th May, 2019'
                 }
                 close
                 color="info"
               />
               <SnackbarContent
                 message={
-                  'SUCCESS - This is a regular notification made with color="success"'
+                  'Birday Party - 25th May, 2019'
                 }
                 close
                 color="success"
               />
               <SnackbarContent
                 message={
-                  'WARNING - This is a regular notification made with color="warning"'
+                  'Travelling in Da Nang - 27th June, 2019'
                 }
                 close
                 color="warning"
               />
               <SnackbarContent
                 message={
-                  'DANGER - This is a regular notification made with color="danger"'
+                  'Hangout with friends - 3rd July, 2019'
                 }
                 close
                 color="danger"
               />
               <SnackbarContent
                 message={
-                  'PRIMARY - This is a regular notification made with color="primary"'
+                  'Go home - 31th August, 2019'
                 }
                 close
                 color="primary"
@@ -161,136 +162,6 @@ class Notifications extends React.Component {
             </GridItem>
           </GridContainer>
           <br />
-          <br />
-          <GridContainer justify="center">
-            <GridItem xs={12} sm={12} md={6} style={{ textAlign: "center" }}>
-              <h5>
-                Notifications Places
-                <br />
-                <small>Click to view notifications</small>
-              </h5>
-            </GridItem>
-          </GridContainer>
-          <GridContainer justify="center">
-            <GridItem xs={12} sm={12} md={10} lg={8}>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={4}>
-                  <Button
-                    fullWidth
-                    color="primary"
-                    onClick={() => this.showNotification("tl")}
-                  >
-                    Top Left
-                  </Button>
-                  <Snackbar
-                    place="tl"
-                    color="info"
-                    icon={AddAlert}
-                    message="Welcome to MATERIAL DASHBOARD React - a beautiful freebie for every web developer."
-                    open={this.state.tl}
-                    closeNotification={() => this.setState({ tl: false })}
-                    close
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <Button
-                    fullWidth
-                    color="primary"
-                    onClick={() => this.showNotification("tc")}
-                  >
-                    Top Center
-                  </Button>
-                  <Snackbar
-                    place="tc"
-                    color="info"
-                    icon={AddAlert}
-                    message="Welcome to MATERIAL DASHBOARD React - a beautiful freebie for every web developer."
-                    open={this.state.tc}
-                    closeNotification={() => this.setState({ tc: false })}
-                    close
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <Button
-                    fullWidth
-                    color="primary"
-                    onClick={() => this.showNotification("tr")}
-                  >
-                    Top Right
-                  </Button>
-                  <Snackbar
-                    place="tr"
-                    color="info"
-                    icon={AddAlert}
-                    message="Welcome to MATERIAL DASHBOARD React - a beautiful freebie for every web developer."
-                    open={this.state.tr}
-                    closeNotification={() => this.setState({ tr: false })}
-                    close
-                  />
-                </GridItem>
-              </GridContainer>
-            </GridItem>
-          </GridContainer>
-          <GridContainer justify={"center"}>
-            <GridItem xs={12} sm={12} md={10} lg={8}>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={4}>
-                  <Button
-                    fullWidth
-                    color="primary"
-                    onClick={() => this.showNotification("bl")}
-                  >
-                    Bottom Left
-                  </Button>
-                  <Snackbar
-                    place="bl"
-                    color="info"
-                    icon={AddAlert}
-                    message="Welcome to MATERIAL DASHBOARD React - a beautiful freebie for every web developer."
-                    open={this.state.bl}
-                    closeNotification={() => this.setState({ bl: false })}
-                    close
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <Button
-                    fullWidth
-                    color="primary"
-                    onClick={() => this.showNotification("bc")}
-                  >
-                    Bottom Center
-                  </Button>
-                  <Snackbar
-                    place="bc"
-                    color="info"
-                    icon={AddAlert}
-                    message="Welcome to MATERIAL DASHBOARD React - a beautiful freebie for every web developer."
-                    open={this.state.bc}
-                    closeNotification={() => this.setState({ bc: false })}
-                    close
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <Button
-                    fullWidth
-                    color="primary"
-                    onClick={() => this.showNotification("br")}
-                  >
-                    Bottom Right
-                  </Button>
-                  <Snackbar
-                    place="br"
-                    color="info"
-                    icon={AddAlert}
-                    message="Welcome to MATERIAL DASHBOARD React - a beautiful freebie for every web developer."
-                    open={this.state.br}
-                    closeNotification={() => this.setState({ br: false })}
-                    close
-                  />
-                </GridItem>
-              </GridContainer>
-            </GridItem>
-          </GridContainer>
         </CardBody>
       </Card>
     );

@@ -60,11 +60,11 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="warning" stats icon>
                 <CardIcon color="warning">
-                  <Icon>content_copy</Icon>
+                  <Icon>Member</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Used Space</p>
+                <p className={classes.cardCategory}>People</p>
                 <h3 className={classes.cardTitle}>
-                  49/50 <small>GB</small>
+                  50
                 </h3>
               </CardHeader>
 
@@ -73,9 +73,8 @@ class Dashboard extends React.Component {
                   <Danger>
                     <Warning />
                   </Danger>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
                     Get more space
-                  </a>
+                  
                 </div>
               </CardFooter>
             </Card>
@@ -85,10 +84,11 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="success" stats icon>
                 <CardIcon color="success">
-                  <Store />
+                  {/* <Store>Post</Store>  */}
+                  <Icon>Post</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Revenue</p>
-                <h3 className={classes.cardTitle}>$34,245</h3>
+                <p className={classes.cardCategory}>Content</p>
+                <h3 className={classes.cardTitle}>45 <small>posts</small></h3>
               </CardHeader>
 
               <CardFooter stats>
@@ -104,7 +104,7 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="danger" stats icon>
                 <CardIcon color="danger">
-                  <Icon>info_outline</Icon>
+                  <Icon>Issues</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>Fixed Issues</p>
                 <h3 className={classes.cardTitle}>75</h3>
@@ -123,7 +123,8 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="info" stats icon>
                 <CardIcon color="info">
-                  <Accessibility />
+                  {/* <Accessibility /> */}
+                  <Icon>Follower</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>Followers</p>
                 <h3 className={classes.cardTitle}>+245</h3>
@@ -152,12 +153,12 @@ class Dashboard extends React.Component {
                 />
               </CardHeader>
               <CardBody>
-                <h4 className={classes.cardTitle}>Daily Sales</h4>
+                <h4 className={classes.cardTitle}>Daily Access</h4>
                 <p className={classes.cardCategory}>
                   <span className={classes.successText}>
                     <ArrowUpward className={classes.upArrowCardCategory} /> 55%
                   </span>{" "}
-                  increase in today sales.
+                  increase in today logins.
                 </p>
               </CardBody>
               <CardFooter chart>
@@ -167,6 +168,7 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
+
           <GridItem xs={12} sm={12} md={4}>
             <Card chart>
               <CardHeader color="warning">
@@ -180,9 +182,9 @@ class Dashboard extends React.Component {
                 />
               </CardHeader>
               <CardBody>
-                <h4 className={classes.cardTitle}>Email Subscriptions</h4>
+                <h4 className={classes.cardTitle}>Post density</h4>
                 <p className={classes.cardCategory}>
-                  Last Campaign Performance
+                  The number of posts per week
                 </p>
               </CardBody>
               <CardFooter chart>
@@ -204,19 +206,20 @@ class Dashboard extends React.Component {
                 />
               </CardHeader>
               <CardBody>
-                <h4 className={classes.cardTitle}>Completed Tasks</h4>
+                <h4 className={classes.cardTitle}>Access time</h4>
                 <p className={classes.cardCategory}>
-                  Last Campaign Performance
+                 Regular access density
                 </p>
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>
-                  <AccessTime /> campaign sent 2 days ago
+                  <AccessTime /> campaign sent 1 day ago
                 </div>
               </CardFooter>
             </Card>
           </GridItem>
         </GridContainer>
+
         <GridContainer>
           <GridItem xs={12} sm={12} md={6}>
             <CustomTabs
@@ -262,20 +265,20 @@ class Dashboard extends React.Component {
           <GridItem xs={12} sm={12} md={6}>
             <Card>
               <CardHeader color="warning">
-                <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
+                <h4 className={classes.cardTitleWhite}>Lastest member</h4>
                 <p className={classes.cardCategoryWhite}>
-                  New employees on 15th September, 2016
+                  New members on 15th May, 2019
                 </p>
               </CardHeader>
               <CardBody>
                 <Table
                   tableHeaderColor="warning"
-                  tableHead={["ID", "Name", "Salary", "Country"]}
+                  tableHead={["ID", "Name", "Phone", "Country"]}
                   tableData={[
-                    ["1", "Dakota Rice", "$36,738", "Niger"],
-                    ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                    ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                    ["4", "Philip Chaney", "$38,735", "Korea, South"]
+                    ["1", "Kim Hoang Long", "0912676869", "Heaven"],
+                    ["2", "Tran Duc Thinh", "0938299188", "Japan"],
+                    ["3", "Vo Ngoc Quynh Nhu", "0911534234", "Korea"],
+                    ["4", "Nguyen Phuc An", "0908941044", "Vietnam"]
                   ]}
                 />
               </CardBody>

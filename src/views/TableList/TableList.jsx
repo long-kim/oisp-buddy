@@ -46,22 +46,34 @@ function TableList(props) {
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
+            <h4 className={classes.cardTitleWhite}>Thread Table</h4>
             <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
+              All posts of all member in BUDDY web 
             </p>
           </CardHeader>
           <CardBody>
             <Table
               tableHeaderColor="primary"
-              tableHead={["Name", "Country", "City", "Salary"]}
+              tableHead={["Name", "Content", "Date", "Vote"]}
               tableData={[
-                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                ["Mason Porter", "Chile", "Gloucester", "$78,615"]
+                ["Ly Hung Duy", 
+                "Quis quo pariatur. Omnis tempora aut aut ipsa. Rem ut ipsum omnis minima tempore commodi est provident. ",
+                "Yesterday 13th May, 2019", "3"],
+                ["Vo Ngoc Quynh Nhu", 
+                "Nam reprehenderit dolores. Voluptatem quasi ut qui quos sed eos quasi. Et molestias maxime aut ut.", 
+                "9th May, 2019", "7"],
+                ["Kim Hoàng Long", 
+                "Adipisci a ducimus molestias illum iure non et. Ut ut non id totam.", 
+                "24th April, 2019", "11"],
+                ["Nguyen Phuc An", 
+                "Exercitationem voluptates tempore ad est. Veritatis perferendis cum accusantium facilis atque.", 
+                "20th April, 2019", "8"],
+                ["Tran Duc Thinh", 
+                "Ex suscipit aut minus nobis rerum. Iure et ipsum nostrum fuga. Recusandae ipsam magni quos labore quae sit hic.", 
+                "3rd April, 2019", "6"],
+                ["Kim Hoàng Long", 
+                "Et nam quisquam eaque laboriosam aperiam consequuntur.", 
+                "20th March, 2019", "20"]
               ]}
             />
           </CardBody>
@@ -71,35 +83,23 @@ function TableList(props) {
         <Card plain>
           <CardHeader plain color="primary">
             <h4 className={classes.cardTitleWhite}>
-              Table on Plain Background
+              Member
             </h4>
             <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
+              Total number of people who follow and register this web
             </p>
           </CardHeader>
           <CardBody>
             <Table
               tableHeaderColor="primary"
-              tableHead={["ID", "Name", "Country", "City", "Salary"]}
+              tableHead={["ID", "Name", "Email", "Phone", "City"]}
               tableData={[
-                ["1", "Dakota Rice", "$36,738", "Niger", "Oud-Turnhout"],
-                ["2", "Minerva Hooper", "$23,789", "Curaçao", "Sinaai-Waas"],
-                ["3", "Sage Rodriguez", "$56,142", "Netherlands", "Baileux"],
-                [
-                  "4",
-                  "Philip Chaney",
-                  "$38,735",
-                  "Korea, South",
-                  "Overland Park"
-                ],
-                [
-                  "5",
-                  "Doris Greene",
-                  "$63,542",
-                  "Malawi",
-                  "Feldkirchen in Kärnten"
-                ],
-                ["6", "Mason Porter", "$78,615", "Chile", "Gloucester"]
+                ["1", "Nguyen Phuc An", "1552005@hcmut.edu.vn", "0908041044", "Vietnam"],
+                ["2", "Kim Hoàng Long", "1652758@hcmut.edu.vn", "0912756238", "America"],
+                ["3", "Tran Duc Thinh", "1652578@hcmut.edu.vn", "0939304193", "Japan"],
+                ["4", "Vo Ngoc Quynh Nhu", "1652458@hcmut.edu.vn", "0126432014", "Korea"],
+                ["5", "Ly Hung Duy", "1652099@hcmut.edu.vn", "0126324982", "Russia"],
+                ["6", "Nguyen Ngoc Ngan", "1552050@hcmut.edu.vn", "0907302142", "Thailand"]
               ]}
             />
           </CardBody>

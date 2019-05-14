@@ -13,7 +13,7 @@ import CardAvatar from "components/Card/CardAvatar.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
-import avatar from "assets/img/faces/marc.jpg";
+import avatar from "assets/img/faces/an.jpg";
 
 const styles = {
   cardCategoryWhite: {
@@ -42,14 +42,14 @@ function UserProfile(props) {
         <GridItem xs={12} sm={12} md={8}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
+              <h4 className={classes.cardTitleWhite}>Admin Profile</h4>
               <p className={classes.cardCategoryWhite}>Complete your profile</p>
             </CardHeader>
             <CardBody>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5}>
                   <CustomInput
-                    labelText="Company (disabled)"
+                    labelText="Bach Khoa University"
                     id="company-disabled"
                     formControlProps={{
                       fullWidth: true
@@ -61,7 +61,7 @@ function UserProfile(props) {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={3}>
                   <CustomInput
-                    labelText="Username"
+                    labelText="An Nguyen"
                     id="username"
                     formControlProps={{
                       fullWidth: true
@@ -70,7 +70,7 @@ function UserProfile(props) {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="Email address"
+                    labelText="1552005@hcmut.edu.vn"
                     id="email-address"
                     formControlProps={{
                       fullWidth: true
@@ -81,7 +81,7 @@ function UserProfile(props) {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
-                    labelText="First Name"
+                    labelText="Nguyen Phuc"
                     id="first-name"
                     formControlProps={{
                       fullWidth: true
@@ -90,7 +90,7 @@ function UserProfile(props) {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
-                    labelText="Last Name"
+                    labelText="An"
                     id="last-name"
                     formControlProps={{
                       fullWidth: true
@@ -101,7 +101,7 @@ function UserProfile(props) {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="City"
+                    labelText="Ho Chi Minh City"
                     id="city"
                     formControlProps={{
                       fullWidth: true
@@ -110,7 +110,7 @@ function UserProfile(props) {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="Country"
+                    labelText="Vietnam"
                     id="country"
                     formControlProps={{
                       fullWidth: true
@@ -119,7 +119,7 @@ function UserProfile(props) {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="Postal Code"
+                    labelText="Phone: 0908041044"
                     id="postal-code"
                     formControlProps={{
                       fullWidth: true
@@ -127,23 +127,8 @@ function UserProfile(props) {
                   />
                 </GridItem>
               </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
-                  <CustomInput
-                    labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                    id="about-me"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      multiline: true,
-                      rows: 5
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
             </CardBody>
+            
             <CardFooter>
               <Button color="primary">Update Profile</Button>
             </CardFooter>
@@ -157,16 +142,13 @@ function UserProfile(props) {
               </a>
             </CardAvatar>
             <CardBody profile>
-              <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
-              <h4 className={classes.cardTitle}>Alec Thompson</h4>
+              <h6 className={classes.cardCategory}>ADMINISTRATOR BUDDY</h6>
+              <h4 className={classes.cardTitle}>Nguyen Phuc An</h4>
               <p className={classes.description}>
-                Don't be scared of the truth because we need to restart the
-                human foundation in truth And I love you like Kanye loves Kanye
-                I love Rick Owens’ bed design but the back is...
+                My maxim is never give up, just have purpose and motivation, you will overcome it all.
+                Family is one of my most powerful motives, where provide me strength, will and effort to grow
               </p>
-              <Button color="primary" round>
-                Follow
-              </Button>
+              
             </CardBody>
           </Card>
         </GridItem>
