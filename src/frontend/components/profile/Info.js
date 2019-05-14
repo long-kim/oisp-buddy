@@ -22,6 +22,7 @@ class Info extends React.Component {
       year: undefined,
       major: "",
       showModal: false,
+      showModal2: false,
       first_name: "",
       last_name: ""
     };
@@ -41,12 +42,12 @@ class Info extends React.Component {
     return param === "ava"
       ? this.setState({ showModal: true })
       : param === "cover"
-      ? this.setState({ showModal: true })
-      : this.setState({ showModal: false });
+      ? this.setState({ showModal2: true })
+      : this.setState({ showModal: false, showModal2: false });
   };
 
   handleCloseModal() {
-    this.setState({ showModal: false });
+    this.setState({ showModal: false, showModal2: false });
   }
 
   componentDidMount() {
@@ -329,7 +330,7 @@ class Info extends React.Component {
         </Popup>
 
         <Popup
-          open={this.state.showModal}
+          open={this.state.showModal2}
           modal
           onClose={this.handleCloseModal}
         >

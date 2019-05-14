@@ -38,7 +38,7 @@ class Friendlist extends Component {
     });
     Axios.get("/api/users/friendlist", {
       params: {
-        user_id: 2
+        user_id: this.state.id
       }
     }).then(res => {
       this.setState({

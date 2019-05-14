@@ -148,37 +148,37 @@ module.exports = {
           "https://images.unsplash.com/photo-1557163123-abbafe113238?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80",
         createdAt: new Date(),
         updatedAt: new Date()
-      },
-      {
-        username: "abc6",
-        email: "abc5@gmail.com",
-        password: seed_pwd,
-        first_name: "Lily",
-        last_name: "Pad",
-        dept: "Art",
-        year: "2013",
-        avatar:
-          "https://images.unsplash.com/photo-1554457945-ba5df6648602?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80",
-        cover:
-          "https://images.unsplash.com/photo-1557163123-abbafe113238?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80",
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        username: "abc7",
-        email: "abc7@gmail.com",
-        password: seed_pwd,
-        first_name: "Marsh",
-        last_name: "Mallow",
-        dept: "Law",
-        year: "2013",
-        avatar:
-          "https://images.unsplash.com/photo-1554457945-ba5df6648602?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80",
-        cover:
-          "https://images.unsplash.com/photo-1557163123-abbafe113238?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80",
-        createdAt: new Date(),
-        updatedAt: new Date()
       }
+      // {
+      //   username: "abc6",
+      //   email: "abc5@gmail.com",
+      //   password: seed_pwd,
+      //   first_name: "Lily",
+      //   last_name: "Pad",
+      //   dept: "Art",
+      //   year: "2013",
+      //   avatar:
+      //     "https://images.unsplash.com/photo-1554457945-ba5df6648602?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80",
+      //   cover:
+      //     "https://images.unsplash.com/photo-1557163123-abbafe113238?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80",
+      //   createdAt: new Date(),
+      //   updatedAt: new Date()
+      // }
+      // {
+      //   username: "abc7",
+      //   email: "abc7@gmail.com",
+      //   password: seed_pwd,
+      //   first_name: "Marsh",
+      //   last_name: "Mallow",
+      //   dept: "Law",
+      //   year: "2013l",
+      //   avatar:
+      //     "https://images.unsplash.com/photo-1554457945-ba5df6648602?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80",
+      //   cover:
+      //     "https://images.unsplash.com/photo-1557163123-abbafe113238?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80",
+      //   createdAt: new Date(),
+      //   updatedAt: new Date()
+      // }
     ]);
   },
 

@@ -22,7 +22,7 @@ class Profile extends Component {
       cover: "",
       year: undefined,
       major: "",
-      friends: "0",
+      friends: undefined,
       thread: "0",
       achivement: "0",
       toggle: false,
@@ -30,10 +30,13 @@ class Profile extends Component {
       id: localStorage.getItem("id"), // lay id tu token
       test: "",
       newavatar: "",
-      showModal: false
+      newcover: "",
+      showModal: false,
+      showModal2: false,
+      friendlist: []
     };
     this.handleButton = this.handleButton.bind(this);
-    this.handleSubmit_ava = this.handleSubmit_ava.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -53,6 +56,15 @@ class Profile extends Component {
         about: res.data.about
       });
     });
+    Axios.get("/api/users/friendlist", {
+      params: {
+        user_id: this.state.id
+      }
+    }).then(res => {
+      this.setState({
+        friendlist: res.data
+      });
+    });
   }
   handleChange(event) {
     const { name, value } = event.target;
@@ -65,26 +77,38 @@ class Profile extends Component {
       };
     });
   }
-  handleOpenModal() {
-    this.setState({ showModal: true });
-  }
+
+  handleOpenModal = param => e => {
+    return param === "ava"
+      ? this.setState({ showModal: true })
+      : param === "cover"
+      ? this.setState({ showModal2: true })
+      : this.setState({ showModal: false, showModal2: false });
+  };
 
   handleCloseModal() {
-    this.setState({ showModal: false });
+    this.setState({ showModal: false, showModal2: false });
   }
 
-  handleSubmit_ava(event) {
-    Axios.patch("/api/users/edit/avatar", {
-      avatar: this.state.newavatar,
-      user_id: this.state.id
-    });
-
-    this.setState({ avatar: this.state.newavatar });
-    alert("Avatar has changed");
-    event.preventDefault();
-  }
+  handleSubmit = param => e => {
+    e.preventDefault();
+    return param === "avatar"
+      ? (Axios.patch("/api/users/edit/avatar", {
+          avatar: this.state.newavatar,
+          user_id: this.state.id
+        }),
+        alert("Avatar has changed"))
+      : param === "cover"
+      ? (Axios.patch("/api/users/edit/cover", {
+          cover: this.state.newcover,
+          user_id: this.state.id
+        }),
+        alert("Cover has changed"))
+      : "no cant do babydoll";
+  };
 
   render() {
+    this.state.friend = Object.keys(this.state.friendlist).length;
     return (
       <div>
         {localStorage.getItem("oisp-token") == null ? (
@@ -98,10 +122,7 @@ class Profile extends Component {
             <header className="header">
               <img src={this.state.cover} alt="user's cover" />
               <h6>
-                <button
-                  type="button"
-                  onClick={() => alert("UNAVAILABLE AT THE MOMENT")}
-                >
+                <button type="button" onClick={this.handleOpenModal("cover")}>
                   <i class="fas fa-pencil-alt" />
                 </button>
               </h6>
@@ -114,7 +135,7 @@ class Profile extends Component {
               <button
                 className="ava_pencil"
                 type="button"
-                onClick={this.handleOpenModal}
+                onClick={this.handleOpenModal("ava")}
               >
                 <i class="fas fa-pencil-alt" />
               </button>
@@ -136,7 +157,11 @@ class Profile extends Component {
                     <h7 style={{ float: "left" }}>
                       <Link to="profile/friendlist">FRIEND</Link>
                     </h7>{" "}
-                    <h7 style={{ float: "right" }}>{this.state.friends}</h7>{" "}
+                    <h7 style={{ float: "right" }}>
+                      {this.state.friendlist !== []
+                        ? this.state.friend
+                        : "false"}
+                    </h7>{" "}
                     <br />
                     <h7 style={{ float: "left" }}>
                       <Link to="forum">THREAD</Link>
@@ -187,7 +212,48 @@ class Profile extends Component {
                 <button
                   type="submit"
                   class="btn btn-primary"
-                  onClick={this.handleSubmit_ava.bind(this)}
+                  onClick={this.handleSubmit("avatar").bind(this)}
+                >
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  class="btn"
+                  onClick={this.handleCloseModal}
+                >
+                  Cancel
+                </button>
+              </form>
+            </div>
+          </div>
+        </Popup>
+
+        <Popup
+          open={this.state.showModal2}
+          modal
+          onClose={this.handleCloseModal}
+        >
+          <div class="card" style={{ width: "400px", height: "200px" }}>
+            <div class="card-body">
+              <form>
+                <div class="form-group">
+                  <label for="cover_url">URL to your image</label>
+                  <input
+                    type="url"
+                    class="form-control"
+                    name="newcover"
+                    placeholder="Enter URL"
+                    value={this.state.newcover}
+                    onChange={this.handleChange}
+                  />
+                  <small id="URLlHelp" class="form-text text-muted">
+                    Recommend size: 180px x 1080px
+                  </small>
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  onClick={this.handleSubmit("cover")}
                 >
                   Submit
                 </button>
