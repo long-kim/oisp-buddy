@@ -6,15 +6,28 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 // const appRoot = document.getElementsByClassName("app");
 
-class ChatBox extends Component {
+class ChatBoxNew extends Component {
   constructor(props) {
     super(props);
     this.state = {
       messages: [],
+      avatar: "",
+      name: "",
       roomID: this.props.roomID,
       showMessList: true,
       showBox: true
     };
+    axios
+      .get(`/api/chats/${this.props.roomID}/info`)
+      .then(response => {
+        this.setState({
+          avatar: response.data.avatar,
+          name: response.data.first_name + " " + response.data.last_name
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
 
     this.el = document.createElement("div");
   }
@@ -27,6 +40,7 @@ class ChatBox extends Component {
   handleHideClick() {
     // console.log("icon on click");
     this.setState({ showBox: false });
+    this.props.callbackFromParent(this.props.roomID);
   }
 
   render() {
@@ -39,8 +53,8 @@ class ChatBox extends Component {
               onClick={this.handleHeaderClick.bind(this)}
             >
               <div className="box-left">
-                <img src={this.props.avatar} />
-                <p>{this.props.name} </p>
+                <img src={this.state.avatar} />
+                <p>{this.state.name} </p>
               </div>
               <div
                 className="box-right"
@@ -61,4 +75,4 @@ class ChatBox extends Component {
   }
 }
 
-export default ChatBox;
+export default ChatBoxNew;

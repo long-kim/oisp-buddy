@@ -26,21 +26,12 @@ module.exports = passport => {
 
   function getRoomsList(req) {
     const user_id = req.user ? req.user.user_id : 1;
-    const resArr = [];
+
     const result = Friend.findAll({
       where: {
         [Op.or]: [{ user_one_id: user_id }, { user_two_id: user_id }]
       }
     })
-      // .then(friends => {
-      //   return Promise.all(
-      //     friends.map(friend => {
-      //       friend.getRoom().then(res => {
-      //         return Promise.resolve(res);
-      //       });
-      //     })
-      //   ).then(result);
-      // })
       .then(friends => {
         return friends.map(friend => friend.getRoom());
       })

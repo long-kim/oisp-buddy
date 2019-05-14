@@ -39,7 +39,13 @@ module.exports = passport => {
   });
 
   router.post("/find", (req, res, next) => {
-    RoomService.findRoom(req.params).then(result => {
+    RoomService.findRoom(req.body).then(result => {
+      res.send(result);
+    });
+  });
+
+  router.post("/newRoom", (req, res, next) => {
+    RoomService.newRoom(req.body).then(result => {
       res.send(result);
     });
   });

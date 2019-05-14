@@ -12,7 +12,8 @@ class Room extends Component {
       lastMessage: "",
       time: moment().format("LT"),
       boxHidden: false,
-      info: {}
+      alreadyShow: false
+      // info: {}
     };
 
     axios
@@ -29,16 +30,18 @@ class Room extends Component {
         console.log(error);
       });
 
-    axios
-      .get(`/api/chats/${this.props.id}/info`)
-      .then(response => {
-        this.setState({
-          info: response.data
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    // axios
+    //   .get(`/api/chats/${this.props.id}/info`)
+    //   .then(response => {
+    //     this.setState({
+    //       info: response.data
+    //     });
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
+
+    // console.log("id:", this.props.id, ".....", this.props.roomFound);
   }
 
   handleClick = () => {
@@ -64,7 +67,11 @@ class Room extends Component {
         <div>
           {this.state.boxHidden && (
             <BoxPortal target="targetForBox">
-              <ChatBox roomID={this.props.id} />
+              <ChatBox
+                roomID={this.props.id}
+                name={this.props.name}
+                avatar={this.props.avatar}
+              />
             </BoxPortal>
           )}
         </div>

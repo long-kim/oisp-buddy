@@ -16,10 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNULL: false
       }
     },
-    {}
+    {
+      timestamps: false
+    }
   );
-  Friend.removeAttribute("createdAt");
-  Friend.removeAttribute("updatedAt");
 
   Friend.associate = function(models) {
     Friend.belongsTo(models.User, { foreignKey: "user_one_id" });
