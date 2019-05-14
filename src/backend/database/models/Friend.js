@@ -18,8 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  Friend.removeAttribute("createdAt");
-  Friend.removeAttribute("updatedAt");
   Friend.associate = function(models) {
     Friend.belongsTo(models.User, { foreignKey: "user_one_id" });
     Friend.belongsTo(models.User, { foreignKey: "user_two_id" });

@@ -56,8 +56,8 @@ class Routes extends Component {
                 <Route path={`${url}/info`} component={Profile.Info} exact />
 
                 <Route
-                  path={`${url}/friend/:user_name`}
-                  component={Profile.Friend}
+                  path={`${url}/friendlist/:user_id`}
+                  component={Profile.Friendlist.FriendProfile}
                   exact
                 />
                 <Route

@@ -25,7 +25,6 @@ class Profile extends Component {
       friends: undefined,
       thread: "0",
       achivement: "0",
-      toggle: false,
       // idd: localStorage.getItem("id"),
       id: localStorage.getItem("id"), // lay id tu token
       test: "",
@@ -33,9 +32,10 @@ class Profile extends Component {
       newcover: "",
       showModal: false,
       showModal2: false,
-      friendlist: []
+      friendlist: [],
+      friendID: []
     };
-    this.handleButton = this.handleButton.bind(this);
+
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -69,13 +69,6 @@ class Profile extends Component {
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
-  }
-  handleButton() {
-    this.setState(prevState => {
-      return {
-        toggle: !prevState.toggle
-      };
-    });
   }
 
   handleOpenModal = param => e => {
@@ -164,11 +157,16 @@ class Profile extends Component {
                     </h7>{" "}
                     <br />
                     <h7 style={{ float: "left" }}>
-                      <Link to="forum">THREAD</Link>
+                      <Link to="/forum/index">THREAD</Link>
                     </h7>{" "}
                     <h7 style={{ float: "right" }}>{this.state.thread}</h7>{" "}
                     <br />
-                    <h7 style={{ float: "left" }}>ACHIVEMENT</h7>{" "}
+                    <h7
+                      style={{ float: "left", cursor: "pointer" }}
+                      onClick={() => alert("You have no achievement")}
+                    >
+                      ACHIVEMENT
+                    </h7>{" "}
                     <h7 style={{ float: "right" }}>{this.state.achivement}</h7>
                     <br />
                   </p>
@@ -176,15 +174,7 @@ class Profile extends Component {
               </div>
             </header>
 
-            <div className="calendar">
-              <Button variant="contained" onClick={this.handleButton}>
-                {this.state.toggle ? "Close Calendar" : "Open Calendar"}
-              </Button>{" "}
-              {this.state.toggle ? (
-                <Calendar onClickDay={() => alert("nothing yet")} />
-              ) : null}
-              {this.state.id == null ? "not log in" : this.state.test}
-            </div>
+            <body className="info_body">Hello I am body</body>
           </div>
         )}
         <Popup

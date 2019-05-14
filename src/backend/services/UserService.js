@@ -101,6 +101,44 @@ module.exports = passport => {
     return result;
   }
 
+  function getFriendStatus(req) {
+    const user_id1 = req.query.user_id1 ? req.query.user_id1 : 1;
+    const user_id2 = req.query.user_id2 ? req.query.user_id2 : 1;
+    // console.log("user1: ", req.query.user_id1);
+    // console.log("user2: ", req.query.user_id2);
+    const result = Relationship.findAll({
+      where: {
+        user_one_id: user_id1,
+        user_two_id: user_id2
+      }
+    })
+      .then(relationship => {
+        // console.log("relationship", Promise.resolve(relationship));
+        return Promise.resolve(relationship);
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
+    return result;
+  }
+
+  function editFriend(req) {
+    const id = req.body.id ? req.body.id : 0;
+    console.log("user1: ", req.body.id);
+    console.log("status: ", req.body.status);
+    return Relationship.findByPk(id)
+      .then(user => {
+        return user.update({
+          status: req.body.status,
+          action_user_id: req.body.action_user_id,
+          updatedAt: new Date()
+        });
+      })
+      .then(user => {
+        return user;
+      });
+  }
+
   function editUser_about(req) {
     // console.log("this is req:", req.user_id);
     const user_id = req.user_id ? req.user_id : 1;
@@ -219,7 +257,9 @@ module.exports = passport => {
     editUser_dept,
     editUser_year,
     getFriendlist,
-    getFriendInfo
+    getFriendInfo,
+    getFriendStatus,
+    editFriend
     // editUser_password
   };
 };

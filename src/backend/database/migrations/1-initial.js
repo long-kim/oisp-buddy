@@ -244,6 +244,16 @@ var migrationCommands = [
             model: "Users",
             key: "user_id"
           }
+        },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: "createdAt",
+          allowNull: false
+        },
+        updatedAt: {
+          type: Sequelize.DATE,
+          field: "updatedAt",
+          allowNull: false
         }
       }
     ]

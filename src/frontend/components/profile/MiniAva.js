@@ -11,6 +11,7 @@ class MiniAva extends Component {
       ava: "",
       major: ""
     };
+    this.handleClick = this.handleClick.bind();
   }
   componentDidMount() {
     Axios.get("/api/users/viewfriend", {
@@ -25,28 +26,41 @@ class MiniAva extends Component {
       });
     });
   }
+  handleClick = param => e => {
+    return;
+  };
   render() {
+    let url;
+    url = "/profile/friendlist/" + this.props.id.toString();
     return (
       <div style={{ width: "200px", margin: "0px" }}>
         {/* <img src={this.state.ava} alt="my avatar" />
         My id is: {this.props.id}
         <hr />
         My name is: {this.state.name} */}
-        <label onClick={() => alert("coming soon")}>
-          <div class="card" style={{ margin: "0px" }}>
-            <img
-              src={this.state.ava}
-              alt="Avatar"
-              style={{ width: "200px", height: "200px", objectFit: "cover" }}
-            />
-            <div class="containerr">
-              <h4>
-                <b>{this.state.name}</b>
-              </h4>
-              <p>{this.state.major}</p>
+        <Link
+          to={{
+            pathname: url,
+
+            user_id: this.props.user_id
+          }}
+        >
+          <label>
+            <div class="card" style={{ margin: "0px" }}>
+              <img
+                src={this.state.ava}
+                alt="Avatar"
+                style={{ width: "200px", height: "200px", objectFit: "cover" }}
+              />
+              <div class="containerr">
+                <h4>
+                  <b>{this.state.name}</b>
+                </h4>
+                <p>{this.state.major}</p>
+              </div>
             </div>
-          </div>
-        </label>
+          </label>
+        </Link>
       </div>
     );
   }

@@ -3,8 +3,10 @@ import { Link, NavLink } from "react-router-dom";
 import Axios from "axios";
 import Button from "@material-ui/core/Button";
 import MiniAva from "./MiniAva.js";
+import FriendProfile from "./FriendProfile.js";
 
 class Friendlist extends Component {
+  static FriendProfile = FriendProfile;
   constructor(props) {
     super(props);
     this.state = {
