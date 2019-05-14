@@ -15,7 +15,13 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 
-const admin = require("firebase-admin");
+// const admin = require("firebase-admin");
+// const serviceAccount = require("/backend/serviceAccountKey.json");
+
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://buddy-chat-dec35.firebaseio.com"
+// });
 
 // Configuration ==============================================================
 const sequelize = new Sequelize({
@@ -33,8 +39,6 @@ sequelize
   .catch(err => {
     console.error("Unable to connect to the database:", err);
   });
-
-require("./config/passport")(passport); // Passport configuration
 
 app.use(morgan("dev"));
 app.use(cookieParser());

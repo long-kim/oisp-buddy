@@ -1,5 +1,48 @@
 {
     "tables": {
+        "Friends": {
+            "tableName": "Friends",
+            "schema": {
+                "friend_id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "allowNull": false,
+                    "field": "friend_id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "status": {
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "allowNULL": false,
+                    "field": "status",
+                    "seqType": "Sequelize.SMALLINT"
+                },
+                "user_one_id": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "user_one_id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "user_two_id": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "user_two_id",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "Messages": {
             "tableName": "Messages",
             "schema": {
@@ -228,6 +271,12 @@
                     "primaryKey": true,
                     "allowNull": false,
                     "field": "room_id",
+                    "references": {
+                        "model": "Friends",
+                        "key": "friend_id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "name": {
@@ -495,11 +544,6 @@
                     "field": "username",
                     "seqType": "Sequelize.STRING(20)"
                 },
-                "avatar": {
-                    "allowNull": true,
-                    "field": "avatar",
-                    "seqType": "Sequelize.STRING"
-                },
                 "email": {
                     "unique": true,
                     "allowNull": false,
@@ -513,6 +557,12 @@
                     "allowNull": false,
                     "field": "password",
                     "seqType": "Sequelize.STRING"
+                },
+                "about": {
+                    "unique": false,
+                    "allowNull": true,
+                    "field": "about",
+                    "seqType": "Sequelize.STRING(120)"
                 },
                 "role": {
                     "defaultValue": {
@@ -536,13 +586,21 @@
                     "field": "last_name",
                     "seqType": "Sequelize.STRING(60)"
                 },
+                "avatar": {
+                    "field": "avatar",
+                    "seqType": "Sequelize.STRING"
+                },
+                "cover": {
+                    "field": "cover",
+                    "seqType": "Sequelize.STRING"
+                },
                 "dept": {
                     "field": "dept",
                     "seqType": "Sequelize.STRING(50)"
                 },
                 "year": {
                     "field": "year",
-                    "seqType": "Sequelize.TINYINT"
+                    "seqType": "Sequelize.SMALLINT"
                 },
                 "createdAt": {
                     "allowNull": false,
@@ -553,44 +611,6 @@
                     "allowNull": false,
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
-                }
-            },
-            "indexes": []
-        },
-        "user_rooms": {
-            "tableName": "user_rooms",
-            "schema": {
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "room_id": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Rooms",
-                        "key": "room_id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "room_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "user_id": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Users",
-                        "key": "user_id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "user_id",
-                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []

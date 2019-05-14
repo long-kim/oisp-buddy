@@ -42,7 +42,6 @@ class Room extends Component {
   }
 
   handleClick = () => {
-    console.log("hmmmm");
     this.setState({ boxHidden: !this.state.boxHidden });
   };
 

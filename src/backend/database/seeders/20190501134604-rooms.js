@@ -1,16 +1,12 @@
 "use strict";
 
 const faker = require("faker");
-function toTitleCase(str) {
-  return str.replace(/\w\S*/g, function(txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  });
-}
+
 const seed_data = [];
 
-for (let i = 0; i < 15; i++) {
+for (let i = 1; i < 7; i++) {
   seed_data.push({
-    name: toTitleCase(faker.lorem.words(Math.floor(Math.random() * 2) + 2)),
+    name: "",
     avatar: faker.image.avatar(),
     createdAt: new Date(),
     updatedAt: new Date()

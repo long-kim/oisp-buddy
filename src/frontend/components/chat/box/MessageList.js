@@ -14,7 +14,6 @@ class MessageList extends Component {
       messages: undefined,
       currentPage: 1
     };
-    this.socket = null;
 
     axios
       .get(`/api/chats/${this.props.roomID}?page=${this.state.currentPage}`)
@@ -58,8 +57,6 @@ class MessageList extends Component {
         console.error(error);
       });
 
-    this.socket.emit("newMessage", this.state.content);
-
     this.setState({
       content: ""
     });
@@ -71,14 +68,6 @@ class MessageList extends Component {
 
   componentDidUpdate() {
     this.scrollToBottom();
-    this.socket = io("localhost:6969");
-    this.socket.on("newMessage", response => {
-      this.newMessage(response);
-    });
-  }
-
-  newMessage(m) {
-    this.setState({ messages: [...this.state.messages, m] });
   }
 
   render() {

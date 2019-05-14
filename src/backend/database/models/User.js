@@ -19,10 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         allowNull: false
       },
-      avatar: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
       email: {
         type: DataTypes.STRING,
         unique: true,
@@ -34,6 +30,11 @@ module.exports = (sequelize, DataTypes) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false
+      },
+      about: {
+        type: DataTypes.STRING(120),
+        unique: false,
+        allowNull: true
       },
       role: {
         type: DataTypes.ENUM("user", "admin"),
@@ -52,11 +53,17 @@ module.exports = (sequelize, DataTypes) => {
           isAlpha: true
         }
       },
+      avatar: {
+        type: DataTypes.STRING
+      },
+      cover: {
+        type: DataTypes.STRING
+      },
       dept: {
         type: DataTypes.STRING(50)
       },
       year: {
-        type: DataTypes.TINYINT
+        type: DataTypes.SMALLINT
       }
     },
     {}
@@ -64,6 +71,8 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function(models) {
     User.hasMany(models.Thread, { foreignKey: "author_id" });
+    User.hasMany(models.Friend, { foreignKey: "user_one_id" });
+    User.hasMany(models.Friend, { foreignKey: "user_two_id" });
     User.hasMany(models.Post, { foreignKey: "posted_by" });
     User.hasMany(models.Report, { foreignKey: "reported_by" });
     User.hasMany(models.Message, { foreignKey: "sender_id" });
@@ -82,10 +91,10 @@ module.exports = (sequelize, DataTypes) => {
       through: models.PostVoteModel,
       foreignKey: "user_id"
     });
-    User.belongsToMany(models.Room, {
-      through: "user_rooms",
-      foreignKey: "user_id"
-    });
+    // User.belongsToMany(models.Room, {
+    //   through: "user_rooms",
+    //   foreignKey: "room_id"
+    // });
   };
 
   // User.addHook("beforeSave", (user, _options) => {

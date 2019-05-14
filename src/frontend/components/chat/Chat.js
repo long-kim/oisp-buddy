@@ -14,7 +14,9 @@ class Chat extends Component {
     super(props);
     this.state = {
       roomlist: [],
-      roomClickYet: true
+      roomClickYet: true,
+      content: "",
+      userSearch: []
     };
     this.handleClick = this.handleClick.bind(this);
     axios
@@ -27,11 +29,34 @@ class Chat extends Component {
       });
   }
   handleClick = () => {
-    console.log("room click");
     this.setState({
       roomClickYet: !this.state.roomClickYet
     });
   };
+
+  handleKeyPress(event) {
+    // if (event.key !== "Enter") return;
+    if (this.state.content === "") {
+      this.setState({ userSearch: [] });
+      return;
+    }
+    this.handleSearch();
+  }
+
+  handleChange(event) {
+    this.setState({ content: event.target.value });
+  }
+  handleFindRoom = myitem => {
+    // axios.post(`/api/chat/find/`);
+    console.log("click to user", myitem);
+  };
+
+  handleSearch() {
+    axios
+      .post(`/api/users/find/`, { content: this.state.content })
+      .then(res => this.setState({ userSearch: res.data }))
+      .catch(err => console.error(err));
+  }
 
   componentDidUpdate(prevProps) {
     // Typical usage (don't forget to compare props):
@@ -41,14 +66,39 @@ class Chat extends Component {
   }
 
   render() {
-    console.log("this.props.show", this.props.show);
-    console.log("this.state.roomClickYet", this.state.roomClickYet);
     return (
       <div className="chat-popup-lst">
         <div
           className={this.props.show && this.state.roomClickYet ? "" : "hidden"}
         >
-          <div className="header">New Message</div>
+          <div className="header">
+            <div className="header-top">
+              <input
+                type="text"
+                placeholder="Search"
+                value={this.state.content}
+                onChange={this.handleChange.bind(this)}
+                onKeyPress={this.handleKeyPress.bind(this)}
+              />
+              <div className="new-mess">New Message</div>
+            </div>
+
+            {this.state.userSearch.users && (
+              <div className="search-result">
+                {this.state.userSearch.users.map((item, index) => {
+                  return (
+                    <div
+                      className="search-item"
+                      key={index}
+                      onClick={this.handleFindRoom.bind(this, item)}
+                    >
+                      {item.username}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
 
           <ListGroup>
             {this.state.roomlist.map((room, index) => {

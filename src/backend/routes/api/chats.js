@@ -10,7 +10,17 @@ module.exports = passport => {
   const UserService = require("../../services/UserService")(passport);
 
   router.get("/", (req, res, next) => {
-    UserService.getRooms(req).then(result => {
+    UserService.getRoomsList(req).then(async result => {
+      let newarr = [];
+      for await (i of result) {
+        newarr.push(i.dataValues);
+      }
+      res.send(newarr);
+    });
+  });
+
+  router.get("/:room_id/info", (req, res, next) => {
+    RoomService.getRoom(req.params).then(result => {
       res.send(result);
     });
   });
@@ -22,8 +32,14 @@ module.exports = passport => {
     });
   });
 
-  router.get("/:room_id/info", (req, res, next) => {
-    RoomService.getRoom(req.params).then(result => {
+  router.get("/:room_id/participants", (req, res, next) => {
+    RoomService.getRoomParticipants(req.params).then(async result => {
+      res.send(result);
+    });
+  });
+
+  router.post("/find", (req, res, next) => {
+    RoomService.findRoom(req.params).then(result => {
       res.send(result);
     });
   });
@@ -35,7 +51,7 @@ module.exports = passport => {
   });
 
   router.post("/:room_id/new", (req, res, next) => {
-    const user_id = req.user ? req.user.user_id : 2;
+    const user_id = req.user ? req.user.user_id : 1;
     // console.log(req.body);
     const data = {
       content: req.body.content,

@@ -1,6 +1,8 @@
 const models = require("backend/database/models");
 const Room = models.Room;
 const User = models.User;
+const Friend = models.Friend;
+const Op = require("sequelize").Op;
 
 module.exports = passport => {
   function addRoom(data) {
@@ -30,7 +32,6 @@ module.exports = passport => {
 
     return result;
   }
-
   function getRoom(req) {
     const room_id = req.room_id ? req.room_id : 1;
     const result = Room.findByPk(room_id)
@@ -40,6 +41,34 @@ module.exports = passport => {
       .catch(err => {
         return Promise.reject(err);
       });
+    return result;
+  }
+
+  function findRoom(req) {
+    const user_id = req.user ? req.user.user_id : 1;
+    const result = UserRooms.findAll({
+      where: { user_id: user_id }
+    })
+      .then(room => {
+        room.map();
+        return getRoomParticipants({ room_id: room });
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
+    return result;
+  }
+
+  function getRoomParticipants(req) {
+    const room_id = req.room_id ? req.room_id : 1;
+    const result = Friend.findByPk(room_id)
+      .then(result => {
+        return Promise.resolve(result);
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
+
     return result;
   }
 
@@ -84,8 +113,10 @@ module.exports = passport => {
     addRoom,
     editRoom,
     deleteRoom,
+    getRoom,
+    findRoom,
     getMessages,
     getLastMessages,
-    getRoom
+    getRoomParticipants
   };
 };

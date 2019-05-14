@@ -5,65 +5,29 @@ var Sequelize = require('sequelize');
 /**
  * Actions summary:
  *
- * createTable "Rooms", deps: []
  * createTable "Topics", deps: []
  * createTable "Users", deps: []
- * createTable "Messages", deps: [Users, Rooms]
+ * createTable "Friends", deps: [Users, Users]
+ * createTable "Rooms", deps: [Friends]
  * createTable "Threads", deps: [Users]
  * createTable "Posts", deps: [Users, Threads, Threads]
  * createTable "post_votes", deps: [Posts, Users]
+ * createTable "Messages", deps: [Users, Rooms]
  * createTable "Reports", deps: [Users, Threads]
  * createTable "subscriptions", deps: [Threads, Users]
  * createTable "thread_topics", deps: [Threads, Topics]
  * createTable "thread_votes", deps: [Threads, Users]
- * createTable "user_rooms", deps: [Rooms, Users]
  *
  **/
 
 var info = {
     "revision": 1,
     "name": "initial",
-    "created": "2019-05-02T07:15:41.164Z",
+    "created": "2019-05-14T09:39:26.262Z",
     "comment": ""
 };
 
 var migrationCommands = [{
-        fn: "createTable",
-        params: [
-            "Rooms",
-            {
-                "room_id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "room_id",
-                    "allowNull": false,
-                    "primaryKey": true,
-                    "autoIncrement": true
-                },
-                "name": {
-                    "type": Sequelize.STRING,
-                    "field": "name",
-                    "allowNull": false
-                },
-                "avatar": {
-                    "type": Sequelize.STRING,
-                    "field": "avatar",
-                    "allowNull": true
-                },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
-                },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
-                }
-            },
-            {}
-        ]
-    },
-    {
         fn: "createTable",
         params: [
             "Topics",
@@ -127,11 +91,6 @@ var migrationCommands = [{
                     },
                     "unique": true
                 },
-                "avatar": {
-                    "type": Sequelize.STRING,
-                    "field": "avatar",
-                    "allowNull": true
-                },
                 "email": {
                     "type": Sequelize.STRING,
                     "field": "email",
@@ -145,6 +104,12 @@ var migrationCommands = [{
                     "type": Sequelize.STRING,
                     "field": "password",
                     "allowNull": false
+                },
+                "about": {
+                    "type": Sequelize.STRING(120),
+                    "field": "about",
+                    "allowNull": true,
+                    "unique": false
                 },
                 "role": {
                     "type": Sequelize.ENUM('user', 'admin'),
@@ -166,12 +131,20 @@ var migrationCommands = [{
                         "isAlpha": true
                     }
                 },
+                "avatar": {
+                    "type": Sequelize.STRING,
+                    "field": "avatar"
+                },
+                "cover": {
+                    "type": Sequelize.STRING,
+                    "field": "cover"
+                },
                 "dept": {
                     "type": Sequelize.STRING(50),
                     "field": "dept"
                 },
                 "year": {
-                    "type": Sequelize.TINYINT,
+                    "type": Sequelize.SMALLINT,
                     "field": "year"
                 },
                 "createdAt": {
@@ -191,19 +164,74 @@ var migrationCommands = [{
     {
         fn: "createTable",
         params: [
-            "Messages",
+            "Friends",
             {
-                "msg_id": {
+                "friend_id": {
                     "type": Sequelize.INTEGER,
-                    "field": "msg_id",
+                    "field": "friend_id",
                     "allowNull": false,
                     "primaryKey": true,
                     "autoIncrement": true
                 },
-                "content": {
-                    "type": Sequelize.STRING(1000),
-                    "field": "content",
+                "status": {
+                    "type": Sequelize.SMALLINT,
+                    "field": "status",
+                    "allowNULL": false,
+                    "defaultValue": 0
+                },
+                "user_one_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "user_one_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "SET NULL",
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "allowNull": true
+                },
+                "user_two_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "user_two_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "SET NULL",
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "allowNull": true
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "Rooms",
+            {
+                "room_id": {
+                    "type": Sequelize.INTEGER,
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "references": {
+                        "model": "Friends",
+                        "key": "friend_id"
+                    },
+                    "field": "room_id",
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true
+                },
+                "name": {
+                    "type": Sequelize.STRING,
+                    "field": "name",
                     "allowNull": false
+                },
+                "avatar": {
+                    "type": Sequelize.STRING,
+                    "field": "avatar",
+                    "allowNull": true
                 },
                 "createdAt": {
                     "type": Sequelize.DATE,
@@ -214,28 +242,6 @@ var migrationCommands = [{
                     "type": Sequelize.DATE,
                     "field": "updatedAt",
                     "allowNull": false
-                },
-                "sender_id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "sender_id",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
-                    "references": {
-                        "model": "Users",
-                        "key": "user_id"
-                    },
-                    "allowNull": true
-                },
-                "room_id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "room_id",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
-                    "references": {
-                        "model": "Rooms",
-                        "key": "room_id"
-                    },
-                    "allowNull": true
                 }
             },
             {}
@@ -414,6 +420,59 @@ var migrationCommands = [{
     {
         fn: "createTable",
         params: [
+            "Messages",
+            {
+                "msg_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "msg_id",
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true
+                },
+                "content": {
+                    "type": Sequelize.STRING(1000),
+                    "field": "content",
+                    "allowNull": false
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                },
+                "sender_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "sender_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "SET NULL",
+                    "references": {
+                        "model": "Users",
+                        "key": "user_id"
+                    },
+                    "allowNull": true
+                },
+                "room_id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "room_id",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "SET NULL",
+                    "references": {
+                        "model": "Rooms",
+                        "key": "room_id"
+                    },
+                    "allowNull": true
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
             "Reports",
             {
                 "report_id": {
@@ -580,47 +639,6 @@ var migrationCommands = [{
                     "references": {
                         "model": "Threads",
                         "key": "thread_id"
-                    },
-                    "primaryKey": true
-                },
-                "user_id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "user_id",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "CASCADE",
-                    "references": {
-                        "model": "Users",
-                        "key": "user_id"
-                    },
-                    "primaryKey": true
-                }
-            },
-            {}
-        ]
-    },
-    {
-        fn: "createTable",
-        params: [
-            "user_rooms",
-            {
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
-                },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
-                },
-                "room_id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "room_id",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "CASCADE",
-                    "references": {
-                        "model": "Rooms",
-                        "key": "room_id"
                     },
                     "primaryKey": true
                 },
