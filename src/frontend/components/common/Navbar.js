@@ -10,25 +10,24 @@ import Navbar from "react-bootstrap/Navbar";
 import InputGroup from "react-bootstrap/InputGroup";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
-import Axios from "axios"; 
+import Axios from "axios";
 const jwt = require("jsonwebtoken");
 
 class PrimaryNav extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-       isLogIn: localStorage.getItem("oisp-token")
-    }
-    this.handleButton = this.handleButton.bind(this)
-    
+      isLogIn: localStorage.getItem("oisp-token")
+    };
+    this.handleButton = this.handleButton.bind(this);
   }
 
   // click = () => {
   //   this.props.checkLogIn()
   // }
-  componentDidUpdate(prevProps){
-    if (this.props.isLogIn !== prevProps.isLogIn){
-      this.setState({ isLogIn: this.props.isLogIn})
+  componentDidUpdate(prevProps) {
+    if (this.props.isLogIn !== prevProps.isLogIn) {
+      this.setState({ isLogIn: this.props.isLogIn });
     }
     console.log("OK");
   }
@@ -37,25 +36,23 @@ class PrimaryNav extends Component {
     Axios.get("/auth/logout").then(res => {
       window.location.reload();
       localStorage.removeItem("oisp-token");
-      localStorage.removeItem("user_id");
+      localStorage.removeItem("id");
     });
     this.setState(
-      {isLogin: null},
-    //() => console.log(this.state)
+      { isLogin: null }
+      //() => console.log(this.state)
     );
   };
 
-  
-
-  handleButton(){
-    this.setState={
+  handleButton() {
+    this.setState = {
       isLogIn: !null
-      }
+    };
   }
-    // window.location.reload()
-  
+  // window.location.reload()
+
   render() {
-    let button
+    let button;
     return (
       <Navbar bg="light" expand="lg" className="sticky-top primary-nav">
         <Link to="/">
@@ -88,8 +85,8 @@ class PrimaryNav extends Component {
               <NavDropdown.Item>Something else here</NavDropdown.Item>
             </NavDropdown>
             <Nav.Item>
-              <NavLink className="nav-link" to="/test" activeClassName="active"> 
-                Test               
+              <NavLink className="nav-link" to="/test" activeClassName="active">
+                Test
               </NavLink>
             </Nav.Item>
             <Form inline className="my-2 my-lg-0">
@@ -110,28 +107,22 @@ class PrimaryNav extends Component {
             </Form>
           </Nav>
           <Nav>
-
-            {localStorage.getItem("oisp-token")!= null? 
-              <Link to = "/profile">
-                <Button
-                  variant="secondary"
-                  className="mr-lg-2 mb-2 mb-lg-0">
-                <i class="fas fa-user"></i>
+            {localStorage.getItem("oisp-token") != null ? (
+              <Link to="/profile">
+                <Button variant="secondary" className="mr-lg-2 mb-2 mb-lg-0">
+                  <i class="fas fa-user" />
                 </Button>
-              </Link>: null}
+              </Link>
+            ) : null}
 
-            {this.state.isLogIn !== null?
-              <Link to="/" >
-                <Button 
-                  type = "button"
-                  variant="primary"
-                  onClick={this.logOut}
-                >
+            {this.state.isLogIn !== null ? (
+              <Link to="/">
+                <Button type="button" variant="primary" onClick={this.logOut}>
                   Log Out
                 </Button>
               </Link>
-              :
-              <Link to="/login" >
+            ) : (
+              <Link to="/login">
                 <Button
                   type="button"
                   variant="secondary"
@@ -140,9 +131,8 @@ class PrimaryNav extends Component {
                 >
                   Sign In
                 </Button>
-              </Link> }
-              
-
+              </Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

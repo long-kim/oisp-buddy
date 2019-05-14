@@ -9,7 +9,7 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      redirectToReferrer: false,
+      redirectToReferrer: false
     };
   }
 
@@ -21,10 +21,9 @@ class Login extends Component {
       password: form.get("password")
     }).then(res => {
       localStorage.setItem("oisp-token", res.data.token);
-       localStorage.setItem("id", res.data.user_id);
+      localStorage.setItem("id", res.data.user_id);
       window.location.reload();
-      this.setState({ redirectToReferrer: true});
-      
+      this.setState({ redirectToReferrer: true });
     });
   };
 
@@ -35,19 +34,21 @@ class Login extends Component {
     let { redirectToReferrer } = this.state;
 
     if (redirectToReferrer) return <Redirect to={from} />;
-    
+
     return (
       <div>
-        {localStorage.getItem("oisp-token") == null? <form id="loginfrm" method="POST" onSubmit={this.handleSubmit}>
-          <label>Username</label>
-          <input type="text" name="username" />
-          <label>Password</label>
-          <input type="password" name="password" />
-          <button type="submit">Log in</button>
-          {this.state.redirectToReferrer? "true" : "false"}
-          
-          
-        </form> : <Redirect to={from} />}
+        {localStorage.getItem("oisp-token") == null ? (
+          <form id="loginfrm" method="POST" onSubmit={this.handleSubmit}>
+            <label>Username</label>
+            <input type="text" name="username" />
+            <label>Password</label>
+            <input type="password" name="password" />
+            <button type="submit">Log in</button>
+            {this.state.redirectToReferrer ? "true" : "false"}
+          </form>
+        ) : (
+          <Redirect to={from} />
+        )}
       </div>
     );
   }

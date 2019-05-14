@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
       about: {
         type: DataTypes.STRING(120),
         unique: false,
-        allowNull: true,
+        allowNull: true
       },
       role: {
         type: DataTypes.ENUM("user", "admin"),
@@ -69,8 +69,11 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
 
-  User.associate = function (models) {
+  User.associate = function(models) {
     User.hasMany(models.Thread, { foreignKey: "author_id" });
+    User.hasMany(models.Friend, { foreignKey: "user_one_id" });
+    User.hasMany(models.Friend, { foreignKey: "user_two_id" });
+    User.hasMany(models.Friend, { foreignKey: "action_user_id" });
     User.hasMany(models.Post, { foreignKey: "posted_by" });
     User.hasMany(models.Report, { foreignKey: "reported_by" });
     User.hasMany(models.Message, { foreignKey: "sender_id" });

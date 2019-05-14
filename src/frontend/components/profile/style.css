@@ -1,190 +1,231 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    background-color: whitesmoke;
+  margin: 0;
+  background-color: whitesmoke;
 }
 
 header {
-    position: relative;
+  position: relative;
 }
 
 header > img {
-    object-fit: cover;
-    width: 100%;
-    /* width: 820px; */
-    height: 180px;
-    position: absolute;
-    z-index: 1;
-    box-shadow: 5px 5px 10px grey;
+  object-fit: cover;
+  width: 100%;
+  /* width: 820px; */
+  height: 180px;
+  position: absolute;
+  z-index: 1;
+  box-shadow: 5px 5px 10px grey;
 }
 
 header > img:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-} 
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
 
 header > button {
-    border-radius: 4px;
-    background-color: white;
-    color: black;
-    border: 2px solid #A5694B;
-    transition-duration: 0.4s;
-    margin-right: 0%;
+  border-radius: 4px;
+  background-color: white;
+  color: black;
+  border: 2px solid #a5694b;
+  transition-duration: 0.4s;
+  margin-right: 0%;
 }
 header > button:hover {
-    background-color: #A5694B; /* Green */
-    color: white;
+  background-color: #a5694b; /* Green */
+  color: white;
 }
 
 header > h2 {
-    left: 410px;
-    top: 100px;
-    position: absolute;
-    z-index: 3;
-    color: azure;
-    text-shadow: 0 0 3px rgba(0, 0, 0, .8);
-    
+  left: 410px;
+  top: 100px;
+  position: absolute;
+  z-index: 3;
+  color: azure;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
 }
 
 header > h5 {
-    position: absolute;
-    z-index: 3;
-    margin-top: 9%;
-    margin-left: 30%;
-    color: azure;
-    font-size: 100%;
-    text-shadow: 2px 2px 5px rgb(39, 38, 38);
+  position: absolute;
+  z-index: 3;
+  margin-top: 9%;
+  margin-left: 30%;
+  color: azure;
+  font-size: 100%;
+  text-shadow: 2px 2px 5px rgb(39, 38, 38);
 }
 
 header > h6 {
-    position: absolute;
-    z-index: 3;
-    
-    margin-top: 150px;
-    margin-left: 97%;
+  position: absolute;
+  z-index: 3;
+
+  margin-top: 150px;
+  margin-left: 97%;
 }
 
-@media screen and (max-width: 600px){
-    .user_name > h6 {
-        display: none;
-    }
-    .container {
-        display: none;
-    }
-    .calendar {
-        display: none;
-    }
+@media screen and (max-width: 600px) {
+  .user_name > h6 {
+    display: none;
+  }
+  .container {
+    display: none;
+  }
+  .calendar {
+    display: none;
+  }
 }
 
-header > h6 >button{
-    background: none;
-    border: 0px;
-    color: #925F4A;
-    outline: black;
-    position: relative;
+header > h6 > button {
+  background: none;
+  border: 0px;
+  color: #925f4a;
+  outline: black;
+  position: relative;
 }
 
 header > h6 > button:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
 .avatar > img {
-    object-fit: cover;
-    width: 290px;
-    height: 400px;
-    box-shadow: 5px 5px 10px grey;
+  object-fit: cover;
+  width: 290px;
+  height: 400px;
+  box-shadow: 5px 5px 10px grey;
 }
 
 .polaroid {
-    width: 290px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    /* text-align: left; */
-    position: absolute;
-    z-index: 2;
-    top: 20px;
-    left: 100px;
-  }
+  width: 290px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  /* text-align: left; */
+  position: absolute;
+  z-index: 2;
+  top: 20px;
+  left: 100px;
+}
 
 .polaroid > img:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
- 
+
 .polaroid > img {
-    object-fit: cover;
-    width: 100%;
-    height: 400px;
-}  
+  object-fit: cover;
+  width: 100%;
+  height: 400px;
+}
 
 .polaroid > div > p > button {
-    background: none;
-    border: 0px;
-    color: #925F4A;
+  background: none;
+  border: 0px;
+  color: #925f4a;
 }
 
-.polaroid > div > p{
-    margin-bottom: 0%
+.polaroid > div > p {
+  margin-bottom: 0%;
 }
 
 .polaroid > div > p > button:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.ava_pencil {
+  background: none;
+  border: 0px;
+  color: #925f4a;
+  position: absolute;
+  z-index: 4;
+  margin-left: 360px;
+  margin-top: 25px;
 }
 
 .container {
-    padding: 50px;
-    color: #615959;
-    font-weight: 600;
-    padding-top: 1%;
-    padding-bottom: 0%
+  padding: 50px;
+  color: #615959;
+  font-weight: 600;
+  padding-top: 1%;
+  padding-bottom: 0%;
 }
 
 .container > h6 {
-    font-size: 13px;
+  font-size: 13px;
 }
 
 .container > hr {
-    margin: 2%
+  margin: 2%;
 }
 
 .info {
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.8;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.8;
 }
 
 .title {
-    font-size: 10px;
-    border: none
+  font-size: 10px;
+  border: none;
 }
 
-.readmore{
-    color: rgb(160, 25, 25);
-    font-size: 12px;
-    font-weight: 150;
-    border: 0px;
-    background: none;
-    padding-left: 0%
+.readmore {
+  color: rgb(160, 25, 25);
+  font-size: 12px;
+  font-weight: 150;
+  border: 0px;
+  background: none;
+  padding-left: 0%;
 }
 
 .calendar {
-    position: absolute;
-    z-index: 3;
-    top: 250px;
-    right: 0%
+  position: absolute;
+  z-index: 3;
+  top: 250px;
+  right: 0%;
 }
 
 .calendar > button {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
-.calendar >button:hover {
-    opacity: 1;
+.calendar > button:hover {
+  opacity: 1;
 }
 
 .info_page {
-    position: absolute;
-    z-index: 3;
-    top: 300px;
-    left: 50%;
+  position: absolute;
+  z-index: 3;
+  top: 300px;
+  left: 50%;
+}
+
+.info_body {
+  position: absolute;
+  margin-left: 500px;
+  margin-top: 230px;
+}
+
+.change_info {
+  border: none;
+}
+
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  width: 201.5px;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* Add some padding inside the card container */
+.containerr {
+  /* padding: 10px 10px; */
+  width: 200px;
+  text-align: center;
 }

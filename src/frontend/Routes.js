@@ -9,19 +9,13 @@ import Page404 from "./components/404";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/auth/PrivateRoute";
 // import ChatBox from "./components/chat/ChatBox";
-import Profile from "./components/profile/Profile"
-
-
+import Profile from "./components/profile/Profile";
 
 class Routes extends Component {
-  
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = {
-    }
-    
+    this.state = {};
   }
- 
 
   render() {
     return (
@@ -43,11 +37,7 @@ class Routes extends Component {
 
           <Route
             path="/test"
-            render={props => (
-              <div className="TestPage" itemProp={props}>
-              
-              </div>
-            )}
+            render={props => <div className="TestPage" itemProp={props} />}
           />
 
           {/* <Route
@@ -64,9 +54,18 @@ class Routes extends Component {
             render={({ match: { url } }) => (
               <div className="Profile">
                 <Route path={`${url}/info`} component={Profile.Info} exact />
-                
-                <Route path={`${url}/friend`} component={Profile.Friend} />
-                <Route path={`${url}/`} component={Profile}  exact/>
+
+                <Route
+                  path={`${url}/friend/:friendId`}
+                  component={Profile.Friend}
+                  exact
+                />
+                <Route
+                  path={`${url}/friendlist/`}
+                  component={Profile.Friendlist}
+                  exact
+                />
+                <Route path={`${url}/`} component={Profile} exact />
               </div>
             )}
           />
@@ -87,19 +86,18 @@ class Routes extends Component {
             auth={this.props.auth}
           />
 
-          { <Route
-            path="/forum"
-            render={({ match: { url } }) => (
-              <div className="Thread">
-                <Route path={`${url}/index`} component={Thread.Index} exact />
-                <Route path={`${url}/create`} component={Thread.Create} />
-                <Route path={`${url}/thread/:threadId`} component={Thread} />
-              </div>
-            )}
-          /> }
-
-  
-
+          {
+            <Route
+              path="/forum"
+              render={({ match: { url } }) => (
+                <div className="Thread">
+                  <Route path={`${url}/index`} component={Thread.Index} exact />
+                  <Route path={`${url}/create`} component={Thread.Create} />
+                  <Route path={`${url}/thread/:threadId`} component={Thread} />
+                </div>
+              )}
+            />
+          }
 
           <Route component={Page404} />
         </Switch>

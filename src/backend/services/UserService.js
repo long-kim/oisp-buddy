@@ -1,5 +1,7 @@
 const models = require("backend/database/models");
 const User = models.User;
+const Relationship = models.Friend;
+const Op = require("sequelize").Op;
 
 module.exports = passport => {
   function getSubscription(req) {
@@ -51,7 +53,9 @@ module.exports = passport => {
   }
 
   function getUserInfo(req) {
+    // console.log("this is req:", req.user ? req.user.user_id : 1);
     const user_id = req.user ? req.user.user_id : 1;
+    // const user_id = req.user_id ? req.user_id : 1;
     const result = User.findByPk(user_id)
       .then(user => {
         return Promise.resolve(user);
@@ -61,10 +65,46 @@ module.exports = passport => {
       });
     return result;
   }
+  function getFriendInfo(req) {
+    const user_id = req.query.user_id ? req.query.user_id : 1;
+    console.log("my friend id", user_id);
+    const result = User.findAll({
+      where: {
+        user_id: user_id
+      }
+    })
+      .then(info => {
+        return Promise.resolve(info);
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
+    return result;
+  }
 
-  function editUser(req) {
+  function getFriendlist(req) {
     const user_id = req.user ? req.user.user_id : 1;
-    // console.log("this is req:",req)
+    // console.log("this is request:", req.user ? req.user.user_id : 1);
+    const result = Relationship.findAll({
+      where: {
+        status: 1,
+        [Op.or]: [{ user_one_id: user_id }, { user_two_id: user_id }]
+      }
+    })
+      .then(relationship => {
+        // console.log("relationship", Promise.resolve(relationship));
+        return Promise.resolve(relationship);
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
+    return result;
+  }
+
+  function editUser_about(req) {
+    // console.log("this is req:", req.user_id);
+    const user_id = req.user_id ? req.user_id : 1;
+
     return User.findByPk(user_id)
       .then(user => {
         return user.update({
@@ -76,11 +116,110 @@ module.exports = passport => {
       });
   }
 
+  function editUser_avatar(req) {
+    // console.log("this is req:", req.user_id);
+    const user_id = req.user_id ? req.user_id : 1;
+
+    return User.findByPk(user_id)
+      .then(user => {
+        return user.update({
+          avatar: req.avatar
+        });
+      })
+      .then(user => {
+        return user;
+      });
+  }
+
+  function editUser_cover(req) {
+    // console.log("this is req:", req.user_id);
+    const user_id = req.user_id ? req.user_id : 1;
+
+    return User.findByPk(user_id)
+      .then(user => {
+        return user.update({
+          cover: req.cover
+        });
+      })
+      .then(user => {
+        return user;
+      });
+  }
+
+  function editUser_name(req) {
+    // console.log("this is req:", req.user_id);
+    const user_id = req.user_id ? req.user_id : 1;
+
+    return User.findByPk(user_id)
+      .then(user => {
+        return user.update({
+          first_name: req.first_name,
+          last_name: req.last_name
+        });
+      })
+      .then(user => {
+        return user;
+      });
+  }
+
+  function editUser_year(req) {
+    // console.log("this is req:", req.user_id);
+    const user_id = req.user_id ? req.user_id : 1;
+
+    return User.findByPk(user_id)
+      .then(user => {
+        return user.update({
+          year: req.year
+        });
+      })
+      .then(user => {
+        return user;
+      });
+  }
+
+  function editUser_dept(req) {
+    // console.log("this is req:", req.user_id);
+    const user_id = req.user_id ? req.user_id : 1;
+
+    return User.findByPk(user_id)
+      .then(user => {
+        return user.update({
+          dept: req.major
+        });
+      })
+      .then(user => {
+        return user;
+      });
+  }
+
+  // function editUser_password(req) {
+  //   // console.log("this is req:", req.user_id);
+  //   const user_id = req.user_id ? req.user_id : 1;
+
+  //   return User.findByPk(user_id)
+  //     .then(user => {
+  //       return user.update({
+  //         passport: req.passport
+  //       });
+  //     })
+  //     .then(user => {
+  //       return user;
+  //     });
+  // }
+
   return {
     getSubscription,
     getThreadVotes,
     getPostVotes,
     getUserInfo,
-    editUser
+    editUser_about,
+    editUser_avatar,
+    editUser_cover,
+    editUser_name,
+    editUser_dept,
+    editUser_year,
+    getFriendlist,
+    getFriendInfo
+    // editUser_password
   };
 };

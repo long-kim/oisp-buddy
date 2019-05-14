@@ -38,11 +38,74 @@ module.exports = passport => {
       res.send(result);
     });
   });
-  router.patch("/edit/about", (req, res, next) => {
-    UserService.editUser(req.body).then(result => {
+
+  router.get("/viewfriend", (req, res, next) => {
+    UserService.getFriendInfo(req).then(result => {
       res.send(result);
     });
   });
+
+  router.get("/friendlist", (req, res, next) => {
+    UserService.getFriendlist(req).then(result => {
+      res.send(result);
+    });
+  });
+
+  router.patch("/edit/about", (req, res, next) => {
+    // console.log("print: " + req[0]);
+    UserService.editUser_about(req.body).then(result => {
+      res.send(result);
+    });
+  });
+
+  router.patch("/edit/avatar", (req, res, next) => {
+    // console.log("print: " + req[0]);
+    UserService.editUser_avatar(req.body).then(result => {
+      res.send(result);
+    });
+  });
+
+  router.patch("/edit/cover", (req, res, next) => {
+    // console.log("print: " + req[0]);
+    UserService.editUser_cover(req.body).then(result => {
+      res.send(result);
+    });
+  });
+
+  router.patch("/edit/cover", (req, res, next) => {
+    // console.log("print: " + req[0]);
+    UserService.editUser_cover(req.body).then(result => {
+      res.send(result);
+    });
+  });
+
+  router.patch("/edit/name", (req, res, next) => {
+    // console.log("print: " + req[0]);
+    UserService.editUser_name(req.body).then(result => {
+      res.send(result);
+    });
+  });
+
+  router.patch("/edit/year", (req, res, next) => {
+    // console.log("print: " + req[0]);
+    UserService.editUser_year(req.body).then(result => {
+      res.send(result);
+    });
+  });
+
+  router.patch("/edit/dept", (req, res, next) => {
+    // console.log("print: " + req[0]);
+    UserService.editUser_dept(req.body).then(result => {
+      res.send(result);
+    });
+  });
+
+  // router.patch("/edit/password", (req, res, next) => {
+  //   // console.log("print: " + req[0]);
+  //   UserService.editUser_password(req.body).then(result => {
+  //     res.send(result);
+  //   });
+  // });
 
   return router;
 };

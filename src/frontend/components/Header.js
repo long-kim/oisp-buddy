@@ -9,7 +9,7 @@ class Header extends Component {
   render() {
     return (
       <div className="Header">
-        <header className="App-header" >
+        <header className="App-header">
           {/* <img src={logo} className="App-logo mb-3" alt="logo" />
           <p>
             {this.props.currentPage === "test"
@@ -25,7 +25,6 @@ class Header extends Component {
             Learn React
           </a> */}
           <h1 class="w3-animate-top">OISP BUDDY Test Page</h1>
-          
         </header>
       </div>
     );
