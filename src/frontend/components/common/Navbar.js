@@ -110,7 +110,7 @@ class PrimaryNav extends Component {
             {localStorage.getItem("oisp-token") != null ? (
               <Link to="/profile">
                 <Button variant="secondary" className="mr-lg-2 mb-2 mb-lg-0">
-                  <i class="fas fa-user" />
+                  <i className="fas fa-user" />
                 </Button>
               </Link>
             ) : null}

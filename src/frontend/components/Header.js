@@ -24,7 +24,7 @@ class Header extends Component {
           >
             Learn React
           </a> */}
-          <h1 class="w3-animate-top">OISP BUDDY Test Page</h1>
+          <h1 className="w3-animate-top">OISP BUDDY Test Page</h1>
         </header>
       </div>
     );

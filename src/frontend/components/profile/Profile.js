@@ -33,13 +33,17 @@ class Profile extends Component {
       showModal: false,
       showModal2: false,
       friendlist: [],
-      friendID: []
+      friendID: [],
+      threadd: [],
+      pending: []
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this._renderObject = this._renderObject.bind(this);
+    this._renderNoti = this._renderNoti.bind(this);
   }
   //test
   componentDidMount() {
@@ -65,7 +69,73 @@ class Profile extends Component {
         friendlist: res.data
       });
     });
+
+    Axios.get("/api/threads/threadlist", {
+      params: {
+        user: this.state.id
+      }
+    }).then(res => {
+      this.setState({
+        threadd: res.data
+      });
+    });
+
+    Axios.get("/api/users/friendnoti", {
+      params: {
+        action_user: this.state.id
+      }
+    }).then(res => {
+      this.setState({
+        // status: res.data[0] ? res.data[0].status : 2,
+        // action: res.data[0] ? res.data[0].action_user_id : 0,
+        // friendID: res.data[0] ? res.data[0].id : 0
+        pending: res.data
+      });
+    });
+    // Axios.get("/api/threads/index")
   }
+
+  _renderObject() {
+    return Object.keys(this.state.threadd).map((obj, i) => {
+      return (
+        <div key={i}>
+          thread number:{" "}
+          {this.state.threadd[obj].title
+            ? this.state.threadd[obj].title
+            : "no number"}
+          author is: {this.state.threadd[obj].author_id}
+          <hr />
+        </div>
+      );
+    });
+  }
+
+  _renderNoti() {
+    let url;
+    return Object.keys(this.state.pending).map((obj, i) => {
+      url = "/profile/friendlist/" + this.state.pending[obj].action_user_id;
+
+      return (
+        <div key={i}>
+          {/* thread number:{" "}
+          {this.state.friendlist[obj].title
+            ? this.state.friendlist[obj].title
+            : "no number"}
+          author is: {this.state.friendlist[obj].author_id} */}
+
+          <Link to={url}>
+            user{" "}
+            {this.state.pending[obj].action_user_id
+              ? this.state.pending[obj].action_user_id
+              : "no one"}{" "}
+            wanted to be friend
+          </Link>
+          <hr />
+        </div>
+      );
+    });
+  }
+
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -102,6 +172,9 @@ class Profile extends Component {
 
   render() {
     this.state.friend = Object.keys(this.state.friendlist).length;
+    // for (let i = 0; Object.keys(this.state.friendlist).length; i++) {
+    //   this.state.friendID.push(Object.values(this.state.friendlist));
+    // }
     return (
       <div>
         {localStorage.getItem("oisp-token") == null ? (
@@ -116,7 +189,7 @@ class Profile extends Component {
               <img src={this.state.cover} alt="user's cover" />
               <h6>
                 <button type="button" onClick={this.handleOpenModal("cover")}>
-                  <i class="fas fa-pencil-alt" />
+                  <i className="fas fa-pencil-alt" />
                 </button>
               </h6>
               <h2 className="user_name">
@@ -130,12 +203,12 @@ class Profile extends Component {
                 type="button"
                 onClick={this.handleOpenModal("ava")}
               >
-                <i class="fas fa-pencil-alt" />
+                <i className="fas fa-pencil-alt" />
               </button>
-              <div class="polaroid">
+              <div className="polaroid">
                 <img src={this.state.avatar} alt="user's avatar" />
 
-                <div class="container">
+                <div className="container">
                   <p>ABOUT </p>
                   <h6>{this.state.about} </h6>
                   <div className="readmore">
@@ -174,7 +247,37 @@ class Profile extends Component {
               </div>
             </header>
 
-            <body className="info_body">Hello I am body</body>
+            <body className="info_body2">
+              Hello I am body
+              {/* {this.state.friendlist != null
+                ? Object.values(this.state.friendlist.toString())
+                : "no list"} */}
+              {this._renderObject()}
+              {/* {this._renderNoti()} */}
+              {/* user {Object.keys(this.state.pending).length} is waiting */}
+            </body>
+            <div className="noti">
+              <div className="dropdown">
+                <button
+                  className="btn btn-primary dropdown-toggle"
+                  type="button"
+                  data-toggle="dropdown"
+                >
+                  Friend Requests
+                  <span className="caret" />
+                </button>
+                <ul
+                  className="dropdown-menu"
+                  style={{
+                    height: "auto",
+                    overflow: "auto",
+                    maxHeight: "150px"
+                  }}
+                >
+                  <li>{this._renderNoti()}</li>
+                </ul>
+              </div>
+            </div>
           </div>
         )}
         <Popup
@@ -182,33 +285,33 @@ class Profile extends Component {
           modal
           onClose={this.handleCloseModal}
         >
-          <div class="card" style={{ width: "400px", height: "200px" }}>
-            <div class="card-body">
+          <div className="card" style={{ width: "400px", height: "200px" }}>
+            <div className="card-body">
               <form>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="ava_url">URL to your image</label>
                   <input
                     type="url"
-                    class="form-control"
+                    className="form-control"
                     name="newavatar"
                     placeholder="Enter URL"
                     value={this.state.newavatar}
                     onChange={this.handleChange}
                   />
-                  <small id="URLlHelp" class="form-text text-muted">
+                  <small id="URLlHelp" className="form-text text-muted">
                     Recommend size: 290px x 400px
                   </small>
                 </div>
                 <button
                   type="submit"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   onClick={this.handleSubmit("avatar").bind(this)}
                 >
                   Submit
                 </button>
                 <button
                   type="button"
-                  class="btn"
+                  className="btn"
                   onClick={this.handleCloseModal}
                 >
                   Cancel
@@ -223,33 +326,33 @@ class Profile extends Component {
           modal
           onClose={this.handleCloseModal}
         >
-          <div class="card" style={{ width: "400px", height: "200px" }}>
-            <div class="card-body">
+          <div className="card" style={{ width: "400px", height: "200px" }}>
+            <div className="card-body">
               <form>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="cover_url">URL to your image</label>
                   <input
                     type="url"
-                    class="form-control"
+                    className="form-control"
                     name="newcover"
                     placeholder="Enter URL"
                     value={this.state.newcover}
                     onChange={this.handleChange}
                   />
-                  <small id="URLlHelp" class="form-text text-muted">
+                  <small id="URLlHelp" className="form-text text-muted">
                     Recommend size: 180px x 1080px
                   </small>
                 </div>
                 <button
                   type="submit"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   onClick={this.handleSubmit("cover")}
                 >
                   Submit
                 </button>
                 <button
                   type="button"
-                  class="btn"
+                  className="btn"
                   onClick={this.handleCloseModal}
                 >
                   Cancel

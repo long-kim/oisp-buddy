@@ -14,13 +14,12 @@ module.exports = passport => {
   }
 
   function getThreadList(req) {
-    const user = req.body.user ? req.body.user : 1;
+    const user = req.query.user ? req.query.user : 1;
     // console.log("this is request:", req.user ? req.user.user_id : 1);
+    console.log("user need thead: ", user);
     const result = Thread.findAll({
       where: {
-        author_id: {
-          [Op.in]: user
-        }
+        author_id: user
       }
     })
       .then(thread => {

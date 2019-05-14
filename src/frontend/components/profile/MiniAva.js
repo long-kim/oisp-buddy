@@ -46,13 +46,13 @@ class MiniAva extends Component {
           }}
         >
           <label>
-            <div class="card" style={{ margin: "0px" }}>
+            <div className="card" style={{ margin: "0px" }}>
               <img
                 src={this.state.ava}
                 alt="Avatar"
                 style={{ width: "200px", height: "200px", objectFit: "cover" }}
               />
-              <div class="containerr">
+              <div className="containerr">
                 <h4>
                   <b>{this.state.name}</b>
                 </h4>

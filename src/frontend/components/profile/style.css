@@ -75,6 +75,9 @@ header > h6 {
   .calendar {
     display: none;
   }
+  .info_body {
+    display: none;
+  }
 }
 
 header > h6 > button {
@@ -204,8 +207,24 @@ header > h6 > button:hover {
   position: absolute;
   margin-left: 500px;
   margin-top: 230px;
+  column-count: 2;
+  column-gap: 200px;
 }
-
+@media screen and (max-width: 1000px) {
+  .info_body {
+    column-count: auto;
+  }
+}
+.info_body2 {
+  position: absolute;
+  margin-left: 500px;
+  margin-top: 230px;
+}
+@media screen and (max-width: 1000px) {
+  .info_body2 {
+    column-count: auto;
+  }
+}
 .change_info {
   border: none;
 }
@@ -228,4 +247,11 @@ header > h6 > button:hover {
   /* padding: 10px 10px; */
   width: 200px;
   text-align: center;
+}
+
+.noti {
+  right: 5%;
+  position: absolute;
+  z-index: 4;
+  margin-top: 200px;
 }

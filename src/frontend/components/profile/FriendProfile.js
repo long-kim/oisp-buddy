@@ -18,10 +18,12 @@ class FriendProfile extends Component {
       status: undefined,
       action: undefined,
       idd: localStorage.getItem("id"),
-      friendID: undefined
+      friendID: undefined,
+      threadd: []
     };
     this.handleStatus = this.handleStatus.bind(this);
     this.handleRequest = this.handleRequest.bind(this);
+    this._renderThread = this._renderThread.bind(this);
   }
 
   componentDidMount() {
@@ -61,9 +63,55 @@ class FriendProfile extends Component {
         friendID: res.data[0] ? res.data[0].id : 0
       });
     });
+
+    Axios.get("/api/threads/threadlist", {
+      params: {
+        user: this.props.match.params.user_id
+      }
+    }).then(res => {
+      this.setState({
+        threadd: res.data
+      });
+    });
   }
   handleRequest() {
     return alert("yes yes yes");
+  }
+
+  _renderThread() {
+    let url;
+    return Object.keys(this.state.threadd).map((obj, i) => {
+      url = "/forum/thread/" + this.state.threadd[obj].thread_id;
+      return (
+        <div key={i}>
+          {/* thread name:{" "}
+          {this.state.threadd[obj].title
+            ? this.state.threadd[obj].title
+            : "no number"}{" "}
+          author is: {this.state.threadd[obj].author_id} */}
+          <Link to={url}>
+            <div className="media">
+              <div className="media-left">
+                <img
+                  src={this.state.avatar}
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    objectFit: "cover",
+                    borderRadius: "50%"
+                  }}
+                />
+              </div>
+              <div className="media-body" style={{ paddingLeft: "50px" }}>
+                <h4 className="media-heading">{this.state.fullname}</h4>
+                <p>{this.state.threadd[obj].title}</p>
+              </div>
+            </div>
+          </Link>
+          <hr />
+        </div>
+      );
+    });
   }
 
   handleStatus(e) {
@@ -119,15 +167,15 @@ class FriendProfile extends Component {
               <h6>
                 <button type="button" onClick={this.handleStatus}>
                   {this.state.status === 1 ? (
-                    <i class="fas fa-user-check" />
+                    <i className="fas fa-user-check" />
                   ) : this.state.status === 2 ? (
-                    <i class="fas fa-user-plus" />
+                    <i className="fas fa-user-plus" />
                   ) : this.state.status === 0 ? (
-                    <i class="fas fa-user-clock" />
+                    <i className="fas fa-user-clock" />
                   ) : this.state.status == 3 ? (
-                    <i class="fas fa-user-lock" />
+                    <i className="fas fa-user-lock" />
                   ) : (
-                    <i class="far fa-frown" />
+                    <i className="far fa-frown" />
                   )}
                 </button>
               </h6>
@@ -141,10 +189,10 @@ class FriendProfile extends Component {
               {/* <div class="polaroid">
               <img src={this.state.avatar} alt="user's avatar" />
             </div> */}
-              <div class="polaroid">
+              <div className="polaroid">
                 <img src={this.state.avatar} alt="user's avatar" />
 
-                <div class="container">
+                <div className="container">
                   <p>ABOUT </p>
                   <h6>{this.state.about} </h6>
 
@@ -153,20 +201,18 @@ class FriendProfile extends Component {
                     <h7 style={{ float: "left" }}>
                       <Link to="/forum/index">THREAD</Link>
                     </h7>{" "}
-                    <h7 style={{ float: "right" }}>{this.state.thread}</h7>{" "}
+                    <h7 style={{ float: "right" }}>
+                      {Object.keys(this.state.threadd).length}
+                    </h7>{" "}
                     <br />
                     <h7 style={{ float: "left" }}>ACHIVEMENT</h7>{" "}
-                    <h7 style={{ float: "right" }}>{this.state.achivement}</h7>
+                    <h7 style={{ float: "right" }}>0</h7>
                     <br />
                   </p>
                 </div>
               </div>
             </header>
-            <body className="info_body">
-              {this.state.status ? this.state.status : "no nothing"}
-              <hr />
-              {this.state.friendID ? this.state.friendID : "no id"}
-            </body>
+            <body className="info_body2">{this._renderThread()}</body>
           </div>
         )}
       </div>

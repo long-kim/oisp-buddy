@@ -52,7 +52,7 @@ class Friendlist extends Component {
   _renderObject() {
     return Object.keys(this.state.friendlist).map((obj, i) => {
       return (
-        <div style={{ width: "100px", margin: "0" }}>
+        <div key={i} style={{ width: "200px", margin: "0" }}>
           {/* my friend is:{" "}
           {
             (this.state.idd =
@@ -73,7 +73,6 @@ class Friendlist extends Component {
                 : this.state.friendlist[obj].user_one_id
             }
           />
-          <hr />
         </div>
       );
     });
@@ -100,7 +99,7 @@ class Friendlist extends Component {
                   type="button"
                   onClick={() => alert("change this somewhere else please")}
                 >
-                  <i class="fas fa-pencil-alt" />
+                  <i className="fas fa-pencil-alt" />
                 </button>
               </h6>
               <h2 className="user_name">
@@ -119,9 +118,9 @@ class Friendlist extends Component {
               >
                 {" "}
                 {/* This is for changing the avatar */}
-                <i class="fas fa-pencil-alt" />
+                <i className="fas fa-pencil-alt" />
               </button>
-              <div class="polaroid">
+              <div className="polaroid">
                 <img src={this.state.avatar} alt="user's avatar" />
               </div>
             </header>

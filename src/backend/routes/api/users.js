@@ -57,6 +57,12 @@ module.exports = passport => {
     });
   });
 
+  router.get("/friendnoti", (req, res, next) => {
+    UserService.getFriendNoti(req).then(result => {
+      res.send(result);
+    });
+  });
+
   router.patch("/edit/friend", (req, res, next) => {
     UserService.editFriend(req).then(result => {
       res.send(result);
@@ -111,6 +117,13 @@ module.exports = passport => {
       res.send(result);
     });
   });
+
+  // router.patch("/edit/dept", (req, res, next) => {
+  //   // console.log("print: " + req[0]);
+  //   UserService.editUser_dept(req.body).then(result => {
+  //     res.send(result);
+  //   });
+  // });
 
   // router.patch("/edit/password", (req, res, next) => {
   //   // console.log("print: " + req[0]);

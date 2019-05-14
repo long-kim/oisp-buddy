@@ -112,7 +112,7 @@ class Info extends React.Component {
           <img src={this.state.cover} alt="user's cover" />
           <h6>
             <button type="button" onClick={this.handleOpenModal("cover")}>
-              <i class="fas fa-pencil-alt" />
+              <i className="fas fa-pencil-alt" />
             </button>
           </h6>
           <h2 className="user_name">
@@ -129,32 +129,32 @@ class Info extends React.Component {
           >
             {" "}
             {/* This is for changing the avatar */}
-            <i class="fas fa-pencil-alt" />
+            <i className="fas fa-pencil-alt" />
           </button>
-          <div class="polaroid">
+          <div className="polaroid">
             <img src={this.state.avatar} alt="user's avatar" />
           </div>
         </header>
 
-        <body className="info_body">
+        <body className="info_body2">
           <div>
             <form onSubmit={this.handleSubmit("about")}>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="about">
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" id="about">
                     About
                   </span>
                 </div>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   value={this.state.about}
                   onChange={this.handleChange}
                   name="about"
                   placeholder="no more than 120 characters"
                 />
                 {/* <input type="submit" value="Save" /> */}
-                <button class="btn btn-primary" type="submit">
+                <button className="btn btn-primary" type="submit">
                   Save
                 </button>
               </div>
@@ -163,15 +163,15 @@ class Info extends React.Component {
 
           <div style={{ marginTop: "20px" }}>
             <form id="name" onSubmit={this.handleSubmit("name")}>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="">
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" id="">
                     First and last name
                   </span>
                 </div>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   name="first_name"
                   value={this.state.first_name}
                   onChange={this.handleChange}
@@ -179,14 +179,14 @@ class Info extends React.Component {
                 />
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   name="last_name"
                   value={this.state.last_name}
                   onChange={this.handleChange}
                   placeholder="last name"
                 />
                 {/* <button type="submit">Save</button> */}
-                <button class="btn btn-primary" type="submit">
+                <button className="btn btn-primary" type="submit">
                   Save
                 </button>
               </div>
@@ -195,22 +195,22 @@ class Info extends React.Component {
 
           <div style={{ marginTop: "20px" }}>
             <form onSubmit={this.handleSubmit("year")}>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="year">
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" id="year">
                     Entrance Year
                   </span>
                 </div>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   value={this.state.year}
                   onChange={this.handleChange}
                   name="year"
                   placeholder="year"
                 />
                 {/* <input type="submit" value="Save" /> */}
-                <button class="btn btn-primary" type="submit">
+                <button className="btn btn-primary" type="submit">
                   Save
                 </button>
               </div>
@@ -219,21 +219,21 @@ class Info extends React.Component {
 
           {/* <div style={{ marginTop: "20px" }}>
             <form onSubmit={this.handleSubmit("major")}>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="major">
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" id="major">
                     Major
                   </span>
                 </div>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   value={this.state.major}
                   onChange={this.handleChange}
                   name="major"
                   placeholder="major"
                 />
-                <button class="btn btn-primary" type="submit">
+                <button className="btn btn-primary" type="submit">
                   Save
                 </button>
               </div>
@@ -242,9 +242,9 @@ class Info extends React.Component {
 
           <div style={{ marginTop: "20px" }}>
             <form onSubmit={this.handleSubmit("major")}>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="major">
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" id="major">
                     Major
                   </span>
                 </div>
@@ -252,7 +252,7 @@ class Info extends React.Component {
                   value={this.state.major}
                   onChange={this.handleChange}
                   name="major"
-                  class="form-control"
+                  className="form-control"
                 >
                   <option value="Computer Science">Computer Science</option>
                   <option value="Computer Engineering">
@@ -280,7 +280,7 @@ class Info extends React.Component {
                     Industrial Management
                   </option>
                 </select>
-                <button class="btn btn-primary" type="submit">
+                <button className="btn btn-primary" type="submit">
                   Save
                 </button>
               </div>
@@ -293,33 +293,33 @@ class Info extends React.Component {
           modal
           onClose={this.handleCloseModal}
         >
-          <div class="card" style={{ width: "400px", height: "200px" }}>
-            <div class="card-body">
+          <div className="card" style={{ width: "400px", height: "200px" }}>
+            <div className="card-body">
               <form>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="ava_url">URL to your image</label>
                   <input
                     type="url"
-                    class="form-control"
+                    className="form-control"
                     name="newavatar"
                     placeholder="Enter URL"
                     value={this.state.newavatar}
                     onChange={this.handleChange}
                   />
-                  <small id="URLlHelp" class="form-text text-muted">
+                  <small id="URLlHelp" className="form-text text-muted">
                     Recommend size: 290px x 400px
                   </small>
                 </div>
                 <button
                   type="submit"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   onClick={this.handleSubmit("ava")}
                 >
                   Submit
                 </button>
                 <button
                   type="button"
-                  class="btn"
+                  className="btn"
                   onClick={this.handleCloseModal}
                 >
                   Cancel
@@ -334,33 +334,33 @@ class Info extends React.Component {
           modal
           onClose={this.handleCloseModal}
         >
-          <div class="card" style={{ width: "400px", height: "200px" }}>
-            <div class="card-body">
+          <div className="card" style={{ width: "400px", height: "200px" }}>
+            <div className="card-body">
               <form>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="cover_url">URL to your image</label>
                   <input
                     type="url"
-                    class="form-control"
+                    className="form-control"
                     name="newcover"
                     placeholder="Enter URL"
                     value={this.state.newcover}
                     onChange={this.handleChange}
                   />
-                  <small id="URLlHelp" class="form-text text-muted">
+                  <small id="URLlHelp" className="form-text text-muted">
                     Recommend size: 180px x 1080px
                   </small>
                 </div>
                 <button
                   type="submit"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   onClick={this.handleSubmit("cover")}
                 >
                   Submit
                 </button>
                 <button
                   type="button"
-                  class="btn"
+                  className="btn"
                   onClick={this.handleCloseModal}
                 >
                   Cancel

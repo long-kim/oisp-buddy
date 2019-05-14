@@ -158,7 +158,7 @@ module.exports = passport => {
   });
 
   router.get("/threadlist", (req, res, next) => {
-    UserService.getThreadList(req).then(result => {
+    ThreadService.getThreadList(req).then(result => {
       res.send(result);
     });
   });

@@ -122,6 +122,27 @@ module.exports = passport => {
     return result;
   }
 
+  function getFriendNoti(req) {
+    const action_user = req.query.action_user ? req.query.action_user : 1;
+    console.log("action user: ", req.query.action_user);
+    // console.log("my id: ", req.query.user_id);
+    const result = Relationship.findAll({
+      where: {
+        [Op.or]: [{ user_one_id: action_user }, { user_two_id: action_user }],
+        [Op.not]: [{ action_user_id: [action_user] }],
+        status: 0
+      }
+    })
+      .then(relationship => {
+        // console.log("relationship", Promise.resolve(relationship));
+        return Promise.resolve(relationship);
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
+    return result;
+  }
+
   function editFriend(req) {
     const id = req.body.id ? req.body.id : 0;
     console.log("user1: ", req.body.id);
@@ -259,7 +280,8 @@ module.exports = passport => {
     getFriendlist,
     getFriendInfo,
     getFriendStatus,
-    editFriend
+    editFriend,
+    getFriendNoti
     // editUser_password
   };
 };
