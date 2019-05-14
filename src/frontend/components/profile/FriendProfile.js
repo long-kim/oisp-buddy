@@ -83,7 +83,7 @@ class FriendProfile extends Component {
     return Object.keys(this.state.threadd).map((obj, i) => {
       url = "/forum/thread/" + this.state.threadd[obj].thread_id;
       return (
-        <div key={i}>
+        <div key={i} className="myThread">
           {/* thread name:{" "}
           {this.state.threadd[obj].title
             ? this.state.threadd[obj].title

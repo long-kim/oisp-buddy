@@ -96,14 +96,30 @@ class Profile extends Component {
   }
 
   _renderObject() {
+    let url;
     return Object.keys(this.state.threadd).map((obj, i) => {
+      url = "/forum/thread/" + this.state.threadd[obj].thread_id;
       return (
-        <div key={i}>
-          thread number:{" "}
-          {this.state.threadd[obj].title
-            ? this.state.threadd[obj].title
-            : "no number"}
-          author is: {this.state.threadd[obj].author_id}
+        <div key={i} className="myThread">
+          <Link to={url}>
+            <div className="media">
+              <div className="media-left">
+                <img
+                  src={this.state.avatar}
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    objectFit: "cover",
+                    borderRadius: "50%"
+                  }}
+                />
+              </div>
+              <div className="media-body" style={{ paddingLeft: "50px" }}>
+                <h4 className="media-heading">{this.state.fullname}</h4>
+                <p>{this.state.threadd[obj].title}</p>
+              </div>
+            </div>
+          </Link>
           <hr />
         </div>
       );
@@ -232,7 +248,9 @@ class Profile extends Component {
                     <h7 style={{ float: "left" }}>
                       <Link to="/forum/index">THREAD</Link>
                     </h7>{" "}
-                    <h7 style={{ float: "right" }}>{this.state.thread}</h7>{" "}
+                    <h7 style={{ float: "right" }}>
+                      {Object.keys(this.state.threadd).length}
+                    </h7>{" "}
                     <br />
                     <h7
                       style={{ float: "left", cursor: "pointer" }}
@@ -248,7 +266,6 @@ class Profile extends Component {
             </header>
 
             <body className="info_body2">
-              Hello I am body
               {/* {this.state.friendlist != null
                 ? Object.values(this.state.friendlist.toString())
                 : "no list"} */}
@@ -256,26 +273,28 @@ class Profile extends Component {
               {/* {this._renderNoti()} */}
               {/* user {Object.keys(this.state.pending).length} is waiting */}
             </body>
-            <div className="noti">
-              <div className="dropdown">
-                <button
-                  className="btn btn-primary dropdown-toggle"
-                  type="button"
-                  data-toggle="dropdown"
-                >
-                  Friend Requests
-                  <span className="caret" />
-                </button>
-                <ul
-                  className="dropdown-menu"
-                  style={{
-                    height: "auto",
-                    overflow: "auto",
-                    maxHeight: "150px"
-                  }}
-                >
-                  <li>{this._renderNoti()}</li>
-                </ul>
+            <div className="fr_req">
+              <div className="noti">
+                <div className="dropdown">
+                  <button
+                    className="btn btn-primary dropdown-toggle"
+                    type="button"
+                    data-toggle="dropdown"
+                  >
+                    Friend Requests
+                    <span className="caret" />
+                  </button>
+                  <ul
+                    className="dropdown-menu"
+                    style={{
+                      height: "auto",
+                      overflow: "auto",
+                      maxHeight: "150px"
+                    }}
+                  >
+                    <li>{this._renderNoti()}</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
