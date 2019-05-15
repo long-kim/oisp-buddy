@@ -20,12 +20,12 @@ class ChatBox extends Component {
   }
 
   handleHeaderClick() {
-    // console.log("header box on click");
+ 
     this.setState({ showMessList: !this.state.showMessList });
   }
 
   handleHideClick() {
-    // console.log("icon on click");
+   
     this.setState({ showBox: false });
   }
 

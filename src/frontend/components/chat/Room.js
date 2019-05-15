@@ -12,8 +12,8 @@ class Room extends Component {
       lastMessage: "",
       time: moment().format("LT"),
       boxHidden: false,
-      alreadyShow: false
-      // info: {}
+      alreadyShow: false,
+      roomInfo: []
     };
 
     axios
@@ -24,6 +24,17 @@ class Room extends Component {
           lastMessage: response.data[0].content,
           time: moment(response.data[0].createdAt).format("LT")
         });
+        // debugger;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+    axios
+      .get(`/api/chats/${this.props.id}/fullinfo`)
+      .then(response => {
+        // console.log(response.data);
+        this.setState({ roomInfo: response.data });
         // debugger;
       })
       .catch(function(error) {
@@ -68,6 +79,7 @@ class Room extends Component {
           {this.state.boxHidden && (
             <BoxPortal target="targetForBox">
               <ChatBox
+                fullInfo={this.state.roomInfo}
                 userActive={this.props.userActive}
                 roomID={this.props.id}
                 name={this.props.name}

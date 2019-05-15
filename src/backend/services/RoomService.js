@@ -49,19 +49,53 @@ module.exports = passport => {
     const result = participants.then(res => {
       if (res.dataValues.user_one_id === user_id)
         return User.findOne({
-          attributes: ["username", "avatar", "first_name", "last_name"],
+          attributes: ["avatar", "first_name", "last_name"],
           where: {
             user_id: res.dataValues.user_two_id
           }
         });
       else {
         return User.findOne({
-          attributes: ["username", "avatar", "first_name", "last_name"],
+          attributes: ["avatar", "first_name", "last_name"],
           where: {
             user_id: res.dataValues.user_one_id
           }
         });
       }
+    });
+
+    return result;
+  }
+
+  function getRoomFull(req) {
+    // Get room information base of participants
+    const room_id = req.room_id ? req.room_id : 1;
+    const user_id = req.user ? req.user.user_id : 1;
+    let partArr = undefined;
+    const participants = Friend.findByPk(room_id)
+      .then(friend => {
+        return Promise.resolve(friend);
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
+    // return;
+    const result = participants.then(res => {
+      return User.findAll({
+        attributes: [
+          "username",
+          "avatar",
+          "first_name",
+          "last_name",
+          "user_id"
+        ],
+        where: {
+          [Op.or]: [
+            { user_id: res.dataValues.user_one_id },
+            { user_id: res.dataValues.user_two_id }
+          ]
+        }
+      });
     });
 
     return result;
@@ -115,12 +149,6 @@ module.exports = passport => {
     const friendPromise = Friend.create(data)
       .then(friend => {
         return Promise.resolve(friend);
-        // Room.create({
-        //   room_id: friend.friend_id,
-        //   name: ""
-        // }).then(room => {
-        //   room;
-        // });
       })
       .catch(err => {
         return Promise.reject(err);
@@ -185,6 +213,7 @@ module.exports = passport => {
     deleteRoom,
     getRoom,
     findRoom,
+    getRoomFull,
     getMessages,
     getLastMessages,
     getRoomParticipants

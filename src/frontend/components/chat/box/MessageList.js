@@ -3,7 +3,7 @@ import "assets/styles/Chat.css";
 import Message from "./Message";
 import axios from "axios";
 import { Form } from "react-bootstrap";
-import db from "../config";
+import firebase from "../firebase";
 
 class MessageList extends Component {
   constructor(props) {
@@ -15,24 +15,35 @@ class MessageList extends Component {
       currentPage: 1
     };
 
-    // this.chatRoom = db
-    //   .collection("rooms")
-    //   .doc(this.props.roomID)
-    //   .collection("messages");
+    // this.firebaseRef = firebase.firestore();
+
+    this.db = firebase.firestore();
+
+    this.roomRef = this.db
+      .collection("rooms")
+      .doc(this.props.roomID.toString());
+
+    this.messageRef = this.roomRef.collection("messages");
+
+    this.roomRef.get().then(docSnapshot => {
+      if (!docSnapshot.exists) {
+        this.roomRef.set({});
+      }
+    });
+    // this.listenMessages();
 
     // this.chatRoom.onSnapshot(doc => {
     //   console.log("Current data: ", doc.data());
     // });
 
-    axios
-      .get(`/api/chats/${this.props.roomID}?page=${this.state.currentPage}`)
-      .then(res => {
-        this.setState({ messages: res.data });
-        // console.log("Hello", res.data);
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    // axios
+    //   .get(`/api/chats/${this.props.roomID}?page=${this.state.currentPage}`)
+    //   .then(res => {
+    //     this.setState({ messages: res.data });
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
   }
 
   scrollToBottom = () => {
@@ -53,17 +64,30 @@ class MessageList extends Component {
   }
 
   handleSend() {
-    let mess = {
-      content: this.state.content
-    };
+    // let mess = {
+    //   content: this.state.content
+    // };
 
-    axios
-      .post(`/api/chats/${this.state.roomID}/new`, mess)
-      .then(function(response) {
-        console.log(response);
+    // axios
+    //   .post(`/api/chats/${this.state.roomID}/new`, mess)
+    //   .then(function(response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function(error) {
+    //     console.error(error);
+    //   });
+
+    this.messageRef
+      .add({
+        content: this.state.content,
+        user_id: this.props.userActive,
+        time: new Date()
+      })
+      .then(function(docRef) {
+        console.log("Document written with ID: ", docRef.id);
       })
       .catch(function(error) {
-        console.error(error);
+        console.error("Error adding document: ", error);
       });
 
     this.setState({
@@ -72,7 +96,22 @@ class MessageList extends Component {
   }
 
   componentDidMount() {
+    this.unsubscribe = this.messageRef
+      .orderBy("time")
+      // .limit(3)
+      .onSnapshot(snapshot => {
+        let messages = [];
+        snapshot.forEach(doc => messages.push(doc.data()));
+        this.setState({
+          messages: messages
+        });
+      });
+
     this.scrollToBottom();
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   componentDidUpdate() {
@@ -90,10 +129,10 @@ class MessageList extends Component {
               return (
                 <Message
                   key={index}
-                  username={item.User.username}
-                  avatar={item.User.avatar}
+                  username={item.user_id}
+                  // avatar={item.User.avatar}
                   message={item.content}
-                  createdAt={item.createdAt}
+                  createdAt={item.time}
                 />
               );
             })}

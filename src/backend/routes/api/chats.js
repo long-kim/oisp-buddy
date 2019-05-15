@@ -43,6 +43,12 @@ module.exports = passport => {
     });
   });
 
+  router.get("/:room_id/fullinfo", (req, res, next) => {
+    RoomService.getRoomFull(req.params).then(result => {
+      res.send(result);
+    });
+  });
+
   router.get("/:room_id", (req, res, next) => {
     const offset = (req.query.page - 1) * MESS_LIMIT;
     RoomService.getMessages(req.params, offset, MESS_LIMIT).then(result => {

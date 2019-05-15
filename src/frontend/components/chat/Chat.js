@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
 import axios from "axios";
 import Room from "./Room";
@@ -7,7 +6,6 @@ import { ListGroup } from "react-bootstrap";
 import BoxPortal from "./BoxPortal";
 import ChatBoxNew from "./box/ChatBoxNew";
 import _ from "lodash";
-import firebase from "./config";
 
 class Chat extends Component {
   constructor(props) {
