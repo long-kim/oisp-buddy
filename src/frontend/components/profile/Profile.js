@@ -8,6 +8,7 @@ import Info from "./Info";
 //import Calendar from 'react-calendar/dist/entry.nostyle';
 import Axios from "axios";
 import Popup from "reactjs-popup";
+import Moment from "react-moment";
 const jwt = require("jsonwebtoken");
 
 class Profile extends Component {
@@ -103,7 +104,7 @@ class Profile extends Component {
         <div key={i} className="myThread">
           <Link to={url}>
             <div className="media">
-              <div className="media-left">
+              <div className="media-left media-middle">
                 <img
                   src={this.state.avatar}
                   style={{
@@ -116,7 +117,14 @@ class Profile extends Component {
               </div>
               <div className="media-body" style={{ paddingLeft: "50px" }}>
                 <h4 className="media-heading">{this.state.fullname}</h4>
-                <p>{this.state.threadd[obj].title}</p>
+                <p style={{ fontSize: "20px" }}>
+                  {this.state.threadd[obj].title}
+                </p>
+                <p>
+                  <Moment format="MMMM DD, YYYY" style={{ fontSize: "15px" }}>
+                    {this.state.threadd[obj].createdAt}
+                  </Moment>
+                </p>
               </div>
             </div>
           </Link>
@@ -140,11 +148,11 @@ class Profile extends Component {
           author is: {this.state.friendlist[obj].author_id} */}
 
           <Link to={url}>
-            user{" "}
+            user with ID of{" "}
             {this.state.pending[obj].action_user_id
               ? this.state.pending[obj].action_user_id
               : "no one"}{" "}
-            wanted to be friend
+            wants to be friends
           </Link>
           <hr />
         </div>
@@ -175,12 +183,20 @@ class Profile extends Component {
       ? (Axios.patch("/api/users/edit/avatar", {
           avatar: this.state.newavatar,
           user_id: this.state.id
+        }).then(() => {
+          this.setState({
+            avatar: this.state.newavatar
+          });
         }),
         alert("Avatar has changed"))
       : param === "cover"
       ? (Axios.patch("/api/users/edit/cover", {
           cover: this.state.newcover,
           user_id: this.state.id
+        }).then(() => {
+          this.setState({
+            cover: this.state.newcover
+          });
         }),
         alert("Cover has changed"))
       : "no cant do babydoll";
@@ -272,6 +288,13 @@ class Profile extends Component {
               {this._renderObject()}
               {/* {this._renderNoti()} */}
               {/* user {Object.keys(this.state.pending).length} is waiting */}
+              <div className="readmore">
+                <Link to="/forum/index">
+                  <button type="button" className="readmore">
+                    Show more →
+                  </button>
+                </Link>
+              </div>
             </body>
             <div className="fr_req">
               <div className="noti">

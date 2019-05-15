@@ -57,11 +57,30 @@ class FriendProfile extends Component {
             : this.state.idd
       }
     }).then(res => {
-      this.setState({
-        status: res.data[0] ? res.data[0].status : 2,
-        action: res.data[0] ? res.data[0].action_user_id : 0,
-        friendID: res.data[0] ? res.data[0].id : 0
-      });
+      if (res.data == null) {
+        Axios.post("/api/users/new/friend", {
+          user1:
+            this.props.match.params.user_id < this.state.idd
+              ? this.props.match.params.user_id
+              : this.state.idd,
+          user2:
+            this.props.match.params.user_id > this.state.idd
+              ? this.props.match.params.user_id
+              : this.state.idd,
+          action: this.state.idd
+        }).then(res => {
+          this.setState({
+            status: 0,
+            action: this.state.idd
+          });
+        });
+      } else {
+        this.setState({
+          status: res.data[0] ? res.data[0].status : null,
+          action: res.data[0] ? res.data[0].action_user_id : 0,
+          friendID: res.data[0] ? res.data[0].id : 0
+        });
+      }
     });
 
     Axios.get("/api/threads/threadlist", {
@@ -121,6 +140,10 @@ class FriendProfile extends Component {
           id: this.state.friendID,
           status: 2,
           action_user_id: this.state.idd
+        }).then(() => {
+          this.setState({
+            status: 2
+          });
         }),
         alert("you two are no longer friends"))
       : this.state.status == 0 && this.state.action == this.state.idd
@@ -130,16 +153,42 @@ class FriendProfile extends Component {
           id: this.state.friendID,
           status: 1,
           action_user_id: this.state.idd
+        }).then(() => {
+          this.setState({
+            status: 1
+          });
         }),
         alert(
           "you two are now friends, refesh page and click the symbol again if you wanna delete friend"
         ))
-      : (Axios.patch("/api/users/edit/friend", {
+      : this.state.status != null
+      ? (Axios.patch("/api/users/edit/friend", {
           id: this.state.friendID,
           status: 0,
           action_user_id: this.state.idd
+        }).then(() => {
+          this.setState({
+            status: 0
+          });
         }),
-        alert("request sent! please wait to be accepted"));
+        alert("request sent! please wait to be accepted"))
+      : (Axios.post("/api/users/new/friend", {
+          user1:
+            this.props.match.params.user_id < this.state.idd
+              ? this.props.match.params.user_id
+              : this.state.idd,
+          user2:
+            this.props.match.params.user_id > this.state.idd
+              ? this.props.match.params.user_id
+              : this.state.idd,
+          action: this.state.idd
+        }).then(res => {
+          this.setState({
+            status: 0,
+            action: this.state.idd
+          });
+        }),
+        alert("Friend Request sent!"));
   }
 
   render() {
@@ -159,6 +208,31 @@ class FriendProfile extends Component {
           </Link>
         ) : this.props.match.params.user_id == localStorage.getItem("id") ? (
           <Redirect to="/profile" />
+        ) : this.state.status === 3 && this.state.action != this.state.id ? (
+          <div
+            style={{
+              margin: "auto",
+              top: "30%",
+              left: "40%",
+              position: "absolute",
+              textAlign: "center"
+            }}
+          >
+            <p style={{ color: "#925f4a" }}>
+              <i class="fas fa-sad-cry" style={{ fontSize: "150px" }} />
+            </p>
+            <p style={{ color: "#615959" }}>
+              {" "}
+              Oh no! you cannot view this user
+            </p>
+            <Link to="/">
+              <p>
+                <button type="button" className="btn btn-danger">
+                  GO TO HOMEPAGE
+                </button>
+              </p>
+            </Link>
+          </div>
         ) : (
           // <div>{this.state.friendlist !== [] ? this.state.dodai : "false"}</div>
           <div>
@@ -175,7 +249,7 @@ class FriendProfile extends Component {
                   ) : this.state.status == 3 ? (
                     <i className="fas fa-user-lock" />
                   ) : (
-                    <i className="far fa-frown" />
+                    <i className="far fa-user-plus" />
                   )}
                 </button>
               </h6>
@@ -212,7 +286,32 @@ class FriendProfile extends Component {
                 </div>
               </div>
             </header>
-            <body className="info_body2">{this._renderThread()}</body>
+            <body className="info_body2">
+              {this._renderThread()}
+              {Object.keys(this.state.threadd).length > 0 ? (
+                <div className="readmore">
+                  <Link to="/forum/index">
+                    <button type="button" className="readmore">
+                      Show more →
+                    </button>
+                  </Link>
+                </div>
+              ) : (
+                <div>
+                  <p style={{ color: "#925f4a", fontStyle: "italic" }}>
+                    This user has no thread, click the link below to see other
+                    users' threads
+                  </p>
+                  <div className="readmore">
+                    <Link to="/forum/index">
+                      <button type="button" className="readmore">
+                        Show more →
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </body>
           </div>
         )}
       </div>

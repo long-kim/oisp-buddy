@@ -124,7 +124,16 @@ class Friendlist extends Component {
                 <img src={this.state.avatar} alt="user's avatar" />
               </div>
             </header>
-            <body className="info_body">{this._renderObject()}</body>
+            <body
+              className="info_body"
+              // style={{
+              //   height: "auto",
+              //   overflow: "auto",
+              //   maxHeight: "250px"
+              // }}
+            >
+              {this._renderObject()}
+            </body>
           </div>
         )}
       </div>

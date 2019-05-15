@@ -75,12 +75,20 @@ class Info extends React.Component {
       ? (Axios.patch("/api/users/edit/avatar", {
           avatar: this.state.newavatar,
           user_id: this.state.id
+        }).then(() => {
+          this.setState({
+            avatar: this.state.newavatar
+          });
         }),
         alert("Avatar has changed"))
       : param === "cover"
       ? (Axios.patch("/api/users/edit/cover", {
           cover: this.state.newcover,
           user_id: this.state.id
+        }).then(() => {
+          this.setState({
+            cover: this.state.newcover
+          });
         }),
         alert("Cover has changed"))
       : param === "name"
@@ -88,6 +96,10 @@ class Info extends React.Component {
           first_name: this.state.first_name,
           last_name: this.state.last_name,
           user_id: this.state.id
+        }).then(() => {
+          this.setState({
+            name: this.state.first_name + " " + this.state.last_name
+          });
         }),
         alert("Name has changed"))
       : param === "year"

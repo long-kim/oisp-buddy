@@ -18,6 +18,8 @@ module.exports = passport => {
     // console.log("this is request:", req.user ? req.user.user_id : 1);
     console.log("user need thead: ", user);
     const result = Thread.findAll({
+      limit: 4,
+      order: [["createdAt", "DESC"]],
       where: {
         author_id: user
       }

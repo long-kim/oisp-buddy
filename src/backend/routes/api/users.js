@@ -69,6 +69,12 @@ module.exports = passport => {
     });
   });
 
+  router.post("/new/friend", (req, res, next) => {
+    UserService.postFriend(req.body).then(result => {
+      res.send(result);
+    });
+  });
+
   router.patch("/edit/about", (req, res, next) => {
     // console.log("print: " + req[0]);
     UserService.editUser_about(req.body).then(result => {

@@ -145,8 +145,9 @@ module.exports = passport => {
 
   function editFriend(req) {
     const id = req.body.id ? req.body.id : 0;
-    console.log("user1: ", req.body.id);
+    console.log("edit Friend user1: ", req.body.id);
     console.log("status: ", req.body.status);
+    // console.log(req);
     return Relationship.findByPk(id)
       .then(user => {
         return user.update({
@@ -157,6 +158,26 @@ module.exports = passport => {
       })
       .then(user => {
         return user;
+      });
+  }
+
+  function postFriend(req) {
+    const user1 = req.user1 ? req.user1 : 0;
+    const user2 = req.user2 ? req.user2 : 0;
+    const action = req.action ? req.action : 0;
+    console.log("in new friend user1", user1, " ", user2);
+
+    return Relationship.create({
+      user_one_id: user1,
+      user_two_id: user2,
+      status: 0,
+      action_user_id: action
+    })
+      .then(relation => {
+        return Promise.resolve(relation);
+      })
+      .catch(err => {
+        return Promise.reject(err);
       });
   }
 
@@ -281,7 +302,8 @@ module.exports = passport => {
     getFriendInfo,
     getFriendStatus,
     editFriend,
-    getFriendNoti
+    getFriendNoti,
+    postFriend
     // editUser_password
   };
 };
