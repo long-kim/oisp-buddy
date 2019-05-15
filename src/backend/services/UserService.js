@@ -4,8 +4,12 @@ const Friend = models.Friend;
 const Op = require("sequelize").Op;
 
 module.exports = passport => {
+  function getActiveUser(req) {
+    const user_id = req.user ? req.user.user_id : 1;
+    return user_id;
+  }
+
   function getSubscription(req) {
-    // Queston here??
     const user_id = req.user ? req.user.user_id : 4;
     const result = User.findByPk(user_id)
       .then(user => {
@@ -99,6 +103,7 @@ module.exports = passport => {
     getThreadVotes,
     getPostVotes,
     getRoomsList,
-    getUserChatInfo
+    getUserChatInfo,
+    getActiveUser
   };
 };

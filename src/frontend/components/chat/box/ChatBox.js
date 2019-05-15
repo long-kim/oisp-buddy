@@ -51,7 +51,10 @@ class ChatBox extends Component {
             </div>
 
             {this.state.showMessList && (
-              <MessageList roomID={this.state.roomID} />
+              <MessageList
+                roomID={this.state.roomID}
+                userActive={this.props.userActive}
+              />
             )}
           </div>
         )}

@@ -3,7 +3,7 @@ import "assets/styles/Chat.css";
 import Message from "./Message";
 import axios from "axios";
 import { Form } from "react-bootstrap";
-import io from "socket.io-client";
+import db from "../config";
 
 class MessageList extends Component {
   constructor(props) {
@@ -14,6 +14,15 @@ class MessageList extends Component {
       messages: undefined,
       currentPage: 1
     };
+
+    // this.chatRoom = db
+    //   .collection("rooms")
+    //   .doc(this.props.roomID)
+    //   .collection("messages");
+
+    // this.chatRoom.onSnapshot(doc => {
+    //   console.log("Current data: ", doc.data());
+    // });
 
     axios
       .get(`/api/chats/${this.props.roomID}?page=${this.state.currentPage}`)

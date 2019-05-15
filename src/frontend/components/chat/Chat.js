@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-// import RoomList from "./RoomList";
-import { Button } from "react-bootstrap";
+
 import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
 import axios from "axios";
 import Room from "./Room";
@@ -8,14 +7,13 @@ import { ListGroup } from "react-bootstrap";
 import BoxPortal from "./BoxPortal";
 import ChatBoxNew from "./box/ChatBoxNew";
 import _ from "lodash";
-
-// this.handleRoomList = this.handleRoomList.bind(this);
-// this.handleRoomID = this.handleRoomID.bind(this);
+import firebase from "./config";
 
 class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userActive: undefined,
       roomlist: [],
       oldRoomlist: [],
       roomClickYet: true,
@@ -24,19 +22,32 @@ class Chat extends Component {
       roomFound: []
     };
     this.handleClick = this.handleClick.bind(this);
+
+    axios
+      .get(`api/chats/active`)
+      .then(res => {
+        this.setState({ userActive: res.data });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
     axios
       .get(`/api/chats/`)
       .then(async response => {
         this.setState({ oldRoomlist: response.data });
-
         response.data.map(room => {
-          axios.get(`/api/chats/${room.room_id}/info`).then(res => {
-            this.setState({ roomlist: [...this.state.roomlist, res.data] });
+          axios.get(`/api/chats/${room.room_id}/info`).then(async res => {
+            let myobject = res.data;
+            myobject.room_id = room.room_id;
+            await this.setState({
+              roomlist: [...this.state.roomlist, myobject]
+            });
           });
         });
       })
       .catch(function(error) {
-        console.log(error);
+        console.error(error);
       });
   }
   handleClick = () => {
@@ -110,6 +121,7 @@ class Chat extends Component {
             return (
               <BoxPortal target="targetForBox" key={index}>
                 <ChatBoxNew
+                  userActive={this.state.userActive}
                   roomID={room.friend_id}
                   callbackFromParent={this.myCallback}
                 />
@@ -154,8 +166,9 @@ class Chat extends Component {
                 <ListGroup.Item key={index}>
                   <Room
                     roomFound={this.state.roomFound}
+                    userActive={this.state.userActive}
                     index={index}
-                    id={this.state.oldRoomlist[index].room_id}
+                    id={room.room_id}
                     name={room.first_name + " " + room.last_name}
                     avatar={room.avatar}
                   />

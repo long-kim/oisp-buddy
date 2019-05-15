@@ -19,6 +19,24 @@ module.exports = passport => {
     });
   });
 
+  router.get("/active", (req, res, next) => {
+    result = UserService.getActiveUser(req);
+    console.log("here is user:", result);
+    res.send(result.toString());
+  });
+
+  router.post("/find", (req, res, next) => {
+    RoomService.findRoom(req.body).then(result => {
+      res.send(result);
+    });
+  });
+
+  router.post("/newRoom", (req, res, next) => {
+    RoomService.newRoom(req.body).then(result => {
+      res.send(result);
+    });
+  });
+
   router.get("/:room_id/info", (req, res, next) => {
     RoomService.getRoom(req.params).then(result => {
       res.send(result);
@@ -34,18 +52,6 @@ module.exports = passport => {
 
   router.get("/:room_id/participants", (req, res, next) => {
     RoomService.getRoomParticipants(req.params).then(async result => {
-      res.send(result);
-    });
-  });
-
-  router.post("/find", (req, res, next) => {
-    RoomService.findRoom(req.body).then(result => {
-      res.send(result);
-    });
-  });
-
-  router.post("/newRoom", (req, res, next) => {
-    RoomService.newRoom(req.body).then(result => {
       res.send(result);
     });
   });

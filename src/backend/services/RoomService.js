@@ -13,22 +13,23 @@ module.exports = passport => {
 
   function getMessages(req, offset, limit) {
     const room_id = req.room_id;
-
-    const result = Room.findByPk(room_id)
-      .then(room => {
-        return room.getMessages({
-          include: [{ model: User }],
-          offset: offset,
-          order: [["msg_id", "DESC"]],
-          limit: limit
-        });
-      })
-      .then(messages => {
-        return Promise.resolve(messages.reverse());
-      })
-      .catch(err => {
-        return Promise.reject(err);
-      });
+    const result = Room.findByPk(room_id).then(room => {
+      if (room) {
+        return room
+          .getMessages({
+            include: [{ model: User }],
+            offset: offset,
+            order: [["msg_id", "DESC"]],
+            limit: limit
+          })
+          .then(messages => {
+            return Promise.resolve(messages.reverse());
+          })
+          .catch(err => {
+            return Promise.reject(err);
+          });
+      }
+    });
 
     return result;
   }

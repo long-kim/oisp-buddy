@@ -68,6 +68,7 @@ class Room extends Component {
           {this.state.boxHidden && (
             <BoxPortal target="targetForBox">
               <ChatBox
+                userActive={this.props.userActive}
                 roomID={this.props.id}
                 name={this.props.name}
                 avatar={this.props.avatar}
