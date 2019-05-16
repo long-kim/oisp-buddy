@@ -97,13 +97,15 @@ class MessageList extends Component {
 
   componentDidMount() {
     this.unsubscribe = this.messageRef
-      .orderBy("time")
-      // .limit(3)
+      .orderBy("time", "desc")
+      .limit(10)
       .onSnapshot(snapshot => {
-        let messages = [];
-        snapshot.forEach(doc => messages.push(doc.data()));
+        let newMessages = [];
+        snapshot.forEach(doc => {
+          newMessages = [...newMessages, doc.data()];
+        });
         this.setState({
-          messages: messages
+          messages: newMessages.reverse()
         });
       });
 

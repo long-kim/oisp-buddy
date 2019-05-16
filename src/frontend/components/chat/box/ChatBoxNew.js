@@ -15,7 +15,8 @@ class ChatBoxNew extends Component {
       name: "",
       roomID: this.props.roomID,
       showMessList: true,
-      showBox: true
+      showBox: true,
+      roomInfo: []
     };
     axios
       .get(`/api/chats/${this.props.roomID}/info`)
@@ -24,6 +25,17 @@ class ChatBoxNew extends Component {
           avatar: response.data.avatar,
           name: response.data.first_name + " " + response.data.last_name
         });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+    axios
+      .get(`/api/chats/${this.props.roomID}/fullinfo`)
+      .then(response => {
+        // console.log(response.data);
+        this.setState({ roomInfo: response.data });
+        // debugger;
       })
       .catch(function(error) {
         console.log(error);
@@ -65,7 +77,10 @@ class ChatBoxNew extends Component {
             </div>
 
             {this.state.showMessList && (
-              <MessageList roomID={this.state.roomID} />
+              <MessageList
+                roomID={this.state.roomID}
+                userActive={this.props.userActive}
+              />
             )}
           </div>
         )}

@@ -4,11 +4,6 @@ import axios from "axios";
 class Message extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      username: this.props.username,
-      avatar: this.props.avatar,
-      message: this.props.message
-    };
   }
   // componentDidMount() {
   //   this.setState({
@@ -20,9 +15,9 @@ class Message extends Component {
   render() {
     return (
       <div className="message">
-        <div className="message-username"> {this.state.username} </div>
+        <div className="message-username"> {this.props.username} </div>
         <div className="box-mess">
-          <div className="message-text"> {this.state.message} </div>
+          <div className="message-text"> {this.props.message} </div>
         </div>
       </div>
     );

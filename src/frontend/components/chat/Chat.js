@@ -138,7 +138,7 @@ class Chat extends Component {
                 onChange={this.handleChange.bind(this)}
                 onKeyPress={this.handleKeyPress.bind(this)}
               />
-              <div className="new-mess">New Message</div>
+              {/* <div className="new-mess">New Message</div> */}
             </div>
 
             {this.state.userSearch.users && (
