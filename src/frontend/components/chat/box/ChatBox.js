@@ -10,23 +10,19 @@ class ChatBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [],
-      roomID: this.props.roomID,
       showMessList: true,
       showBox: true
     };
-
-    this.el = document.createElement("div");
   }
 
   handleHeaderClick() {
- 
     this.setState({ showMessList: !this.state.showMessList });
   }
 
-  handleHideClick() {
-   
-    this.setState({ showBox: false });
+  handleClose() {
+    // this.setState({ showBox: false });
+    this.props.handleCloseBox();
+    this.props.callbackFromParent(this.props.room_id);
   }
 
   render() {
@@ -39,26 +35,23 @@ class ChatBox extends Component {
               onClick={this.handleHeaderClick.bind(this)}
             >
               <div className="box-left">
-                <img src={this.props.avatar} />
+                <img src={this.props.avatar} alt="avatar" />
                 <p>{this.props.name} </p>
               </div>
-              <div
-                className="box-right"
-                onClick={this.handleHideClick.bind(this)}
-              >
+              <div className="box-right" onClick={this.handleClose.bind(this)}>
                 <FontAwesomeIcon icon={faTimes} size="lg" color="#a56a4b" />
               </div>
             </div>
 
             {this.state.showMessList && (
               <MessageList
-                roomID={this.state.roomID}
+                room_id={this.props.room_id}
+                fullInfo={this.props.fullInfo}
                 userActive={this.props.userActive}
               />
             )}
           </div>
         )}
-        {/* <div className="chatbox-bottomShow"> */}
       </div>
     );
   }

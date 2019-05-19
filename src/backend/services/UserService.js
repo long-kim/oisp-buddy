@@ -1,14 +1,9 @@
 const models = require("backend/database/models");
 const User = models.User;
-const Friend = models.Friend;
+const Room = models.Room;
 const Op = require("sequelize").Op;
 
 module.exports = passport => {
-  function getActiveUser(req) {
-    const user_id = req.user ? req.user.user_id : 1;
-    return user_id;
-  }
-
   function getSubscription(req) {
     const user_id = req.user ? req.user.user_id : 4;
     const result = User.findByPk(user_id)
@@ -21,28 +16,31 @@ module.exports = passport => {
       .catch(err => {
         return Promise.reject(err);
       });
-
     return result;
   }
 
   //---------------
   // Chat API here
 
-  function getRoomsList(req) {
+  function getActiveUser(req) {
     const user_id = req.user ? req.user.user_id : 1;
+    return user_id;
+  }
 
-    const result = Friend.findAll({
+  function getRoomList(req) {
+    // Get all chat room from user
+    const user_id = req.user ? req.user.user_id : 1;
+    const result = Room.findAll({
       where: {
         [Op.or]: [{ user_one_id: user_id }, { user_two_id: user_id }]
       }
     })
-      .then(friends => {
-        return friends.map(friend => friend.getRoom());
+      .then(rooms => {
+        return rooms.map(room => Promise.resolve(room));
       })
       .catch(err => {
         return Promise.reject(err);
       });
-
     return result;
   }
 
@@ -66,7 +64,6 @@ module.exports = passport => {
 
   function getUserChatInfo(req) {
     const user_id = req.query.user_id ? req.query.user_id : 1;
-    // console.log("my friend id", user_id);
     const result = User.findAll({
       attributes: ["username", "avatar"],
       where: {
@@ -102,7 +99,7 @@ module.exports = passport => {
     getSubscription,
     getThreadVotes,
     getPostVotes,
-    getRoomsList,
+    getRoomList,
     getUserChatInfo,
     getActiveUser
   };

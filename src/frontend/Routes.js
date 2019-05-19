@@ -29,7 +29,7 @@ class Routes extends Component {
           />
           <Route path="/login" render={props => <Login {...props} />} />
           <Route path="/chat" component={Chat} />
-          {/* <Route path="/chat/:roomID" component={ChatBox} /> */}
+
           <Route
             path="/test"
             render={props => (

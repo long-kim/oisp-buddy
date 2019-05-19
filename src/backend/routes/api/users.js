@@ -5,13 +5,7 @@ const sequelize = require("sequelize");
 
 module.exports = passport => {
   const UserService = require("../../services/UserService")(passport);
-  router.get("/", (req, res, next) => {
-    User.findAll({
-      order: [["user_id", "ASC"]]
-    }).then(users => {
-      res.json({ users: users.map(user => user.toJSON()) });
-    });
-  });
+  
 
   // router.get("/user_data", function(req, res) {
   //   if (req.user === undefined) {

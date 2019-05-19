@@ -10,23 +10,20 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         allowNull: false
       },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      avatar: {
-        type: DataTypes.STRING,
-        allowNull: true
+      status: {
+        type: DataTypes.SMALLINT,
+        defaultValue: 0,
+        allowNULL: false
       }
     },
     {
-      timestamps: true
+      timestamps: false
     }
   );
 
   Room.associate = function(models) {
-    Room.hasMany(models.Message, { foreignKey: "room_id" });
+    Room.belongsTo(models.User, { foreignKey: "user_one_id" });
+    Room.belongsTo(models.User, { foreignKey: "user_two_id" });
   };
-
   return Room;
 };

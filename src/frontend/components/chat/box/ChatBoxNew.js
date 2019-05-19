@@ -13,13 +13,12 @@ class ChatBoxNew extends Component {
       messages: [],
       avatar: "",
       name: "",
-      roomID: this.props.roomID,
       showMessList: true,
       showBox: true,
       roomInfo: []
     };
     axios
-      .get(`/api/chats/${this.props.roomID}/info`)
+      .get(`/api/chats/${this.props.room_id}/info`)
       .then(response => {
         this.setState({
           avatar: response.data.avatar,
@@ -31,7 +30,7 @@ class ChatBoxNew extends Component {
       });
 
     axios
-      .get(`/api/chats/${this.props.roomID}/fullinfo`)
+      .get(`/api/chats/${this.props.room_id}/fullinfo`)
       .then(response => {
         // console.log(response.data);
         this.setState({ roomInfo: response.data });
@@ -52,7 +51,7 @@ class ChatBoxNew extends Component {
   handleHideClick() {
     // console.log("icon on click");
     this.setState({ showBox: false });
-    this.props.callbackFromParent(this.props.roomID);
+    this.props.callbackFromParent(this.props.room_id);
   }
 
   render() {
@@ -65,7 +64,7 @@ class ChatBoxNew extends Component {
               onClick={this.handleHeaderClick.bind(this)}
             >
               <div className="box-left">
-                <img src={this.state.avatar} />
+                <img src={this.state.avatar} alt="avatar" />
                 <p>{this.state.name} </p>
               </div>
               <div
@@ -78,7 +77,8 @@ class ChatBoxNew extends Component {
 
             {this.state.showMessList && (
               <MessageList
-                roomID={this.state.roomID}
+                room_id={this.props.room_id}
+                fullInfo={this.state.roomInfo}
                 userActive={this.props.userActive}
               />
             )}

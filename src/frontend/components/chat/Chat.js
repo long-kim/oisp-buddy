@@ -13,11 +13,11 @@ class Chat extends Component {
     this.state = {
       userActive: undefined,
       roomlist: [],
-      oldRoomlist: [],
       roomClickYet: true,
       content: "",
       userSearch: [],
-      roomFound: []
+      roomFound: [],
+      roomShowing: []
     };
     this.handleClick = this.handleClick.bind(this);
 
@@ -33,7 +33,6 @@ class Chat extends Component {
     axios
       .get(`/api/chats/`)
       .then(async response => {
-        this.setState({ oldRoomlist: response.data });
         response.data.map(room => {
           axios.get(`/api/chats/${room.room_id}/info`).then(async res => {
             let myobject = res.data;
@@ -66,26 +65,27 @@ class Chat extends Component {
   handleChange(event) {
     this.setState({ content: event.target.value });
   }
+
   handleFindRoom = myitem => {
     axios
       .post(`/api/chats/find/`, { user_id: myitem.user_id })
       .then(res => {
         if (!res.data) {
-          // console.log("new room!!", res.data);
           axios
             .post(`api/chats/newroom`, { user_id: myitem.user_id })
             .then(res => {
+              this.myCallback(res.data.room_id);
               this.setState({ roomFound: [...this.state.roomFound, res.data] });
             });
         } else {
-          if (_.some(this.state.roomFound, res.data)) return;
+          if (_.includes(this.state.roomShowing, res.data.room_id)) return;
+          this.myCallback(res.data.room_id);
           this.setState({ roomFound: [...this.state.roomFound, res.data] });
         }
       })
       .catch(err => {
         console.error(err);
       });
-    // console.log("roomFound", this.state.roomFound);
   };
 
   handleSearch() {
@@ -96,19 +96,22 @@ class Chat extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // Typical usage (don't forget to compare props):
     if (this.props.show !== prevProps.show) {
       this.setState({ roomClickYet: true });
     }
   }
 
   myCallback = dataFromChild => {
-    let newarr = this.state.roomFound;
-    _.remove(newarr, x => {
-      return x.friend_id == dataFromChild;
-    });
-    // console.log(newarr);
-    this.setState({ roomFound: newarr });
+    console.log("dataFromChild", dataFromChild);
+    let newarr = this.state.roomShowing;
+    if (_.includes(this.state.roomShowing, dataFromChild)) {
+      _.remove(newarr, item => {
+        return item === dataFromChild;
+      });
+    } else {
+      newarr.push(dataFromChild);
+    }
+    this.setState({ roomShowing: newarr });
   };
 
   render() {
@@ -120,7 +123,7 @@ class Chat extends Component {
               <BoxPortal target="targetForBox" key={index}>
                 <ChatBoxNew
                   userActive={this.state.userActive}
-                  roomID={room.friend_id}
+                  room_id={room.room_id}
                   callbackFromParent={this.myCallback}
                 />
               </BoxPortal>
@@ -163,16 +166,14 @@ class Chat extends Component {
               return (
                 <ListGroup.Item key={index}>
                   <Room
+                    roomShowing={this.state.roomShowing}
                     roomFound={this.state.roomFound}
                     userActive={this.state.userActive}
+                    callbackFromParent={this.myCallback}
                     index={index}
-                    id={room.room_id}
+                    room_id={room.room_id}
                     name={room.first_name + " " + room.last_name}
                     avatar={room.avatar}
-                  />
-                  <div
-                    className="clickPurpose"
-                    onClick={this.handleClick.bind(this)}
                   />
                 </ListGroup.Item>
               );

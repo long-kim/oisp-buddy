@@ -4,15 +4,15 @@ import Message from "./Message";
 import axios from "axios";
 import { Form } from "react-bootstrap";
 import firebase from "../firebase";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 class MessageList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      roomID: this.props.roomID,
-      content: "",
       messages: undefined,
-      currentPage: 1
+      currentPage: 1,
+      content: ""
     };
 
     // this.firebaseRef = firebase.firestore();
@@ -21,7 +21,7 @@ class MessageList extends Component {
 
     this.roomRef = this.db
       .collection("rooms")
-      .doc(this.props.roomID.toString());
+      .doc(this.props.room_id.toString());
 
     this.messageRef = this.roomRef.collection("messages");
 
@@ -30,28 +30,7 @@ class MessageList extends Component {
         this.roomRef.set({});
       }
     });
-    // this.listenMessages();
-
-    // this.chatRoom.onSnapshot(doc => {
-    //   console.log("Current data: ", doc.data());
-    // });
-
-    // axios
-    //   .get(`/api/chats/${this.props.roomID}?page=${this.state.currentPage}`)
-    //   .then(res => {
-    //     this.setState({ messages: res.data });
-    //   })
-    //   .catch(err => {
-    //     console.error(err);
-    //   });
   }
-
-  scrollToBottom = () => {
-    setTimeout(() => {
-      // this.messagesEnd.scrollIntoView({ behavior: "smooth" });
-      this.messagesEnd.scrollIntoView({ behavior: "auto" });
-    }, 0);
-  };
 
   handleKeyPress(event) {
     if (event.key !== "Enter") return;
@@ -64,19 +43,6 @@ class MessageList extends Component {
   }
 
   handleSend() {
-    // let mess = {
-    //   content: this.state.content
-    // };
-
-    // axios
-    //   .post(`/api/chats/${this.state.roomID}/new`, mess)
-    //   .then(function(response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function(error) {
-    //     console.error(error);
-    //   });
-
     this.messageRef
       .add({
         content: this.state.content,
@@ -108,43 +74,33 @@ class MessageList extends Component {
           messages: newMessages.reverse()
         });
       });
-
-    this.scrollToBottom();
   }
 
   componentWillUnmount() {
     this.unsubscribe();
   }
 
-  componentDidUpdate() {
-    this.scrollToBottom();
-  }
+  componentDidUpdate() {}
 
   render() {
-    // console.log(this.state.partiArr);
-
     return (
       <div className="message-list">
         <div className="msg-lst">
           {this.state.messages &&
+            this.props.fullInfo.length &&
             this.state.messages.map((item, index) => {
               return (
                 <Message
                   key={index}
-                  username={item.user_id}
-                  // avatar={item.User.avatar}
+                  user_id={item.user_id}
+                  fullInfo={this.props.fullInfo}
                   message={item.content}
                   createdAt={item.time}
                 />
+                // <h1>test</h1>
               );
             })}
-
-          <div
-            style={{ float: "left", clear: "both" }}
-            ref={el => {
-              this.messagesEnd = el;
-            }}
-          />
+          <div id="end-mess-list" />
         </div>
 
         <Form.Control

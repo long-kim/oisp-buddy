@@ -7,12 +7,10 @@ var Sequelize = require('sequelize');
  *
  * createTable "Topics", deps: []
  * createTable "Users", deps: []
- * createTable "Friends", deps: [Users, Users]
- * createTable "Rooms", deps: [Friends]
  * createTable "Threads", deps: [Users]
  * createTable "Posts", deps: [Users, Threads, Threads]
  * createTable "post_votes", deps: [Posts, Users]
- * createTable "Messages", deps: [Users, Rooms]
+ * createTable "Rooms", deps: [Users, Users]
  * createTable "Reports", deps: [Users, Threads]
  * createTable "subscriptions", deps: [Threads, Users]
  * createTable "thread_topics", deps: [Threads, Topics]
@@ -22,8 +20,8 @@ var Sequelize = require('sequelize');
 
 var info = {
     "revision": 1,
-    "name": "initial",
-    "created": "2019-05-14T18:11:19.826Z",
+    "name": "init",
+    "created": "2019-05-17T17:29:22.500Z",
     "comment": ""
 };
 
@@ -146,92 +144,6 @@ var migrationCommands = [{
                 "year": {
                     "type": Sequelize.SMALLINT,
                     "field": "year"
-                },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
-                },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
-                }
-            },
-            {}
-        ]
-    },
-    {
-        fn: "createTable",
-        params: [
-            "Friends",
-            {
-                "friend_id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "friend_id",
-                    "allowNull": false,
-                    "primaryKey": true,
-                    "autoIncrement": true
-                },
-                "status": {
-                    "type": Sequelize.SMALLINT,
-                    "field": "status",
-                    "allowNULL": false,
-                    "defaultValue": 0
-                },
-                "user_one_id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "user_one_id",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
-                    "references": {
-                        "model": "Users",
-                        "key": "user_id"
-                    },
-                    "allowNull": true
-                },
-                "user_two_id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "user_two_id",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
-                    "references": {
-                        "model": "Users",
-                        "key": "user_id"
-                    },
-                    "allowNull": true
-                }
-            },
-            {}
-        ]
-    },
-    {
-        fn: "createTable",
-        params: [
-            "Rooms",
-            {
-                "room_id": {
-                    "type": Sequelize.INTEGER,
-                    "onUpdate": "CASCADE",
-                    "onDelete": "CASCADE",
-                    "references": {
-                        "model": "Friends",
-                        "key": "friend_id"
-                    },
-                    "field": "room_id",
-                    "allowNull": false,
-                    "primaryKey": true,
-                    "autoIncrement": true
-                },
-                "name": {
-                    "type": Sequelize.STRING,
-                    "field": "name",
-                    "allowNull": false
-                },
-                "avatar": {
-                    "type": Sequelize.STRING,
-                    "field": "avatar",
-                    "allowNull": true
                 },
                 "createdAt": {
                     "type": Sequelize.DATE,
@@ -420,33 +332,24 @@ var migrationCommands = [{
     {
         fn: "createTable",
         params: [
-            "Messages",
+            "Rooms",
             {
-                "msg_id": {
+                "room_id": {
                     "type": Sequelize.INTEGER,
-                    "field": "msg_id",
+                    "field": "room_id",
                     "allowNull": false,
                     "primaryKey": true,
                     "autoIncrement": true
                 },
-                "content": {
-                    "type": Sequelize.STRING(1000),
-                    "field": "content",
-                    "allowNull": false
+                "status": {
+                    "type": Sequelize.SMALLINT,
+                    "field": "status",
+                    "allowNULL": false,
+                    "defaultValue": 0
                 },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
-                },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
-                },
-                "sender_id": {
+                "user_one_id": {
                     "type": Sequelize.INTEGER,
-                    "field": "sender_id",
+                    "field": "user_one_id",
                     "onUpdate": "CASCADE",
                     "onDelete": "SET NULL",
                     "references": {
@@ -455,14 +358,14 @@ var migrationCommands = [{
                     },
                     "allowNull": true
                 },
-                "room_id": {
+                "user_two_id": {
                     "type": Sequelize.INTEGER,
-                    "field": "room_id",
+                    "field": "user_two_id",
                     "onUpdate": "CASCADE",
                     "onDelete": "SET NULL",
                     "references": {
-                        "model": "Rooms",
-                        "key": "room_id"
+                        "model": "Users",
+                        "key": "user_id"
                     },
                     "allowNull": true
                 }
