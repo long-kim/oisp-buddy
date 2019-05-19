@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Select from "react-select";
 import makeAnimated from "react-select/lib/animated";
+import AsyncSelect from "react-select/lib/Async";
 import ReplyForm from "./elements/ReplyForm";
 import Axios from "axios";
 
@@ -14,9 +14,23 @@ export class Create extends Component {
       data: {
         title: "",
         content: ""
-      }
+      },
+      input: ""
     };
   }
+
+  loadOptions = inputValue => {
+    return Axios.get(`/api/topics/find?input=${inputValue}`).then(response => {
+      const options = response.data.map(option => {
+        return {
+          value: option.name,
+          label: option.title
+        };
+      });
+      console.log(options);
+      return options;
+    });
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -38,7 +52,7 @@ export class Create extends Component {
     return (
       <Container className="CreateThread">
         <Form id="form" method="POST" onSubmit={this.handleSubmit}>
-          <div className="card-wrapper header">
+          <div className="card-wrapper header sticky">
             <h3 className="mr-auto">Create new Thread</h3>
             <Button variant="primary" className="post-btn" type="submit">
               Post
@@ -56,7 +70,7 @@ export class Create extends Component {
             </Form.Group>
             <Form.Group>
               <Form.Label>Topics</Form.Label>
-              <Select
+              <AsyncSelect
                 name="topics"
                 closeMenuOnSelect={true}
                 className="select"
@@ -64,11 +78,8 @@ export class Create extends Component {
                 components={makeAnimated()}
                 isMulti
                 placeholder="Choose your topics"
-                onMenuClose
-                options={[
-                  { value: "dog", label: "Dog" },
-                  { value: "cat", label: "Cat" }
-                ]}
+                loadOptions={this.loadOptions}
+                cacheOptions
               />
             </Form.Group>
             <Form.Group>

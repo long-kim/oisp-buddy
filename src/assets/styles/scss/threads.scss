@@ -116,31 +116,161 @@
 
 .Thread {
   background-color: #777777;
+  height: 100%;
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    li {
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16);
+      display: flex;
+      height: 35px;
+      width: 30px;
+      align-content: center;
+      justify-content: center;
+      background-color: #dddddd;
+      color: #777777;
+      transition-duration: 0.3s;
+      cursor: pointer;
+      &.prev,
+      &.next {
+        font-family: FontAwesome;
+      }
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+      &.active {
+        background-color: #777777;
+        color: #fff;
+        pointer-events: none;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+      }
+      a {
+        display: flex;
+        align-self: center;
+        color: inherit;
+        text-decoration: none;
+      }
+      &.disabled {
+        pointer-events: none;
+        color: #b4b4b4;
+      }
+      &:hover {
+        background-color: #fff;
+        transition-duration: 0.3s;
+      }
+    }
+  }
   .container {
     background-color: #dddddd;
     padding: 0;
     max-width: 900px;
+    min-height: 100vh;
     &.index {
       padding: 20px;
+      @include mobile {
+        padding: 10px;
+        .overview {
+          margin-top: 20px;
+          & ~ .overview {
+            margin-top: -10px;
+          }
+        }
+      }
       .card-wrapper {
         padding: 1rem;
         font-size: 20px;
+        @include mobile {
+          font-size: 18px;
+        }
         height: 150px;
+        display: flex;
         &.header {
+          @include mobile {
+            max-width: 100vw;
+            margin: -10px;
+            padding: 1rem;
+          }
           margin: -20px;
-          height: 100%;
+          height: 70px;
           padding: 1rem 2rem;
           margin-bottom: 20px;
+          position: sticky;
+          top: $navbar-height;
+          align-content: center;
+          align-items: center;
+          &.sticky {
+            z-index: 1010;
+          }
+          h3 {
+            line-height: 1.75rem;
+          }
+          .filter {
+            display: flex;
+            flex-direction: row;
+            font-size: 15px;
+            color: #777777;
+            margin-right: 10px;
+            transition: all 0.3s;
+            .topic-filter {
+              margin-right: 10px;
+              transition: all 0.3s;
+            }
+            .clear-filter {
+              overflow: hidden;
+              white-space: nowrap;
+              opacity: 1;
+              transition: all 0.3s;
+              width: 50px;
+              cursor: pointer;
+              &.hidden {
+                width: 0;
+                opacity: 0;
+              }
+            }
+          }
         }
       }
     }
     &.single-thread {
+      @include mobile {
+        max-width: 100vw;
+      }
       .card-wrapper {
         &.header {
           padding: 1rem;
+          @include mobile {
+            width: inherit;
+          }
           .content {
             .subtitle {
               color: #777777;
+            }
+          }
+          .pagination {
+            margin: 1rem auto 0.5rem auto;
+          }
+        }
+        &.trans {
+          display: flex;
+          flex-direction: column;
+          .pagination {
+            margin-bottom: 1.5rem;
+          }
+        }
+      }
+    }
+    &.CreateThread {
+      .card-wrapper {
+        &.header {
+          position: sticky;
+          top: $navbar-height;
+          @include mobile {
+            width: 100vw;
+            h3 {
+              font-size: 20px;
+              line-height: 36px;
+              vertical-align: middle;
             }
           }
         }
@@ -149,6 +279,9 @@
     form {
       width: 100%;
       .card-wrapper {
+        &.sticky {
+          z-index: 1010;
+        }
         &.trans {
           flex-direction: column;
         }
@@ -170,10 +303,14 @@
       position: relative;
       &.header {
         @include shadow(0.36);
-        z-index: 1010;
         width: 900px;
+        flex-wrap: wrap;
       }
       &.sticky-header {
+        @include mobile {
+          width: 100vw;
+          padding: 1rem 1.5rem;
+        }
         max-height: 0;
         overflow: hidden;
         width: 900px;
@@ -202,11 +339,30 @@
         }
       }
       &.trans {
-        background-color: rgba(255, 255, 255, 0.4);
+        background-color: rgba(255, 255, 255, 0.6);
         margin-bottom: 0;
         .ReplyForm {
           width: 85%;
           margin: 0 auto;
+          @include mobile {
+            width: 100%;
+          }
+        }
+        .footer-text {
+          @include mobile {
+            width: 100%;
+          }
+          width: 85%;
+          margin: 1.5rem auto 0.5rem auto;
+          font-size: 12px;
+          color: #aeaeae;
+          a {
+            color: #f1cbb6;
+            text-decoration: none;
+            &:hover {
+              color: #a56a4b;
+            }
+          }
         }
       }
       h3 {
@@ -214,6 +370,9 @@
       }
       .btn-primary {
         width: 100px;
+        @include mobile {
+          width: 80px;
+        }
       }
       .control-group {
         display: flex;
@@ -228,8 +387,19 @@
           color: #dddddd;
           height: 100%;
           padding-top: 10px;
-          .control:hover {
-            color: #aeaeae;
+          transition: all 0.3s;
+          &.hidden {
+            opacity: 0;
+          }
+          .control {
+            transition: all 0.2s;
+            &:hover {
+              color: #aeaeae;
+              transition: all 0.2s;
+            }
+            &:active {
+              transform: scale(0.85);
+            }
           }
         }
         .control {
@@ -260,6 +430,7 @@
         flex-direction: column;
         padding: 10px 20px 10px 20px;
         width: calc(100% - 60px);
+        max-width: calc(100% - 60px);
         .thread-title {
           color: #777777;
           width: 100%;
@@ -274,9 +445,11 @@
           margin-top: 10px;
           .topic {
             @include shadow(0.16);
-            display: flex;
+            display: block;
             width: 80px;
             height: 30px;
+            margin-right: 10px;
+            padding: 0 0.5rem;
             background-color: #a56a4b;
             color: #fff;
             font-size: 15px;
@@ -284,6 +457,10 @@
             text-align: center;
             text-decoration: none;
             justify-content: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 30px;
           }
         }
       }
@@ -300,7 +477,8 @@
             img {
               object-fit: cover;
               border-radius: 50%;
-              max-width: 100%;
+              width: 100%;
+              height: 100%;
               box-shadow: -1px 2px 6px rgba(0, 0, 0, 0.16);
             }
           }

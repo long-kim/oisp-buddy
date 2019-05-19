@@ -21,12 +21,7 @@ module.exports = {
         password: seed_pwd,
         first_name: "Long",
         last_name: "Kim",
-        about: "I'm Gosu, I'm THE best",
-        dept: "Computer Science",
-        year: "2016",
         avatar: "/images/avatars/avatar_long.jpg",
-        cover:
-          "http://thewowstyle.com/wp-content/uploads/2015/01/cover-facebook-1.jpg",
         createdAt: new Date(),
         updatedAt: new Date()
       },

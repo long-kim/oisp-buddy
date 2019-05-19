@@ -11,7 +11,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Navbar from "components/Navbars/Navbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
+// import React, { Component } from "react";
 
 import routes from "routes.js";
 
@@ -49,6 +49,12 @@ class Dashboard extends React.Component {
 		  fixedClasses: "dropdown show",
 		  mobileOpen: false
 		};
+    super(props);
+    this.state = {
+      number: 0,
+      isLoading: true,
+      error: true
+    };
     this.handleClick = this.handleClick.bind(this);
 
   }
@@ -118,7 +124,7 @@ class Dashboard extends React.Component {
           routes={routes}
           logoText={"BUDDY OISP"}
           logo={logo}
-          image={this.state.image}
+          image={"https://images.unsplash.com/photo-1557943819-b09ae5a1375c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjF9&auto=format&fit=crop&w=1868&q=80"}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color={this.state.color}

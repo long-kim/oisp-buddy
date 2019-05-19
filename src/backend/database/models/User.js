@@ -56,9 +56,6 @@ module.exports = (sequelize, DataTypes) => {
       avatar: {
         type: DataTypes.STRING
       },
-      cover: {
-        type: DataTypes.STRING
-      },
       dept: {
         type: DataTypes.STRING(50)
       },
@@ -69,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
 
-  User.associate = function(models) {
+  User.associate = function (models) {
     User.hasMany(models.Thread, { foreignKey: "author_id" });
     User.hasMany(models.Friend, { foreignKey: "user_one_id" });
     User.hasMany(models.Friend, { foreignKey: "user_two_id" });

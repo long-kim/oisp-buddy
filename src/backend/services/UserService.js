@@ -273,9 +273,7 @@ module.exports = passport => {
   }
 
   function getAllUser(req) {
-    const result = User.findAll({
-      attributes: [[sequelize.fn('COUNT', sequelize.col('user_id')), 'no_user']]
-    })
+    const result = User.findAll()
       .then(info => {
         return Promise.resolve(info);
       })
@@ -284,6 +282,8 @@ module.exports = passport => {
       });
     return result;
   }
+
+  
 
   return {
     getSubscription,
@@ -305,4 +305,5 @@ module.exports = passport => {
     getAllUser
     // editUser_password
   };
+  return { getSubscription, getThreadVotes, getPostVotes };
 };
