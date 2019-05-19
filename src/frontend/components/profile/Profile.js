@@ -9,6 +9,7 @@ import Info from "./Info";
 import Axios from "axios";
 import Popup from "reactjs-popup";
 import Moment from "react-moment";
+import MiniRequest from "./MiniRequest";
 const jwt = require("jsonwebtoken");
 
 class Profile extends Component {
@@ -147,14 +148,22 @@ class Profile extends Component {
             : "no number"}
           author is: {this.state.friendlist[obj].author_id} */}
 
-          <Link to={url}>
+          {/* <Link to={url}>
             user with ID of{" "}
             {this.state.pending[obj].action_user_id
               ? this.state.pending[obj].action_user_id
               : "no one"}{" "}
             wants to be friends
-          </Link>
-          <hr />
+          </Link> */}
+          <MiniRequest
+            url={url}
+            action_user_id={
+              this.state.pending[obj].action_user_id
+                ? this.state.pending[obj].action_user_id
+                : "nothing"
+            }
+          />
+          {/* {Object.keys(this.state.pending).length > 1 ? <hr /> : null} */}
         </div>
       );
     });
@@ -315,6 +324,22 @@ class Profile extends Component {
                       maxHeight: "150px"
                     }}
                   >
+                    <p
+                      style={{
+                        paddingLeft: "10px",
+                        fontSize: "13px",
+                        color: "#a56a4b"
+                      }}
+                    >
+                      {Object.keys(this.state.pending).length
+                        ? Object.keys(this.state.pending).length
+                        : 0}{" "}
+                      in coming request
+                      {Object.keys(this.state.pending).length == 1 ||
+                      Object.keys(this.state.pending).length == 0
+                        ? null
+                        : "s"}
+                    </p>
                     <li>{this._renderNoti()}</li>
                   </ul>
                 </div>

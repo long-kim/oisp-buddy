@@ -3,6 +3,7 @@ import Axios from "axios";
 import * as styles from "./style.css";
 import { Link, NavLink, Redirect } from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import Modal from "react-bootstrap/Modal";
 
 class FriendProfile extends Component {
   constructor(props) {
@@ -19,11 +20,14 @@ class FriendProfile extends Component {
       action: undefined,
       idd: localStorage.getItem("id"),
       friendID: undefined,
-      threadd: []
+      threadd: [],
+      showModal: false,
+      showModal2: false
     };
     this.handleStatus = this.handleStatus.bind(this);
     this.handleRequest = this.handleRequest.bind(this);
     this._renderThread = this._renderThread.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -136,31 +140,15 @@ class FriendProfile extends Component {
   handleStatus(e) {
     e.preventDefault();
     return this.state.status == 1
-      ? (Axios.patch("/api/users/edit/friend", {
-          id: this.state.friendID,
-          status: 2,
-          action_user_id: this.state.idd
-        }).then(() => {
-          this.setState({
-            status: 2
-          });
-        }),
-        alert("you two are no longer friends"))
+      ? this.setState({
+          showModal2: true
+        })
       : this.state.status == 0 && this.state.action == this.state.idd
       ? alert("please wait to be accepted")
       : this.state.status == 0 && this.state.action != this.state.idd
-      ? (Axios.patch("/api/users/edit/friend", {
-          id: this.state.friendID,
-          status: 1,
-          action_user_id: this.state.idd
-        }).then(() => {
-          this.setState({
-            status: 1
-          });
-        }),
-        alert(
-          "you two are now friends, refesh page and click the symbol again if you wanna delete friend"
-        ))
+      ? this.setState({
+          showModal: true
+        })
       : this.state.status != null
       ? (Axios.patch("/api/users/edit/friend", {
           id: this.state.friendID,
@@ -190,6 +178,46 @@ class FriendProfile extends Component {
         }),
         alert("Friend Request sent!"));
   }
+
+  handleClick = params => e => {
+    e.preventDefault();
+    return params === "decline"
+      ? (Axios.patch("/api/users/edit/friend", {
+          id: this.state.friendID,
+          status: 2,
+          action_user_id: this.state.idd
+        }).then(() => {
+          this.setState({
+            status: 2
+          });
+        }),
+        this.setState({
+          showModal: false
+        }))
+      : params === "stop"
+      ? (Axios.patch("/api/users/edit/friend", {
+          id: this.state.friendID,
+          status: 2,
+          action_user_id: this.state.idd
+        }).then(() => {
+          this.setState({
+            status: 2
+          });
+        }),
+        this.setState({ showModal2: false }))
+      : (Axios.patch("/api/users/edit/friend", {
+          id: this.state.friendID,
+          status: 1,
+          action_user_id: this.state.idd
+        }).then(() => {
+          this.setState({
+            status: 1
+          });
+        }),
+        this.setState({
+          showModal: false
+        }));
+  };
 
   render() {
     return (
@@ -254,7 +282,8 @@ class FriendProfile extends Component {
                 </button>
               </h6>
               <h2 className="user_name">
-                {this.state.fullname} <br />
+                {this.state.fullname}
+                <br />
                 <h6>
                   Class of {this.state.year} - {this.state.major}
                 </h6>
@@ -314,6 +343,66 @@ class FriendProfile extends Component {
             </body>
           </div>
         )}
+        <Modal
+          show={this.state.showModal}
+          onHide={() => {
+            this.setState({ showModal: false });
+          }}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title style={{ color: "#a56a4b" }}>
+              Do you want to be friends with this user?
+            </Modal.Title>
+          </Modal.Header>
+
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClick("decline")}>
+              Decline
+            </Button>
+            <Button
+              style={{ backgroundColor: "#a56a4b", color: "white" }}
+              variant="primary"
+              onClick={this.handleClick("accept")}
+            >
+              Accept
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal
+          show={this.state.showModal2}
+          onHide={() => {
+            this.setState({ showModal2: false });
+          }}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title style={{ color: "#a56a4b" }}>
+              Are you sure you want to stop being friends with this user?
+            </Modal.Title>
+          </Modal.Header>
+
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() =>
+                this.setState({
+                  showModal2: false
+                })
+              }
+            >
+              No
+            </Button>
+            <Button
+              style={{ backgroundColor: "#a56a4b", color: "white" }}
+              variant="primary"
+              onClick={this.handleClick("stop")}
+            >
+              Yes
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }
