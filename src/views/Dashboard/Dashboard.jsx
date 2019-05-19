@@ -1,19 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-// react plugin for creating charts
-import ChartistGraph from "react-chartist";
+
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
-import Store from "@material-ui/icons/Store";
 import Warning from "@material-ui/icons/Warning";
 import DateRange from "@material-ui/icons/DateRange";
 import LocalOffer from "@material-ui/icons/LocalOffer";
 import Update from "@material-ui/icons/Update";
-import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import AccessTime from "@material-ui/icons/AccessTime";
-import Accessibility from "@material-ui/icons/Accessibility";
 import BugReport from "@material-ui/icons/BugReport";
 import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
@@ -31,19 +26,108 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
 import { bugs, website, server } from "variables/general.jsx";
+import Axios from "axios";
 
-import {
-  dailySalesChart,
-  emailsSubscriptionChart,
-  completedTasksChart
-} from "variables/charts.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 class Dashboard extends React.Component {
-  state = {
-    value: 0
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      value: 0,
+      id: undefined,
+      avatar: "",
+      cover: "",
+      fullname: "",
+      year: undefined,
+      major: "",
+      about: "",
+      status: undefined,
+      action: undefined,
+      idd: localStorage.getItem("id"),
+      friendID: undefined,
+      threadd: [], 
+      total: undefined
+    };
+  }
+  
+  componentDidMount(){
+    const httpClient = Axios.create()
+    httpClient.defaults.timeout = 50000
+    this.setState({
+      id: this.props.match.params.user_id
+    });
+
+    // Axios.get("/api/users/getAll").then(res=>{
+    //   this.setState({
+    //     total: res.data.no_user
+    //   })
+    // })
+
+    Axios.get("/api/users/viewfriend",{timeout: 5000}, {
+      params: {
+        user_id: this.props.match.params.user_id
+      }
+    }).then(res => {
+      this.setState({
+        fullname: res.data[0].first_name + " " + res.data[0].last_name,
+        avatar: res.data[0].avatar,
+        major: res.data[0].dept,
+        cover: res.data[0].cover,
+        about: res.data[0].about
+      });
+    });
+
+    // Axios.get("/api/users/friendstatus", {
+    //   params: {
+    //     user_id1:
+    //       this.props.match.params.user_id < this.state.idd
+    //         ? this.props.match.params.user_id
+    //         : this.state.idd,
+    //     user_id2:
+    //       this.props.match.params.user_id > this.state.idd
+    //         ? this.props.match.params.user_id
+    //         : this.state.idd
+    //   }
+    // }).then(res => {
+    //   if (res.data == null) {
+    //     Axios.post("/api/users/new/friend", {
+    //       user1:
+    //         this.props.match.params.user_id < this.state.idd
+    //           ? this.props.match.params.user_id
+    //           : this.state.idd,
+    //       user2:
+    //         this.props.match.params.user_id > this.state.idd
+    //           ? this.props.match.params.user_id
+    //           : this.state.idd,
+    //       action: this.state.idd
+    //     }).then(res => {
+    //       this.setState({
+    //         status: 0,
+    //         action: this.state.idd
+    //       });
+    //     });
+    //   } else {
+    //     this.setState({
+    //       status: res.data[0] ? res.data[0].status : null,
+    //       action: res.data[0] ? res.data[0].action_user_id : 0,
+    //       friendID: res.data[0] ? res.data[0].id : 0
+    //     });
+    //   }
+    // });
+
+    // Axios.get("/api/threads/threadlist", {
+    //   params: {
+    //     user: this.props.match.params.user_id
+    //   }
+    // }).then(res => {
+    //   this.setState({
+    //     threadd: res.data
+    //   });
+    // });
+  }
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -84,7 +168,6 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="success" stats icon>
                 <CardIcon color="success">
-                  {/* <Store>Post</Store>  */}
                   <Icon>Post</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>Content</p>
@@ -123,7 +206,6 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="info" stats icon>
                 <CardIcon color="info">
-                  {/* <Accessibility /> */}
                   <Icon>Follower</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>Followers</p>
@@ -139,86 +221,7 @@ class Dashboard extends React.Component {
             </Card>
           </GridItem>
         </GridContainer>
-        
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={4}>
-            <Card chart>
-              <CardHeader color="success">
-                <ChartistGraph
-                  className="ct-chart"
-                  data={dailySalesChart.data}
-                  type="Line"
-                  options={dailySalesChart.options}
-                  listener={dailySalesChart.animation}
-                />
-              </CardHeader>
-              <CardBody>
-                <h4 className={classes.cardTitle}>Daily Access</h4>
-                <p className={classes.cardCategory}>
-                  <span className={classes.successText}>
-                    <ArrowUpward className={classes.upArrowCardCategory} /> 55%
-                  </span>{" "}
-                  increase in today logins.
-                </p>
-              </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> updated 4 minutes ago
-                </div>
-              </CardFooter>
-            </Card>
-          </GridItem>
 
-          <GridItem xs={12} sm={12} md={4}>
-            <Card chart>
-              <CardHeader color="warning">
-                <ChartistGraph
-                  className="ct-chart"
-                  data={emailsSubscriptionChart.data}
-                  type="Bar"
-                  options={emailsSubscriptionChart.options}
-                  responsiveOptions={emailsSubscriptionChart.responsiveOptions}
-                  listener={emailsSubscriptionChart.animation}
-                />
-              </CardHeader>
-              <CardBody>
-                <h4 className={classes.cardTitle}>Post density</h4>
-                <p className={classes.cardCategory}>
-                  The number of posts per week
-                </p>
-              </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> campaign sent 2 days ago
-                </div>
-              </CardFooter>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={4}>
-            <Card chart>
-              <CardHeader color="danger">
-                <ChartistGraph
-                  className="ct-chart"
-                  data={completedTasksChart.data}
-                  type="Line"
-                  options={completedTasksChart.options}
-                  listener={completedTasksChart.animation}
-                />
-              </CardHeader>
-              <CardBody>
-                <h4 className={classes.cardTitle}>Access time</h4>
-                <p className={classes.cardCategory}>
-                 Regular access density
-                </p>
-              </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> campaign sent 1 day ago
-                </div>
-              </CardFooter>
-            </Card>
-          </GridItem>
-        </GridContainer>
 
         <GridContainer>
           <GridItem xs={12} sm={12} md={6}>
@@ -273,12 +276,12 @@ class Dashboard extends React.Component {
               <CardBody>
                 <Table
                   tableHeaderColor="warning"
-                  tableHead={["ID", "Name", "Phone", "Country"]}
+                  tableHead={["No", "Name", "Email", "Date"]}
                   tableData={[
-                    ["1", "Kim Hoang Long", "0912676869", "Heaven"],
-                    ["2", "Tran Duc Thinh", "0938299188", "Japan"],
-                    ["3", "Vo Ngoc Quynh Nhu", "0911534234", "Korea"],
-                    ["4", "Nguyen Phuc An", "0908941044", "Vietnam"]
+                    ["1", "Kim Hoang Long", "kimhoanglong.cs@gmail.com", "2019-05-17 10:58:00"],
+                    ["2", "Tran Duc Thinh", "jimcbl@gmail.com", "2019-05-17 10:58:00"],
+                    ["3", "Vo Ngoc Quynh Nhu", "sarah@gmail.com", "2019-05-17 10:58:00"],
+                    ["4", "Nguyen Phuc An", "anng96@gmail.com", "2019-05-17 10:58:00"]
                   ]}
                 />
               </CardBody>

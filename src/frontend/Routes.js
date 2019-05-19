@@ -14,8 +14,6 @@ import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Redirect } from "react-router-dom";
 
-import RTL from "frontend/components/RTL.jsx";
-
 import "assets/css/material-dashboard-react.css?v=1.6.0";
 
 const hist = createBrowserHistory();
