@@ -2,6 +2,7 @@ const models = require("backend/database/models");
 const User = models.User;
 const Relationship = models.Friend;
 const Op = require("sequelize").Op;
+const bcrypt = require("bcrypt");
 
 module.exports = passport => {
   function getSubscription(req) {
@@ -272,20 +273,21 @@ module.exports = passport => {
       });
   }
 
-  // function editUser_password(req) {
-  //   // console.log("this is req:", req.user_id);
-  //   const user_id = req.user_id ? req.user_id : 1;
+  function editUser_pass(req) {
+    // console.log("this is req:", req.user_id);
+    console.log("change pass: ", req);
+    const user_id = req.body.user_id ? req.body.user_id : 1;
 
-  //   return User.findByPk(user_id)
-  //     .then(user => {
-  //       return user.update({
-  //         passport: req.passport
-  //       });
-  //     })
-  //     .then(user => {
-  //       return user;
-  //     });
-  // }
+    return User.findByPk(user_id)
+      .then(user => {
+        return user.update({
+          password: bcrypt.hashSync(req.body.pass, 10)
+        });
+      })
+      .then(user => {
+        return user;
+      });
+  }
 
   return {
     getSubscription,
@@ -303,7 +305,7 @@ module.exports = passport => {
     getFriendStatus,
     editFriend,
     getFriendNoti,
-    postFriend
-    // editUser_password
+    postFriend,
+    editUser_pass
   };
 };

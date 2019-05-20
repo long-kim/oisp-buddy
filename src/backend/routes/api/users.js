@@ -124,19 +124,12 @@ module.exports = passport => {
     });
   });
 
-  // router.patch("/edit/dept", (req, res, next) => {
-  //   // console.log("print: " + req[0]);
-  //   UserService.editUser_dept(req.body).then(result => {
-  //     res.send(result);
-  //   });
-  // });
-
-  // router.patch("/edit/password", (req, res, next) => {
-  //   // console.log("print: " + req[0]);
-  //   UserService.editUser_password(req.body).then(result => {
-  //     res.send(result);
-  //   });
-  // });
+  router.patch("/edit/pass", (req, res, next) => {
+    // console.log("print: " + req[0]);
+    UserService.editUser_pass(req).then(result => {
+      res.send(result);
+    });
+  });
 
   return router;
 };

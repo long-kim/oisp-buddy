@@ -37,7 +37,9 @@ class Profile extends Component {
       friendlist: [],
       friendID: [],
       threadd: [],
-      pending: []
+      pending: [],
+      friendIDList: [],
+      friendIDList2: []
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -70,6 +72,9 @@ class Profile extends Component {
       this.setState({
         friendlist: res.data
       });
+      // this.state.friendlist.map((obj, i) => {
+      //   this.state.friendIDList.push(obj.user_id);
+      // });
     });
 
     Axios.get("/api/threads/threadlist", {
@@ -88,9 +93,6 @@ class Profile extends Component {
       }
     }).then(res => {
       this.setState({
-        // status: res.data[0] ? res.data[0].status : 2,
-        // action: res.data[0] ? res.data[0].action_user_id : 0,
-        // friendID: res.data[0] ? res.data[0].id : 0
         pending: res.data
       });
     });
@@ -117,8 +119,8 @@ class Profile extends Component {
                 />
               </div>
               <div className="media-body" style={{ paddingLeft: "50px" }}>
-                <h4 className="media-heading">{this.state.fullname}</h4>
-                <p style={{ fontSize: "20px" }}>
+                {/* <h4 className="media-heading">{this.state.name}</h4> */}
+                <p className="media-heading" style={{ fontSize: "25px" }}>
                   {this.state.threadd[obj].title}
                 </p>
                 <p>
@@ -142,19 +144,6 @@ class Profile extends Component {
 
       return (
         <div key={i}>
-          {/* thread number:{" "}
-          {this.state.friendlist[obj].title
-            ? this.state.friendlist[obj].title
-            : "no number"}
-          author is: {this.state.friendlist[obj].author_id} */}
-
-          {/* <Link to={url}>
-            user with ID of{" "}
-            {this.state.pending[obj].action_user_id
-              ? this.state.pending[obj].action_user_id
-              : "no one"}{" "}
-            wants to be friends
-          </Link> */}
           <MiniRequest
             url={url}
             action_user_id={
@@ -163,7 +152,6 @@ class Profile extends Component {
                 : "nothing"
             }
           />
-          {/* {Object.keys(this.state.pending).length > 1 ? <hr /> : null} */}
         </div>
       );
     });
@@ -234,7 +222,8 @@ class Profile extends Component {
                 </button>
               </h6>
               <h2 className="user_name">
-                {this.state.name} <br />
+                {this.state.name}
+                <br />
                 <h6>
                   Class of {this.state.year} - {this.state.major}
                 </h6>

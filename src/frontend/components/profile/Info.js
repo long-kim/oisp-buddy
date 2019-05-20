@@ -1,11 +1,12 @@
 import React from "react";
 import Axios from "axios";
-import * as styles from "./style.css";
-import { Link, NavLink } from "react-router-dom";
-import ReactModal from "react-modal";
+// import * as styles from "./style.css";
+import { Redirect } from "react-router-dom";
+// import ReactModal from "react-modal";
 import Popup from "reactjs-popup";
-import { func } from "prop-types";
-const jwt = require("jsonwebtoken");
+// import { func } from "prop-types";
+// const jwt = require("jsonwebtoken");
+// const bcrypt = require("bcrypt");
 
 class Info extends React.Component {
   constructor(props) {
@@ -24,7 +25,9 @@ class Info extends React.Component {
       showModal: false,
       showModal2: false,
       first_name: "",
-      last_name: ""
+      last_name: "",
+      password: "",
+      direct: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -114,6 +117,20 @@ class Info extends React.Component {
           user_id: this.state.id
         }),
         alert("Major has changed"))
+      : param === "pass"
+      ? Axios.patch("/api/users/edit/pass", {
+          pass: this.state.password,
+          user_id: this.state.id
+        }).then(() => {
+          Axios.get("/auth/logout").then(res => {
+            alert("Password has changed, please login again");
+            localStorage.removeItem("oisp-token");
+            localStorage.removeItem("id");
+            this.setState({
+              direct: true
+            });
+          });
+        })
       : "no cant do babydoll";
   };
 
@@ -198,6 +215,30 @@ class Info extends React.Component {
                   placeholder="last name"
                 />
                 {/* <button type="submit">Save</button> */}
+                <button className="btn btn-primary" type="submit">
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div style={{ marginTop: "20px" }}>
+            <form onSubmit={this.handleSubmit("pass")}>
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" id="password">
+                    Password
+                  </span>
+                </div>
+                <input
+                  type="password"
+                  className="form-control"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  name="password"
+                  placeholder="no more than 32 characters"
+                />
+                {/* <input type="submit" value="Save" /> */}
                 <button className="btn btn-primary" type="submit">
                   Save
                 </button>
@@ -381,6 +422,7 @@ class Info extends React.Component {
             </div>
           </div>
         </Popup>
+        {this.state.direct ? <Redirect to="/login" /> : null}
       </div>
     );
   }

@@ -4,6 +4,7 @@ import * as styles from "./style.css";
 import { Link, NavLink, Redirect } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Modal from "react-bootstrap/Modal";
+import Moment from "react-moment";
 
 class FriendProfile extends Component {
   constructor(props) {
@@ -22,7 +23,8 @@ class FriendProfile extends Component {
       friendID: undefined,
       threadd: [],
       showModal: false,
-      showModal2: false
+      showModal2: false,
+      showModal3: false
     };
     this.handleStatus = this.handleStatus.bind(this);
     this.handleRequest = this.handleRequest.bind(this);
@@ -126,8 +128,15 @@ class FriendProfile extends Component {
                 />
               </div>
               <div className="media-body" style={{ paddingLeft: "50px" }}>
-                <h4 className="media-heading">{this.state.fullname}</h4>
-                <p>{this.state.threadd[obj].title}</p>
+                {/* <h4 className="media-heading">{this.state.fullname}</h4> */}
+                <p className="media-heading" style={{ fontSize: "25px" }}>
+                  {this.state.threadd[obj].title}
+                </p>
+                <p>
+                  <Moment format="MMMM DD, YYYY" style={{ fontSize: "15px" }}>
+                    {this.state.threadd[obj].createdAt}
+                  </Moment>
+                </p>
               </div>
             </div>
           </Link>
@@ -144,7 +153,9 @@ class FriendProfile extends Component {
           showModal2: true
         })
       : this.state.status == 0 && this.state.action == this.state.idd
-      ? alert("please wait to be accepted")
+      ? this.setState({
+          showModal3: true
+        })
       : this.state.status == 0 && this.state.action != this.state.idd
       ? this.setState({
           showModal: true
@@ -205,6 +216,17 @@ class FriendProfile extends Component {
           });
         }),
         this.setState({ showModal2: false }))
+      : params === "withdraw"
+      ? (Axios.patch("/api/users/edit/friend", {
+          id: this.state.friendID,
+          status: 2,
+          action_user_id: this.state.idd
+        }).then(() => {
+          this.setState({
+            status: 2
+          });
+        }),
+        this.setState({ showModal3: false }))
       : (Axios.patch("/api/users/edit/friend", {
           id: this.state.friendID,
           status: 1,
@@ -222,12 +244,6 @@ class FriendProfile extends Component {
   render() {
     return (
       <div>
-        {/* This should be {this.state.fullname} aka{" "}
-        {this.state.id ? this.state.id : "no"}'s page
-        <hr />
-        <img src={this.state.avatar} alt="user's avatar" />
-        <hr />
-        <img src={this.state.cover} alt="user's cover" /> */}
         {localStorage.getItem("oisp-token") == null ? (
           <Link to="/login">
             <Button type="button" className="mr-lg-2 mb-2 mb-lg-0">
@@ -398,6 +414,40 @@ class FriendProfile extends Component {
               style={{ backgroundColor: "#a56a4b", color: "white" }}
               variant="primary"
               onClick={this.handleClick("stop")}
+            >
+              Yes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal
+          show={this.state.showModal3}
+          onHide={() => {
+            this.setState({ showModal3: false });
+          }}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title style={{ color: "#a56a4b" }}>
+              Are you sure you want to withdraw the request?
+            </Modal.Title>
+          </Modal.Header>
+
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() =>
+                this.setState({
+                  showModal3: false
+                })
+              }
+            >
+              No
+            </Button>
+            <Button
+              style={{ backgroundColor: "#a56a4b", color: "white" }}
+              variant="primary"
+              onClick={this.handleClick("withdraw")}
             >
               Yes
             </Button>
