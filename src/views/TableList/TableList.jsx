@@ -4,10 +4,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import Moment from "react-moment";
+import Axios from "axios";
 
 const styles = {
   cardCategoryWhite: {
@@ -39,8 +40,93 @@ const styles = {
   }
 };
 
-function TableList(props) {
-  const { classes } = props;
+
+class TableList extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      id: undefined,
+      fullname: "",
+      email: "",
+      major: "",
+      year: undefined,
+      memberlist: [],
+      thread: "",
+      score: undefined,
+      authid: undefined,
+      threadlist: []
+    }
+  }
+
+  componentDidMount(){
+    const httpClient = Axios.create()
+    httpClient.defaults.timeout = 50000
+    this.setState({
+      id: this.props.match.params.user_id
+    });
+
+    Axios.get("/api/users/memberlist", {
+      params: {
+        user_id: this.state.id
+      }
+    }).then(res => {
+      this.setState({
+        memberlist: res.data
+      });
+    });
+
+    Axios.get("/api/threads/threadlist", {
+      params: {
+        thread_id: this.state.id
+      }
+    }).then(res => {
+      this.setState({
+        threadlist: res.data
+      });
+    });
+
+
+  }  
+
+  _renderContent(){
+    return Object.keys(this.state.threadlist).map((obj, i) =>{
+      return (
+            <tr key = {i}>
+              <th scope="row">{this.state.threadlist[obj].author_id}</th>
+              {/* <td>{this.state.threadlist[obj].first_name + " " + this.state.memberlist[obj].last_name}</td> */}
+              <td>{this.state.threadlist[obj].title} </td>
+              <td>
+                  <Moment format="MMMM DD, YYYY" style={{ fontSize: "15px" }}>
+                  {this.state.threadlist[obj].createdAt}
+                  </Moment>
+              </td>
+            </tr>
+      );
+    })
+  }
+
+  _renderObject(){
+    return Object.keys(this.state.memberlist).map((obj, i) =>{
+      return (
+            <tr key = {i}>
+              <th scope="row">{this.state.memberlist[obj].user_id}</th>
+              <td>{this.state.memberlist[obj].first_name + " " + this.state.memberlist[obj].last_name}</td>
+              <td>{this.state.memberlist[obj].email} </td>
+              <td>{this.state.memberlist[obj].dept}</td>
+              <td>{this.state.memberlist[obj].year}</td>
+              <td>
+                  <Moment format="MMMM DD, YYYY" style={{ fontSize: "15px" }}>
+                  {this.state.memberlist[obj].createdAt}
+                  </Moment>
+              </td>
+            </tr>
+      );
+    })
+  }
+
+
+  render(){
+    const { classes } = this.props;
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -52,30 +138,18 @@ function TableList(props) {
             </p>
           </CardHeader>
           <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Name", "Content", "Date", "Vote"]}
-              tableData={[
-                ["Ly Hung Duy", 
-                "Quis quo pariatur. Omnis tempora aut aut ipsa. Rem ut ipsum omnis minima tempore commodi est provident. ",
-                "Yesterday 13th May, 2019", "3"],
-                ["Vo Ngoc Quynh Nhu", 
-                "Nam reprehenderit dolores. Voluptatem quasi ut qui quos sed eos quasi. Et molestias maxime aut ut.", 
-                "9th May, 2019", "7"],
-                ["Kim Hoàng Long", 
-                "Adipisci a ducimus molestias illum iure non et. Ut ut non id totam.", 
-                "24th April, 2019", "11"],
-                ["Nguyen Phuc An", 
-                "Exercitationem voluptates tempore ad est. Veritatis perferendis cum accusantium facilis atque.", 
-                "20th April, 2019", "8"],
-                ["Tran Duc Thinh", 
-                "Ex suscipit aut minus nobis rerum. Iure et ipsum nostrum fuga. Recusandae ipsam magni quos labore quae sit hic.", 
-                "3rd April, 2019", "6"],
-                ["Kim Hoàng Long", 
-                "Et nam quisquam eaque laboriosam aperiam consequuntur.", 
-                "20th March, 2019", "20"]
-              ]}
-            />
+            <table class="table">
+                <thead class="thead-table-success">
+                  <tr>
+                    <th scope="col">Author ID</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {this._renderContent()}
+                </tbody>
+              </table> 
           </CardBody>
         </Card>
       </GridItem>
@@ -90,23 +164,28 @@ function TableList(props) {
             </p>
           </CardHeader>
           <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["ID", "Name", "Email", "Phone", "City"]}
-              tableData={[
-                ["1", "Nguyen Phuc An", "1552005@hcmut.edu.vn", "0908041044", "Vietnam"],
-                ["2", "Kim Hoàng Long", "1652758@hcmut.edu.vn", "0912756238", "America"],
-                ["3", "Tran Duc Thinh", "1652578@hcmut.edu.vn", "0939304193", "Japan"],
-                ["4", "Vo Ngoc Quynh Nhu", "1652458@hcmut.edu.vn", "0126432014", "Korea"],
-                ["5", "Ly Hung Duy", "1652099@hcmut.edu.vn", "0126324982", "Russia"],
-                ["6", "Nguyen Ngoc Ngan", "1552050@hcmut.edu.vn", "0907302142", "Thailand"]
-              ]}
-            />
+              <table class="table">
+                <thead class="thead-table-success">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {this._renderObject()}
+                </tbody>
+              </table> 
           </CardBody>
         </Card>
       </GridItem>
     </GridContainer>
   );
+  }
+  
 }
 
 export default withStyles(styles)(TableList);

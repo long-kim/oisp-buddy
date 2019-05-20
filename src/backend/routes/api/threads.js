@@ -163,5 +163,11 @@ module.exports = passport => {
     });
   });
 
+  router.get("/threadlist", (req, res, next) => {
+    ThreadService.getAllThread(req).then(result => {
+      res.send(result);
+    });
+  });
+
   return router;
 };

@@ -17,11 +17,11 @@ module.exports = passport => {
     });
   });
 
-  router.get("/getAllTopic", (req, res, next) => {
-    PostService.getAllTopic(req).then(result => {
-      res.send(result);
-    });
-  });
+  // router.get("/getAllTopic", (req, res, next) => {
+  //   PostService.getAllTopic(req).then(result => {
+  //     res.send(result);
+  //   });
+  // });
 
   return router;
 };

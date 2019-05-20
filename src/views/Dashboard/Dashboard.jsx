@@ -15,7 +15,6 @@ import Cloud from "@material-ui/icons/Cloud";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
 import Tasks from "components/Tasks/Tasks.jsx";
 import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
 import Danger from "components/Typography/Danger.jsx";
@@ -82,12 +81,6 @@ class Dashboard extends React.Component {
       })
     });
 
-    Axios.get("/api/users/getAllTopic").then(res=>{
-      this.setState({
-        totalTopic: Object.keys(res.data).length
-      })
-    });
-
     Axios.get("/api/users/memberlist", {
       params: {
         user_id: this.state.id
@@ -103,7 +96,7 @@ class Dashboard extends React.Component {
     return Object.keys(this.state.memberlist).map((obj, i) =>{
       return (
             <tr key = {i}>
-              <th scope="row"></th>
+              <th scope="row">{this.state.memberlist[obj].user_id}</th>
               <td>{this.state.memberlist[obj].first_name + " " + this.state.memberlist[obj].last_name}</td>
               <td>{this.state.memberlist[obj].email} </td>
               <td>

@@ -37,16 +37,16 @@ module.exports = passport => {
     return result;
   }
 
-  function getAllTopic(req) {
-    const result = Post.findAll()
-      .then(info => {
-        return Promise.resolve(info);
-      })
-      .catch(err => {
-        return Promise.reject(err);
-      });
-    return result;
-  }
+  // function getAllTopic(req) {
+  //   const result = Post.findAll()
+  //     .then(info => {
+  //       return Promise.resolve(info);
+  //     })
+  //     .catch(err => {
+  //       return Promise.reject(err);
+  //     });
+  //   return result;
+  // }
 
-  return { addPost, editPost, deletePost, getAllPost, getAllTopic };
+  return { addPost, editPost, deletePost, getAllPost };
 };

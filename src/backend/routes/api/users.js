@@ -39,6 +39,12 @@ module.exports = passport => {
     });
   });
 
+  router.get("/edit/dept", (req, res, next) => {
+    UserService.editUser_dept(req.body).then(result => {
+      res.send(result);
+    });
+  });
+
   router.get("/getAllMember", (req, res, next) => {
     UserService.getAllUser(req).then(result => {
       res.send(result);
