@@ -14,6 +14,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
 import avatar from "assets/img/faces/an.jpg";
+import { Link, NavLink, Redirect } from "react-router-dom";
 
 const styles = {
   cardCategoryWhite: {
@@ -185,6 +186,8 @@ class UserProfile extends React.Component {
                 <p className={classes.description}>
                   My maxim is never give up, just have purpose and motivation, you will overcome it all.
                           </p>
+                <h7><Link to="/profile/4">Click here to come Admin Page</Link></h7>
+
                 
               </CardBody>
             </Card>

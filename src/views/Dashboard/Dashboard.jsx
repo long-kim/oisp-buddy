@@ -257,7 +257,7 @@ class Dashboard extends React.Component {
               <CardHeader color="warning">
                 <h4 className={classes.cardTitleWhite}>Lastest member</h4>
                 <p className={classes.cardCategoryWhite}>
-                  New members on 15th May, 2019
+                  New members on lastest time
                 </p>
               </CardHeader>
               <CardBody>

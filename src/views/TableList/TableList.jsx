@@ -8,6 +8,8 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Moment from "react-moment";
+import { Link, NavLink, Redirect } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 import Axios from "axios";
 
 const styles = {
@@ -52,8 +54,6 @@ class TableList extends React.Component {
       year: undefined,
       memberlist: [],
       thread: "",
-      score: undefined,
-      authid: undefined,
       threadlist: []
     }
   }
@@ -89,16 +89,25 @@ class TableList extends React.Component {
   }  
 
   _renderContent(){
+    let url;
     return Object.keys(this.state.threadlist).map((obj, i) =>{
+      url = "/threads/view/" + this.state.threadlist[obj].author_id;
       return (
             <tr key = {i}>
               <th scope="row">{this.state.threadlist[obj].author_id}</th>
-              {/* <td>{this.state.threadlist[obj].first_name + " " + this.state.memberlist[obj].last_name}</td> */}
               <td>{this.state.threadlist[obj].title} </td>
               <td>
                   <Moment format="MMMM DD, YYYY" style={{ fontSize: "15px" }}>
                   {this.state.threadlist[obj].createdAt}
                   </Moment>
+              </td>
+              <td><div key={i}>
+                    <Link to={url}>
+                    <Button type="button" className="mr-lg-2 mb-2 mb-lg-0">
+                      Go
+                    </Button>
+                  </Link>
+                  </div>
               </td>
             </tr>
       );
@@ -106,7 +115,9 @@ class TableList extends React.Component {
   }
 
   _renderObject(){
+    let url;
     return Object.keys(this.state.memberlist).map((obj, i) =>{
+      url = "/profile/" + this.state.memberlist[obj].user_id;
       return (
             <tr key = {i}>
               <th scope="row">{this.state.memberlist[obj].user_id}</th>
@@ -119,11 +130,20 @@ class TableList extends React.Component {
                   {this.state.memberlist[obj].createdAt}
                   </Moment>
               </td>
+              <td><div key={i}>
+                    <Link to={url}>
+                    <Button type="button" className="mr-lg-2 mb-2 mb-lg-0">
+                      Go
+                    </Button>
+                  </Link>
+                  </div>
+              </td>
             </tr>
       );
     })
   }
 
+  
 
   render(){
     const { classes } = this.props;
@@ -144,6 +164,7 @@ class TableList extends React.Component {
                     <th scope="col">Author ID</th>
                     <th scope="col">Content</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Review</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -173,6 +194,7 @@ class TableList extends React.Component {
                     <th scope="col">Department</th>
                     <th scope="col">Year</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Review</th>
                   </tr>
                 </thead>
                 <tbody>
