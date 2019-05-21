@@ -169,5 +169,18 @@ module.exports = passport => {
     });
   });
 
+  router.delete("/delete/:threadId", (req, res, next) => {
+    ThreadService.deleteThread(req.params.postId)
+      .then(thread => {
+        res.json({
+          thread_id: thread.thread_id,
+          message: "Thread deleted."
+        });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  });
+
   return router;
 };

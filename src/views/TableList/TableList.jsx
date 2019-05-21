@@ -109,10 +109,26 @@ class TableList extends React.Component {
                   </Link>
                   </div>
               </td>
+              <td><div key={i}>
+                    <Button type="button" 
+                            className="mr-lg-2 mb-2 mb-lg-0"
+                            onClick={this.handleDeleteThread}>
+                      Delete
+                    </Button>
+                  </div>
+              </td>
             </tr>
       );
     })
   }
+
+  handleDeleteThread = () => {
+    Axios.delete(`/api/threads/delete/${this.props.thread_id}`).then(res => {
+      console.log(res);
+      this.props.delete();
+      document.getElementsByTagName("body")[0].style.overflow = "initial";
+    });
+  };
 
   _renderObject(){
     let url;
@@ -146,7 +162,7 @@ class TableList extends React.Component {
   
 
   render(){
-    const { classes } = this.props;
+  const { classes } = this.props;
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -158,13 +174,14 @@ class TableList extends React.Component {
             </p>
           </CardHeader>
           <CardBody>
-            <table class="table">
+            <table class="table table-hover table-bordered">
                 <thead class="thead-table-success">
                   <tr>
                     <th scope="col">Author ID</th>
                     <th scope="col">Content</th>
                     <th scope="col">Date</th>
                     <th scope="col">Review</th>
+                    <th scope="col">Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -174,18 +191,17 @@ class TableList extends React.Component {
           </CardBody>
         </Card>
       </GridItem>
+
       <GridItem xs={12} sm={12} md={12}>
         <Card plain>
           <CardHeader plain color="primary">
-            <h4 className={classes.cardTitleWhite}>
-              Member
-            </h4>
+            <h4 className={classes.cardTitleWhite}>Member</h4>
             <p className={classes.cardCategoryWhite}>
               Total number of people who follow and register this web
             </p>
           </CardHeader>
           <CardBody>
-              <table class="table">
+              <table class="table table-hover table-bordered">
                 <thead class="thead-table-success">
                   <tr>
                     <th scope="col">ID</th>

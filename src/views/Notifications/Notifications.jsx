@@ -122,39 +122,39 @@ class Notifications extends React.Component {
               
             </GridItem>
             <GridItem xs={12} sm={12} md={6}>
-              <h5>Event Notes</h5>
+              <h5>Color Table</h5>
               <br />
               <SnackbarContent
                 message={
-                  'Assignment in Practice on Engineering Software - 15th May, 2019'
+                  'INFO - This is a regular notification made with color="info"'
                 }
                 close
                 color="info"
               />
               <SnackbarContent
                 message={
-                  'Birday Party - 25th May, 2019'
+                  'SUCCESS - This is a regular notification made with color="success"'
                 }
                 close
                 color="success"
               />
               <SnackbarContent
                 message={
-                  'Travelling in Da Nang - 27th June, 2019'
+                  'WARNING - This is a regular notification made with color="warning"'
                 }
                 close
                 color="warning"
               />
               <SnackbarContent
                 message={
-                  'Hangout with friends - 3rd July, 2019'
+                  'DANGER - This is a regular notification made with color="danger"'
                 }
                 close
                 color="danger"
               />
               <SnackbarContent
                 message={
-                  'Go home - 31th August, 2019'
+                  'PRIMARY - This is a regular notification made with color="primary"'
                 }
                 close
                 color="primary"

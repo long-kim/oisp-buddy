@@ -28,8 +28,8 @@ import { bugs, website, server } from "variables/general.jsx";
 import Axios from "axios";
 import Moment from "react-moment";
 
-
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
+
 
 class Dashboard extends React.Component {
   constructor(props){
@@ -51,7 +51,7 @@ class Dashboard extends React.Component {
       totalMember: undefined,
       totalThread: undefined,
       totalPost: undefined,
-      totalTopic: undefined,
+      totalDept: undefined,
       memberlist: []
     };
   }
@@ -78,6 +78,12 @@ class Dashboard extends React.Component {
     Axios.get("/api/posts/getAllPost").then(res=>{
       this.setState({
         totalPost: Object.keys(res.data).length
+      })
+    });
+
+    Axios.get("/api/users/getAllMember").then(res=>{
+      this.setState({
+        totalDept: Object.keys(res.data).length
       })
     });
 
@@ -191,11 +197,11 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="info" stats icon>
                 <CardIcon color="info">
-                  <Icon>Topic</Icon>
+                  <Icon>Depart</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>Department</p>
                 <h3 className={classes.cardTitle}>
-                  {this.state.totalTopic}
+                  {this.state.totalDept}
                 </h3>
               </CardHeader>
 
@@ -252,6 +258,7 @@ class Dashboard extends React.Component {
               ]}
             />
           </GridItem>
+          
           <GridItem xs={12} sm={12} md={6}>
             <Card>
               <CardHeader color="warning">
@@ -260,8 +267,9 @@ class Dashboard extends React.Component {
                   New members on lastest time
                 </p>
               </CardHeader>
-              <CardBody>
-              <table class="table">
+              <CardBody >
+                <div >
+              <table class="table table-striped table-bordered mb-0">
                 <thead class="thead-table-success">
                   <tr>
                     <th scope="col">No</th>
@@ -270,11 +278,11 @@ class Dashboard extends React.Component {
                     <th scope="col">Date</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody  height="200">
                 {this._renderObject()}
                 </tbody>
               </table>  
-                
+              </div>
               </CardBody>
             </Card>
           </GridItem>

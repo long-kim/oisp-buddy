@@ -54,7 +54,7 @@ function TypographyPage(props) {
   return (
     <Card>
       <CardHeader color="primary">
-        <h4 className={classes.cardTitleWhite}>Material Dashboard Heading</h4>
+        <h4 className={classes.cardTitleWhite}>Dashboard Heading</h4>
         <p className={classes.cardCategoryWhite}>
           Created using Roboto Font Family
         </p>

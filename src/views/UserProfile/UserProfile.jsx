@@ -61,14 +61,6 @@ class UserProfile extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        {/* <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form> */}
-
         <GridContainer>
           <GridItem xs={12} sm={12} md={8}>
             <Card>
@@ -166,11 +158,6 @@ class UserProfile extends React.Component {
                   </GridItem>
                 </GridContainer>
               </CardBody>
-              
-              {/* <CardFooter>
-                <Button color="primary">Update Profile</Button>
-              </CardFooter> */}
-
             </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={4}>

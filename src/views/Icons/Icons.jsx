@@ -19,7 +19,7 @@ function Icons(props) {
       <GridItem xs={12} sm={12} md={12}>
         <Card plain>
           <CardHeader plain color="primary">
-            <h4 className={classes.cardTitleWhite}>Material Design Icons</h4>
+            <h4 className={classes.cardTitleWhite}>Design Icons</h4>
             <p className={classes.cardCategoryWhite}>
               Handcrafted by our friends from{" "}
               <a

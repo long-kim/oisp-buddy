@@ -24,11 +24,28 @@ module.exports = passport => {
     return result;
   }
 
+  // function editPost(params, id) {
+  //   return Post.findByPk(id)
+  //     .then(post => {
+  //       return post.update(params);
+  //     })
+  //     .then(post => {
+  //       return post;
+  //     });
+  // }
 
+  function deleteThread(id) {
+    return Thread.destroy({
+      where: {
+        thread_id: id
+      }
+    });
+  }
 
   return { 
     getPosts,
-    getAllThread
+    getAllThread,
+    deleteThread
   }
 
 };
