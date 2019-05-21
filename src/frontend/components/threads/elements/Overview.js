@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { BrowserRouter as _Router, _Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Axios from "axios";
 
 class Overview extends Component {
   constructor(props) {
@@ -12,14 +13,41 @@ class Overview extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.voted !== prevProps.voted) {
+      this.setState({ voted: this.props.voted });
+    }
+    if (this.props.sub !== prevProps.sub) {
+      this.setState({ subscribed: this.props.sub });
+    }
+    if (
+      this.state.score !== this.props.score &&
+      this.state.voted !== this.props.voted
+    ) {
+      Axios.patch(`/api/threads/${this.props.thread_id}/edit/score`, {
+        score: this.state.score
+      }).then(() => {
+        Axios.post(`/api/threads/${this.props.thread_id}/vote`, {
+          voted: this.state.voted
+        });
+      });
+    }
+  }
+
   handleSubscribe = () => {
     const sub = this.state.subscribed;
-    this.setState({ subscribed: !sub });
+    if (!sub) {
+      this.setState({ subscribed: true });
+      Axios.get(`/api/threads/${this.props.thread_id}/subscribe`);
+    } else {
+      this.setState({ subscribed: false });
+      Axios.get(`/api/threads/${this.props.thread_id}/unsubscribe`);
+    }
   };
 
   updateScore = val => {
     const score = this.state.score;
-    let voted = this.state.voted;
+    let voted = this.props.voted;
     if (val === voted) {
       val = -voted;
     } else if (val === -voted) {
@@ -29,10 +57,27 @@ class Overview extends Component {
     this.setState({ voted: voted + val });
   };
 
+  showControl = () => {
+    const card = document.getElementById(this.props.thread_id);
+    const control = card.getElementsByClassName("interact")[0];
+    control.classList.remove("hidden");
+  };
+
+  hideControl = () => {
+    const card = document.getElementById(this.props.thread_id);
+    const control = card.getElementsByClassName("interact")[0];
+    control.classList.add("hidden");
+  }
+
   render() {
     return (
       <div className="overview">
-        <div className="card-wrapper">
+        <div
+          className="card-wrapper"
+          id={this.props.thread_id}
+          onMouseEnter={this.showControl}
+          onMouseLeave={this.hideControl}
+        >
           <div className="control-group score">
             <div className="control" onClick={this.updateScore.bind(this, 1)}>
               <i
@@ -65,17 +110,24 @@ class Overview extends Component {
           <div className="content">
             <Link
               className="thread-title"
-              to={`thread/${this.props.thread_id}`}
+              to={{
+                pathname: `thread/${this.props.thread_id}`,
+                state: {topics: this.props.topics, ...this.state}
+              }}
             >
               {this.props.title}
             </Link>
             <div className="topics-wrapper">
-              <a className="topic" href="./">
-                asp.net
-              </a>
+              {this.props.topics.map((topic, idx) => {
+                return (
+                  <Link className="topic" to={`?topic=${topic.id}`} key={idx}>
+                    {topic.title}
+                  </Link>
+                );
+              })}
             </div>
           </div>
-          <div className="control-group interact">
+          <div className="control-group interact hidden">
             <div className="control" onClick={this.handleSubscribe}>
               <i
                 className="fa fa-star"

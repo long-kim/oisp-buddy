@@ -51,7 +51,6 @@ module.exports = passport => {
         username: req.user.username
       }
     }).then(user => {
-      //console.log("ID: "+ user.user_id);
       const token = jwt.sign({ id: user.user_id }, process.env.JWT_SECRET);
       const data = {
         auth: true,

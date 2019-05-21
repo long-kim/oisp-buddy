@@ -15,7 +15,6 @@ import Cloud from "@material-ui/icons/Cloud";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
 import Tasks from "components/Tasks/Tasks.jsx";
 import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
 import Danger from "components/Typography/Danger.jsx";
@@ -27,9 +26,10 @@ import CardFooter from "components/Card/CardFooter.jsx";
 
 import { bugs, website, server } from "variables/general.jsx";
 import Axios from "axios";
-
+import Moment from "react-moment";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
+
 
 class Dashboard extends React.Component {
   constructor(props){
@@ -48,7 +48,11 @@ class Dashboard extends React.Component {
       idd: localStorage.getItem("id"),
       friendID: undefined,
       threadd: [], 
-      total: undefined
+      totalMember: undefined,
+      totalThread: undefined,
+      totalPost: undefined,
+      totalDept: undefined,
+      memberlist: []
     };
   }
   
@@ -59,73 +63,56 @@ class Dashboard extends React.Component {
       id: this.props.match.params.user_id
     });
 
-    // Axios.get("/api/users/getAll").then(res=>{
-    //   this.setState({
-    //     total: res.data.no_user
-    //   })
-    // })
+    Axios.get("/api/users/getAllMember").then(res=>{
+      this.setState({
+        totalMember: Object.keys(res.data).length
+      })
+    });
 
-    Axios.get("/api/users/viewfriend",{timeout: 5000}, {
+    Axios.get("/api/threads/getAllThread").then(res=>{
+      this.setState({
+        totalThread: Object.keys(res.data).length
+      })
+    });
+
+    Axios.get("/api/posts/getAllPost").then(res=>{
+      this.setState({
+        totalPost: Object.keys(res.data).length
+      })
+    });
+
+    Axios.get("/api/users/getAllMember").then(res=>{
+      this.setState({
+        totalDept: Object.keys(res.data).length
+      })
+    });
+
+    Axios.get("/api/users/memberlist", {
       params: {
-        user_id: this.props.match.params.user_id
+        user_id: this.state.id
       }
     }).then(res => {
       this.setState({
-        fullname: res.data[0].first_name + " " + res.data[0].last_name,
-        avatar: res.data[0].avatar,
-        major: res.data[0].dept,
-        cover: res.data[0].cover,
-        about: res.data[0].about
+        memberlist: res.data
       });
     });
+  }
 
-    // Axios.get("/api/users/friendstatus", {
-    //   params: {
-    //     user_id1:
-    //       this.props.match.params.user_id < this.state.idd
-    //         ? this.props.match.params.user_id
-    //         : this.state.idd,
-    //     user_id2:
-    //       this.props.match.params.user_id > this.state.idd
-    //         ? this.props.match.params.user_id
-    //         : this.state.idd
-    //   }
-    // }).then(res => {
-    //   if (res.data == null) {
-    //     Axios.post("/api/users/new/friend", {
-    //       user1:
-    //         this.props.match.params.user_id < this.state.idd
-    //           ? this.props.match.params.user_id
-    //           : this.state.idd,
-    //       user2:
-    //         this.props.match.params.user_id > this.state.idd
-    //           ? this.props.match.params.user_id
-    //           : this.state.idd,
-    //       action: this.state.idd
-    //     }).then(res => {
-    //       this.setState({
-    //         status: 0,
-    //         action: this.state.idd
-    //       });
-    //     });
-    //   } else {
-    //     this.setState({
-    //       status: res.data[0] ? res.data[0].status : null,
-    //       action: res.data[0] ? res.data[0].action_user_id : 0,
-    //       friendID: res.data[0] ? res.data[0].id : 0
-    //     });
-    //   }
-    // });
-
-    // Axios.get("/api/threads/threadlist", {
-    //   params: {
-    //     user: this.props.match.params.user_id
-    //   }
-    // }).then(res => {
-    //   this.setState({
-    //     threadd: res.data
-    //   });
-    // });
+  _renderObject(){
+    return Object.keys(this.state.memberlist).map((obj, i) =>{
+      return (
+            <tr key = {i}>
+              <th scope="row">{this.state.memberlist[obj].user_id}</th>
+              <td>{this.state.memberlist[obj].first_name + " " + this.state.memberlist[obj].last_name}</td>
+              <td>{this.state.memberlist[obj].email} </td>
+              <td>
+                  <Moment format="MMMM DD, YYYY" style={{ fontSize: "15px" }}>
+                  {this.state.memberlist[obj].createdAt}
+                  </Moment>
+              </td>
+            </tr>
+      );
+    })
   }
 
   handleChange = (event, value) => {
@@ -148,7 +135,7 @@ class Dashboard extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory}>People</p>
                 <h3 className={classes.cardTitle}>
-                  50
+                  {this.state.totalMember}
                 </h3>
               </CardHeader>
 
@@ -157,7 +144,7 @@ class Dashboard extends React.Component {
                   <Danger>
                     <Warning />
                   </Danger>
-                    Get more space
+                    Total member in our website 
                   
                 </div>
               </CardFooter>
@@ -168,16 +155,18 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="success" stats icon>
                 <CardIcon color="success">
-                  <Icon>Post</Icon>
+                  <Icon>Thread</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Content</p>
-                <h3 className={classes.cardTitle}>45 <small>posts</small></h3>
+                <p className={classes.cardCategory}>Topic</p>
+                <h3 className={classes.cardTitle}>
+                    {this.state.totalThread? this.state.totalThread : "no thread"}
+                   </h3>
               </CardHeader>
 
               <CardFooter stats>
                 <div className={classes.stats}>
                   <DateRange />
-                  Last 24 Hours
+                  Total thread in all
                 </div>
               </CardFooter>
             </Card>
@@ -187,16 +176,18 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="danger" stats icon>
                 <CardIcon color="danger">
-                  <Icon>Issues</Icon>
+                  <Icon>Post</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Fixed Issues</p>
-                <h3 className={classes.cardTitle}>75</h3>
+                <p className={classes.cardCategory}>Content</p>
+                <h3 className={classes.cardTitle}>
+                  {this.state.totalPost}
+                </h3>
               </CardHeader>
 
               <CardFooter stats>
                 <div className={classes.stats}>
                   <LocalOffer />
-                  Tracked from Github
+                  Total post in all
                 </div>
               </CardFooter>
             </Card>
@@ -206,10 +197,12 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="info" stats icon>
                 <CardIcon color="info">
-                  <Icon>Follower</Icon>
+                  <Icon>Depart</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Followers</p>
-                <h3 className={classes.cardTitle}>+245</h3>
+                <p className={classes.cardCategory}>Department</p>
+                <h3 className={classes.cardTitle}>
+                  {this.state.totalDept}
+                </h3>
               </CardHeader>
 
               <CardFooter stats>
@@ -265,25 +258,31 @@ class Dashboard extends React.Component {
               ]}
             />
           </GridItem>
+          
           <GridItem xs={12} sm={12} md={6}>
             <Card>
               <CardHeader color="warning">
                 <h4 className={classes.cardTitleWhite}>Lastest member</h4>
                 <p className={classes.cardCategoryWhite}>
-                  New members on 15th May, 2019
+                  New members on lastest time
                 </p>
               </CardHeader>
-              <CardBody>
-                <Table
-                  tableHeaderColor="warning"
-                  tableHead={["No", "Name", "Email", "Date"]}
-                  tableData={[
-                    ["1", "Kim Hoang Long", "kimhoanglong.cs@gmail.com", "2019-05-17 10:58:00"],
-                    ["2", "Tran Duc Thinh", "jimcbl@gmail.com", "2019-05-17 10:58:00"],
-                    ["3", "Vo Ngoc Quynh Nhu", "sarah@gmail.com", "2019-05-17 10:58:00"],
-                    ["4", "Nguyen Phuc An", "anng96@gmail.com", "2019-05-17 10:58:00"]
-                  ]}
-                />
+              <CardBody >
+                <div >
+              <table class="table table-striped table-bordered mb-0">
+                <thead class="thead-table-success">
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Date</th>
+                  </tr>
+                </thead>
+                <tbody  height="200">
+                {this._renderObject()}
+                </tbody>
+              </table>  
+              </div>
               </CardBody>
             </Card>
           </GridItem>

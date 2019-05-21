@@ -11,22 +11,12 @@ module.exports = passport => {
         limit: limit
       });
     });
-  }
+  }  
 
-  function getThreadList(req) {
-    const user = req.query.user ? req.query.user : 1;
-    // console.log("this is request:", req.user ? req.user.user_id : 1);
-    console.log("user need thead: ", user);
-    const result = Thread.findAll({
-      limit: 4,
-      order: [["createdAt", "DESC"]],
-      where: {
-        author_id: user
-      }
-    })
-      .then(thread => {
-        // console.log("relationship", Promise.resolve(relationship));
-        return Promise.resolve(thread);
+  function getAllThread(req) {
+    const result = Thread.findAll()
+      .then(info => {
+        return Promise.resolve(info);
       })
       .catch(err => {
         return Promise.reject(err);
@@ -34,5 +24,28 @@ module.exports = passport => {
     return result;
   }
 
-  return { getPosts, getThreadList };
+  // function editPost(params, id) {
+  //   return Post.findByPk(id)
+  //     .then(post => {
+  //       return post.update(params);
+  //     })
+  //     .then(post => {
+  //       return post;
+  //     });
+  // }
+
+  function deleteThread(id) {
+    return Thread.destroy({
+      where: {
+        thread_id: id
+      }
+    });
+  }
+
+  return { 
+    getPosts,
+    getAllThread,
+    deleteThread
+  }
+
 };
