@@ -81,7 +81,7 @@ const Sidebar = ({ ...props }) => {
   var brand = (
     <div className={classes.logo}>
       <a
-        href="http://localhost:3000/admin/dashboard"
+        href="http://oisp-buddy.herokuapp.com/?fbclid=IwAR2_qIi71gyMlKAFZWEBzl7i5yrEvCgS9wo5R85Wy6tpT8YEX8pStK9hWJo"
         className={classNames(classes.logoLink, {
           [classes.logoLinkRTL]: props.rtlActive
         })}

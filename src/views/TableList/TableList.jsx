@@ -54,7 +54,8 @@ class TableList extends React.Component {
       year: undefined,
       memberlist: [],
       thread: "",
-      threadlist: []
+      threadlist: [],
+      deleteThread: false
     }
   }
 
@@ -85,13 +86,25 @@ class TableList extends React.Component {
       });
     });
 
+    // Axios.delete(`/api/threads/delete/${this.props.thread_id}`).then(res => {
+    //   console.log(res);
+    //   this.props.delete();
+    //   document.getElementsByTagName("body")[0].style.overflow = "initial";
+    // });
 
+    let thread_id = this.props.match.params.threadId;
+    Axios.get(
+      `/api/threads/view/${thread_id}/page=${this.state.currentPage}`
+    ).then(res => {
+      const threads = res.data.threads;
+      this.setState({ threads: threads, deleteThread: false });
+    });
   }  
 
   _renderContent(){
     let url;
     return Object.keys(this.state.threadlist).map((obj, i) =>{
-      url = "/threads/view/" + this.state.threadlist[obj].author_id;
+      url = "/forum/thread/" + this.state.threadlist[obj].author_id;
       return (
             <tr key = {i}>
               <th scope="row">{this.state.threadlist[obj].author_id}</th>
@@ -123,11 +136,7 @@ class TableList extends React.Component {
   }
 
   handleDeleteThread = () => {
-    Axios.delete(`/api/threads/delete/${this.props.thread_id}`).then(res => {
-      console.log(res);
-      this.props.delete();
-      document.getElementsByTagName("body")[0].style.overflow = "initial";
-    });
+    this.setState({ deleteThread: true});
   };
 
   _renderObject(){

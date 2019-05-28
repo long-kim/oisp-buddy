@@ -37,22 +37,14 @@ class Dashboard extends React.Component {
     this.state = {
       value: 0,
       id: undefined,
-      avatar: "",
-      cover: "",
       fullname: "",
       year: undefined,
-      major: "",
-      about: "",
-      status: undefined,
-      action: undefined,
-      idd: localStorage.getItem("id"),
       friendID: undefined,
-      threadd: [], 
       totalMember: undefined,
       totalThread: undefined,
       totalPost: undefined,
       totalDept: undefined,
-      memberlist: []
+      memberlist: [],
     };
   }
   
@@ -268,21 +260,22 @@ class Dashboard extends React.Component {
                 </p>
               </CardHeader>
               <CardBody >
-                <div >
-              <table class="table table-striped table-bordered mb-0">
-                <thead class="thead-table-success">
-                  <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Date</th>
-                  </tr>
-                </thead>
-                <tbody  height="200">
-                {this._renderObject()}
-                </tbody>
-              </table>  
-              </div>
+                    <div >
+                  <table class="table table-striped table-bordered mb-0 order-column">
+                    <thead class="thead-table-success">
+                      <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody  height="200">
+                    {this._renderObject()}
+                    </tbody>
+                  </table>  
+                  
+                  </div>
               </CardBody>
             </Card>
           </GridItem>

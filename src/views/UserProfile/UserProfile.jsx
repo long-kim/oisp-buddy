@@ -173,7 +173,7 @@ class UserProfile extends React.Component {
                 <p className={classes.description}>
                   My maxim is never give up, just have purpose and motivation, you will overcome it all.
                           </p>
-                <h7><Link to="/profile/4">Click here to come Admin Page</Link></h7>
+                <h7><a href="http://oisp-buddy.herokuapp.com/login">Click here to come Admin account</a></h7>
 
                 
               </CardBody>
