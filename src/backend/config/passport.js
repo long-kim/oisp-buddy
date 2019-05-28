@@ -101,28 +101,28 @@ module.exports = passport => {
     )
   );
 
-  passport.use(
-    "jwt",
-    new JWTStrategy(
-      {
-        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-        secretOrKey: process.env.JWT_SECRET
-      },
-      (payload, done) => {
-        User.findByPk(payload.id)
-          .then(user => {
-            if (user) {
-              console.log("Found user");
-              done(null, user);
-            } else {
-              console.log("Not found.");
-              done(null, false);
-            }
-          })
-          .catch(err => {
-            done(err);
-          });
-      }
-    )
-  );
+  // passport.use(
+  //   "jwt",
+  //   new JWTStrategy(
+  //     {
+  //       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  //       secretOrKey: process.env.JWT_SECRET
+  //     },
+  //     (payload, done) => {
+  //       User.findByPk(payload.id)
+  //         .then(user => {
+  //           if (user) {
+  //             console.log("Found user");
+  //             done(null, user);
+  //           } else {
+  //             console.log("Not found.");
+  //             done(null, false);
+  //           }
+  //         })
+  //         .catch(err => {
+  //           done(err);
+  //         });
+  //     }
+  //   )
+  // );
 };
