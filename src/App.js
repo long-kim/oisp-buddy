@@ -56,6 +56,10 @@ class App extends Component {
             Learn React
           </a>
         </header>
+        <div className="App-Component">
+            <h2>Search Bar:</h2>
+              <AutoCompleteText items={name}/>
+        </div>
         <form className="row d-flex form-group mt-3 test-api mx-auto justify-content-center" onSubmit={this.handleSubmit}>
           <h2>Post to Server:</h2>
           <div className="col-md-9">
