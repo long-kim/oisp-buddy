@@ -14,20 +14,3 @@ ReactDOM.render(<App />, document.getElementById('root'));
 // Learn more about service workers: https://bit.ly/CRA-PWA
 
 serviceWorker.unregister();
-function active(){
-    var searchBar= document.getElementById("searchBar");
-
-    if(searchBar.value == 'search something here'){
-        searchBar.value = '';
-        searchBar.placeholder = "search something here";
-    }
-}
-
-function inactive(){
-    var searchBar= document.getElementById("searchBar");
-
-    if(searchBar.value == ''){
-        searchBar.value = 'search something here';
-        searchBar.placeholder = '';
-    }
-}
