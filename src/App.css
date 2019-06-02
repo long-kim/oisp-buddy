@@ -39,6 +39,10 @@
   width: 100%;
 }
 
+.App-Component {
+  margin: 150px auto 0 auto;
+  width: 600px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
