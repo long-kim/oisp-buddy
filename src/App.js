@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './hcmut.svg';
 import './App.css';
+import AutoCompleteText from './AutoCompleteText';
+import name from './name';
 
 class App extends Component {
   state = {
