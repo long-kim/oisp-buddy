@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import "assets/styles/Chat.css";
 import Message from "./Message";
-import axios from "axios";
 import { Form } from "react-bootstrap";
 import firebase from "../firebase";
-import ScrollToBottom from "react-scroll-to-bottom";
+
 
 class MessageList extends Component {
   constructor(props) {
@@ -14,8 +13,6 @@ class MessageList extends Component {
       currentPage: 1,
       content: ""
     };
-
-    // this.firebaseRef = firebase.firestore();
 
     this.db = firebase.firestore();
 
