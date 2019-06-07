@@ -1,0 +1,14 @@
+#chatbox-area {
+  position: fixed;
+  bottom: 0;
+  right: 10px;
+  height: 400px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.chatroom {
+  margin: 0 10px;
+}
