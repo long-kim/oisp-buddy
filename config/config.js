@@ -3,7 +3,7 @@ const fs = require('fs');
 module.exports = {
   development: {
     username: "postgres",
-    password: "15081998",
+    password: null,
     database: "oisp-buddy",
     host: "localhost",
     dialect: "postgres"
